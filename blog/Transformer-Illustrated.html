@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Taha Samavati">
+
+    <title>ترانسفورمر در یادگیری عمیق</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SY0D1STNSD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-SY0D1STNSD');
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        @font-face { font-family: Samim-FD; src: url('../fonts/Samim-FD.ttf'); } 
+        h1,h2 {
+           font-family: Samim-FD
+        }
+        p,br {
+           font-family: Samim-FD
+        }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%;
+        }
+
+        .center-small {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+
+        figure {
+            float: right;
+            width: 100%;
+            text-align: center;
+            font-family: Samim-FD;
+            font-size: smaller;
+            text-indent: 0;
+            border: thin silver solid;
+            margin: 0.5em;
+            padding: 0.5em;
+        }
+      </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">Blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="../index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="../about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('../img/posts-dark.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading" dir="rtl">
+                        <h1>شرح دقیق و بصری ترانسفورمر</h1>
+                        <h2 class="subheading">--</h2>
+                        <span class="meta">Posted by <a href="#">Taha Samavati</a> on August 07, 2021</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container" font>
+            <div class="row">
+                <div class="col-lg-16 col-lg-offset-2 col-md-16 col-md-offset-1" dir="rtl">
+                    <p>ترانسفورمر در مقاله <a href="https://arxiv.org/abs/1706.03762">Attention is All You Need</a> معرفی شد.پیاده سازی آن در فریمورک TensorFlow در این <a href="https://github.com/tensorflow/tensor2tensor">این لینک</a> قابل دسترسی است. در این پست سعی داریم تا یک نگاه کلی و در عین حال به دور از پیچیدگی به مدل ترنسفورمر اجزای آن و نحوه کارکرد آن داشته باشیم.</p>
+        
+                    <h2 id="a-high-level-look">نگاه سطح بالا به ترنسفورمر</h2>
+                    <p>ترانسفورمر را می توان به صورت یک جعبه سیاه در نظر گرفت. مانند یک مدل ترجمه زیانی که از یکطرف جمله ای به آن وارد و در طرف دیگر یعنی خروجی جمله ای دیگر به عنوان ترجمه تولید می شود.</p>
+
+                    <img src="../media/transformer/the_transformer_3.png" class="center">
+
+                    <!--more-->
+
+                    <p>اگر یک قدم جلوتر برویم و اصطلاحا در جعبه سیاه را باز کنیم یک رمزنگار و رمزگشا خواهیم دید که به شکل زیر به هم متصل شده اند.</p>
+
+                    <img src="../media/transformer/The_transformer_encoders_decoders.png" class="center"/>
+
+                    <p> بخش رمزنگار خود از ۶ رمزنگار کوچک تشکیل شده است (دلیلی برای ۶تا وجود ندارد. شما می توانید هر چندتا در مدل خود داشته باشید). مجموعه این رمزنگار های کوچک در قالب یک پشته یا استک بلوک رمزنگار را می سازند. در مقایل و در بخش رمزگشا همین تعداد رمزگشا کوچک داریم که با استک خروجی هایشان خروجی نهایی بلوک رمزگشا بدست می آید. </p>
+
+                    <div class="img-div-any-width">
+                    <img src="../media/transformer/The_transformer_encoder_decoder_stack.png" class="center"/>
+                    </div>
+
+                    <p> رمزنگار ها ساختار یکسانی دارند اما هر کدام وزن های مختص به خود را دارند. هر کدام از این رمزنگارها دارای دو بخش است:</p>
+
+                    <div class="img-div-any-width">
+                    <img src="../media/transformer/Transformer_encoder.png" class="center"/>
+                    </div>
+
+                    <p> ورودی های رمزگشا ابتدا از یک لایه خود-توجه عبور می کنند. لایه خود-توجه به رمزنگار کمک می کند تا در هنگام رمزنگاری هر کلمه به کلمات دیگر موجود در جمله ورودی نیز توجه کند. در ادامه توضیحات مفصل تری در مورد این بخش خواهم آورد.</p>
+
+                    <p>خروجی های لایه خود توجه به یک شبکه feed-forward  ورودی داده می شوند. در واقع بردار مربوط به هر کلمه ورودی به صورت مجزا به این شبکه ورودی داده می شود. </p>
+                    <p>هر رمزگشا یا دیکودر نیز مانند رمزنگار دو لایه مذکور را دارد. با این تفاوت که بین این دولایه یک لایه توجه وجود دارد که به رمزگشا کمک می کند تا تمرکز خود را بر روی بخش های مربوط جمله ورودی قرار دهد (شبیه مکانیزم توجه در مدل های sequence2sequnce).</p>
+
+                    <div class="img-div-any-width">
+                    <img src="../media/transformer/Transformer_decoder.png" class="center"/>
+                    </div>
+
+                    <h2 id="bringing-the-tensors-into-the-picture">شرح نحوه محاسبه خروجی با استفاده از مثال</h2>
+
+                    <p>تا اینجا با بخش های اصلی ترانسفورمر به صورت کلی آشنا شدیم. حال برای بررسی دقیق تر ببینم چه عملیاتی روی تنسور های ورودی انجام می شود تا خروجی مورد نظر ما بدست آید.</p>
+
+                    <p>همانطور که می دانید برای آنکه کلمات را به یک بردار قابل درک برای یک شبکه عصبی تبدیل کنیم. از یک <a href="https://medium.com/deeper-learning/glossary-of-deep-learning-word-embedding-f90c3cec34ca">embedding algorithm</a> استفاده می کنیم.</p>
+
+                    <p><br /></p>
+
+                    <div class="img-div-any-width">
+						<figure class="figure">
+							<img src="../media/transformer/embeddings.png" />
+							<figcaption> به هر کلمه یک بردار با سایز ۵۱۲ اختصاص داده می شود. برای سادگی ما این بردار ها را به شکل بالا نمایش می دهیم.</figcaption>
+						</figure>
+                    <br />
+                   
+               	  </div>
+
+                    <p>هر کدام از رمزنگارها با دریافت یک لیست از بردارهای ۵۱۲تایی خروجی مربوط به خود را تولید می کند. لازم به ذکر است اولین رمزنگار در توالی رمزنگار ها لیستی از بردارهای امبدینگ را دریافت می کند و خروجی آن نیز لیستی به همان طول از بردار های ۵۱۲تایی خواهد بود. لیست خروجی این رمزنگار به رمزنگار بعدی در توالی ورودی داده می شود. طول لیست مذکور یکی از ابرپارامترهای مدل ترنسفورمر است که معمولا ما آن را به اندازه طول بزرگترین جکله موجود در مجموعه داده انتخاب می کنیم.</p>
+
+                    <p>همانطور که گفته شد رمزنگار دولایه دارد. لیست بردارهای ورودی از این دولایه میگذرد و خروجی رمزنگار بدست می آید.</p>
+
+                    <div class="img-div-any-width">
+                    <img src="../media/transformer/encoder_with_tensors.png" class="center"/>
+                    <br />
+
+                    </div>
+
+                    <p>فارسی</p>
+                    <p>Here we begin to see one key property of the Transformer, which is that the word in each position flows through its own path in the encoder. There are dependencies between these paths in the self-attention layer. The feed-forward layer does not have those dependencies, however, and thus the various paths can be executed in parallel while flowing through the feed-forward layer.</p>
+
+                    <p>در مرحله بعد قصد داریم تا با استفاده از یک جمله کوتاه تر ببینیم چه اتفاقی در هر زیرلایه رمزنگار می افتد.</p>
+
+                    <h2 id="now-were-encoding">رمزنگار</h2>
+                    <p>همانطور که پیشتر گفتیم رمزنگار با دریافت لیستی از بردارها آنها را از دولایه خود-توجه و سپس feed-forward عبور داده و خروجی را به انکودر بعدی که در توالی قرار دارد می دهد. </p>
+
+                    <div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/encoder_with_tensors_2.png" class="center"/>
+							<figcaption> هر کلمه که در مکانی مشخص از جمله قرار دارد از لایه خود توجه عبور می کند. سپس هر کدام از بردار ها به صورت مستقل از یک شبکه feed-forward عبور میکند.</figcaption>
+						</figure>
+                    </div>
+
+                    <h2 id="self-attention-at-a-high-level">نگاهی کلی به مکانیزم خود توجه</h2>
+                    
+                    <p>فرض کنید نمونه زیر جمله ای باشد که ما قصد ترجمه آن را داریم:</p>
+
+                    <p>”<code class="language-plaintext highlighter-rouge">The animal didn't cross the street because it was too tired</code>”</p>
+
+                    <p>برای ترجمه صحیح این جمله ابتدا باید مشخص کرد که کلمه "it" به چه چیزی اشاره می کند، خیابان یا حیوان. تشخیص این امر برای ما انسان ها کار ساده ای است ولی برای الگوریتم به این سادگی ها نیست.</p>
+
+                    <p>مکانیزم خود-توجه به مدل ترنسفورمر کمک می کند تا در هنگام پردازش کلمه "it" آن را به حیوان نسبت دهد.</p>
+
+                    <p>به بیان مفهومی تر مکانیزم خود توجه به مدل کمک می کند تا هنگام رمزنگاری هر کلمه از جمله به کلمات دیگر همان جمله هم توجه کند و به رمزنگاری بهتر و دقیق تری برای این کلمه دست یابد.</p>
+
+                    <p>اگر شما به شبکه های عصبی بازگشتی یا RNN آشنا باشید حتما می دانید که وضعیت hidden state ها می تواند در پردازش کلمه یا بردار جدید نقش تعیین کننده ای داشته باشد و به نوعی مانند حافظه عمل کند.  در ترنسفورمر نیز مکانیزم خود-توجه چنین کاری را انجام می دهد.</p>
+                    <p>If you’re familiar with RNNs, think of how maintaining a hidden state allows an RNN to incorporate its representation of previous words/vectors it has processed with the current one it’s processing. Self-attention is the method the Transformer uses to bake the “understanding” of other relevant words into the one we’re currently processing.</p>
+
+                    <div class="img-any-width">
+                        <figure class="figure">
+                            <img src="../media/transformer/transformer_self-attention_visualization.png"/>
+                            <figcaption>
+                                همانطور که مشاهده می شود در هنگام رمزنگاری کلمه it در رمزنگار پنجم(از 6) مکانیزم خود-توجه به بردار کلمات The Animal وزن بیشتری اختصاص می دهد و آنها را در پروسه رمزنگاری کلمه it بیشتر دخالت می دهد.</figcaption>
+                        </figure>
+                    </div>
+ 
+                    <p> حتما به <a href="https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb">Tensor2Tensor notebook</a> سر بزنید. در آنجا می توانید خروجی لایه های مختلف یک مدل ترنسفورمر را به صورت تعاملی مشاهده و بررسی کنید. </p>
+
+                    <h2 id="self-attention-in-detail">نگاهی دقیق تر به مکانیزم خود-توجه</h2>
+                    <p>در این بخش اول نحوه محاسبه خروجی لایه مکانیزم خود-توجه را توضیح می دهیم. می خواهیم ببینیم چه عملیاتی روی بردار های ورودی انجام شده تا بردار های خروجی لایه مذکور بدست آید. بعد از آن نیز  مراحل پیاده سازی ماتریسی آن را شرح می دهیم.</p>
+
+                    <p>قدم اول در محاسبه خروجی لایه خود-توجه، ساخت 3 بردار "Key"،"Query" و "Value" به ازای هر بردار کلمه ورودی است. همانطور که قبلا گفتیم در اینجا منظور از بردار کلمات همان بردار امبدینگ کلمات است.  هر کدام از این سه بردار (Key, Query, value) وزن مختص به خود را دارد که در طول آموزش مدل تنظیم می شود. این بردار های وزن با ضرب در بردار امبدینگ هر کلمه مقدار دهی می شوندو</p>
+                    <p>The <strong>first step</strong> in calculating self-attention is to create three vectors from each of the encoder’s input vectors (in this case, the embedding of each word). So for each word, we create a Query vector, a Key vector, and a Value vector. These vectors are created by multiplying the embedding by three matrices that we trained during the training process.</p>
+
+                    <p>لازم به ذکر است که ابعاد بردار های سه گانه مذکور کمتر از ابعاد امبدینگ کلمات است و برابر با 64 است. البته این اندازه می تواند بسته به انتخاب شما در هنگام طراحی مدل تغییر کند.</p>
+                    <p>this is an architecture choice to make the computation of multiheaded attention (mostly) constant.</p>
+
+                    <p><br /></p>
+
+                    <div class="img-div-any-width">
+                    <img src="../media/transformer/transformer_self_attention_vectors.png" class="center" />
+                    <br />
+                    Multiplying <span class="encoder">x1</span> by the <span class="decoder">WQ</span> weight matrix produces <span class="decoder">q1</span>, the "query" vector associated with that word. We end up creating a "query", a "key", and a "value" projection of each word in the input sentence.
+                    </div>
+
+                    <p><br /></p>
+
+                    <p>بردارهای "Query"،"Key" و "Value" دقیقا چه تعریف و نقشی دارند؟
+                    <br />
+                    <br />
+                    این بردارها انتزاع و به اصطلاح abstraction هستند که از طریق آنها مکانیزم توجه پیاده سازی و اعمال می شود. در ادامه در مورد نحوه محاسبه آنها توضیح می دهیم تا نقش هرکدام برایتان روشن تر شود.
+                    </p>
+
+                    <p>قدم دوم در محاسبه خروجی خود-توجه محاسبه یک امتیاز برای هر کلمه نسبت به کلمات دیگر موجود در جمله است. فرض کنید جمله ورودی ما : "<code class="language-plaintext highlighter-rouge">Thinking Machines</code>" باشد. ما می خواهیم خروجی خود-توجه را برای کلمه اول یعنی "<code class="language-plaintext highlighter-rouge">Thinking</code>" محاسبه کنیم. بدین منظور لازم است تا به تمام کلمات موجود در جمله یک امتیاز نسبت به کلمه مورد بررسی اختصاص دهیم. جمع این امتیاز ها بایستی برابر 1 شود. این امتیاز ها در واقع مشخص می کند هر کلمه در جمله چه سهمی در محاسبه انکودینگ کلمه مورد نظر ما داشته باشد.</p>
+                    <p>The <strong>second step</strong> in calculating self-attention is to calculate a score. Say we’re calculating the self-attention for the first word in this example, “Thinking”. We need to score each word of the input sentence against this word. The score determines how much focus to place on other parts of the input sentence as we encode a word at a certain position.</p>
+
+                    <p>برای محاسبه امتیاز هر کلمه نسبت به "Thinking"، بردار "Query" این کلمه که در اینجا q1 است را در بردار "Key" آن ضرب می کنیم. مثلا در اینجا برای محاسبه امتیاز کلمه "Thinking" نسبت به خودش بایستی ضرب داخلی q1وk1 را محاسبه کنیم. به همین ترتیب برای محاسبه امتیاز "Machines" نسبت به "Thinking" بایستی q1.k2 را محاسبه کنیم. این عملیات در شکل زیر نمایش داده شده است.</p>
+                    <p>The score is calculated by taking the dot product of the <span class="decoder">query vector</span> with the <span class="context">key vector</span> of the respective word we’re scoring. So if we’re processing the self-attention for the word in position <span class="encoder">#1</span>, the first score would be the dot product of <span class="decoder">q1</span> and <span class="context">k1</span>. The second score would be the dot product of <span class="decoder">q1</span> and <span class="context">k2</span>.</p>
+
+                    <p><br /></p>
+
+                    <div class="img-div-any-width">
+                    <img src="../media/transformer/transformer_self_attention_score.png" class="center" />
+                    <br />
+
+                    </div>
+
+                    <p><br /></p>
+
+                    <p>قدم سوم یکی تقسیم امتیاز های بدست آمده از قدم اول بر مجذور اندازه بردار "Key" است. در اینجا این مقدار برابر با 8 می شود. قدم چهارم هم اعمال Softmax به امتیازات است. این مقدار امتیاز ها را نرمالیزه و جمع آنها را برابر با 1 قرار می دهد.</p>
+                    <p>The <strong>third and forth steps</strong> are to divide the scores by 8 (the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other possible values here, but this is the default), then pass the result through a softmax operation. Softmax normalizes the scores so they’re all positive and add up to 1.</p>
+
+                    <p><br /></p>
+
+                    <div class="img-div-any-width">
+                    <img src="../media/transformer/self-attention_softmax.png" class="center"/>
+                    <br />
+
+                    </div>
+                    <p>امتیاز اختصاص داده شده به هر کلمه میزان ارتباط آن را با کلمه مورد بررسی مشخص می کند و به همین میزان در محاسبه بردار انکودینگ کلمه مورد نظر نقش دارد. طبعا این امتیاز برای خود کلمه مورد بررسی بیشترین مقدار را دارد. </p>
+                    <p>This softmax score determines how much each word will be expressed at this position. Clearly the word at this position will have the highest softmax score, but sometimes it’s useful to attend to another word that is relevant to the current word.</p>
+                    <p><br /></p>
+                    <p>قدم پنجم، ضرب بردار Value هر کلمه در امتیاز Softmax آن است. قدم ششم، جمع بردارهای وزن دهی شده شده است. با این کار بردار خروجی لایه خود-توجه برای کلمه "Thinking" بدست می آید.</p>
+                    <p>The <strong>fifth step</strong> is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out irrelevant words (by multiplying them by tiny numbers like 0.001, for example).</p>
+
+                    <p><br /></p>
+
+                    <div class="img-div-any-width">
+                    <img src="../media/transformer/self-attention-output.png" class="center"/>
+                    <br />
+                    </div>
+                  <p>خروجی بدست آمده در مرحله بعد به شبکه feed-forward ورودی داده می شود. در بخش بعد خواهیم دید این عملیات چطور به صورت ماتریسی (برای پردازش سریعتر) پیاده سازی می شود. </p>
+                    <h2 id="matrix-calculation-of-self-attention">محاسبه ماتریسی خود-توجه</h2>
+					<p>قدم اول محاسبه بردارهای Query،Key و Value است. طبق شکل زیر اگر بردارهای امبدینگ کلمات را در ماتریس X قرار دهیم، باضرب این بردار در بردارهای وزن مختص به هریک از این سه بردار یعنی (<span class="decoder">WQ</span>, <span class="context">WK</span>, <span class="step_no">WV</span>) که مقادیرشان هنگام آموزش شبکه تنظیم شده اند  می توان مقادیر سه بردار مذکور را برای هر کلمه محاسبه کرد.</p>
+
+                    <div class="img-div-any-width">
+						<figure class="figure">
+							<img src="../media/transformer/self-attention-matrix-calculation.png" class="center"/>
+							<figcaption>
+								هر ردیف در ماتریس X متناظر با بردار امبدینگ مربوط به یک کلمه در جمله ورودی است. همانطور که مشاهده می شود ابعاد ماتریس امبدینگ کلمات (در اینجا 512) بیشتر از ابعاد بردار های Q,K,V (در اینجا 64) است.
+							</figcaption>
+						</figure>
+                    </div>
+
+                    <p><br /></p>
+                  <p>در نهایت، چون با ماتریس سروکار داریم قدم های 2 تا 6، که در بخش قبل توضیح داده شدند، در فرمول زیر خلاصه می شوند:</p>
+                  <div class="img-div-any-width">
+                    <figure class="figure">
+                    	<img src="../media/transformer/self-attention-matrix-calculation-2.png" class="center"/>
+                    	<br />
+                    	<figcaption>محاسبه ماتریسی خروجی لایه خود-توجه</figcaption>
+                    </figure>
+                  </div>
+
+                    <p><br /></p>
+
+                    <p><br /></p>
+                    <h2 id="the-beast-with-many-heads">اژدهای چند سر</h2>
+					<p>مقاله مورد بررسی برای بهبود عملکرد لایه خود-توجه مکانیزم جدیدی به نام توجه "چند-سر" یا همان "Multi-Headed" را معرفی کرده است. این مکانیزم عملکرد لایه خود توجه را از دو منظر بهبود می بخشد:</p>
+
+                    <ol>
+                    <li>
+                        <p>افزایش توانایی مدل با فراهم کردن امکان تمرکز روی بخش های مختلف جمله. همانطور که در مثال بالاتر دیدیم بردار z1 جمع وزن دار همه بردار های کلمات جمله بود. در چنین شرایطی ممکن است وزن خود کلمه ای که در حال بدست آوردن بردار خود توجه برای آن هستیم آنقدر بزرگ باشد که اثر کلمات دیگر را خنثی کند. در اینجا داشتن چند سر برای مکانیزم خود توجه کمک می کند تا این مشکل برطرف شود و شرایط برای در نظر گرفتن کلمات دیگر جمله نیز محیا شود.
+						</p>
+                    </li>
+                    <li>
+                        <p>این مکانیزم چند زیرفضا برای representation توجه به ما می دهد. این موجب می شود تا ما به جای یک مجموعه سه تایی Query\Key\Value چند مجموعه داشته باشیم. در واقع مدل ترانسفورمر از 8 سر برای توجه استفاده می کند لذا 8 مجموعه به ازای هر encoder/decoder خواهیم داشت که هر کدام به ما یک زیر فضا برای مکانیزم توجه به ما می دهند.
+							
+					  It gives the attention layer multiple “representation subspaces”. As we’ll see next, with multi-headed attention we have not only one, but multiple sets of Query/Key/Value weight matrices (the Transformer uses eight attention heads, so we end up with eight sets for each encoder/decoder). Each of these sets is randomly initialized. Then, after training, each set is used to project the input embeddings (or vectors from lower encoders/decoders) into a different representation subspace.</p>
+                    </li>
+                    </ol>
+
+					<div class="img-div-any-width">
+						<figure class="figure">
+							<img src="../media/transformer/transformer_attention_heads_qkv.png" class="center"/>
+							<br />
+							<figcaption>با کمک توجه چند-سر، ما به ازای هر سر ماتریس وزن جداگانه ای برای بردار های Q\K\V داریم که در طول آموزش منجر به بدست آمدن ماتریس های متفاوتی برای Q\K\V می شوند. مانند قبل با ضرب ماتریسی X با ضرایب بردارهای سه گانه یعنی WQ\WK\WV ماتریس های Q\K\V بدست می آیند.
+						  </figcaption>
+						</figure>
+					</div>
+
+                    <p><br />
+					با توجه به اینکه 8 سر برای محاسبه خود توجه داریم، اگر 8 بار با ماتریس های وزن متفاوت محاسبات لایه خود توجه را مانند توضیحات گذشته انجام دهیم به 8 ماتریس متفاوت Z خواهیم رسید.
+                  </p>
+
+                    <div class="img-div-any-width">
+						<figure class="figure">
+                    		<img src="../media/transformer/transformer_attention_heads_z.png" class="center"/>
+						</figure>
+                    <br />
+
+                    </div>
+
+                    <p><br /></p>
+
+                    <p>تا اینجا ما 8 ماتریس مختلف برای Z بدست آوردیم که هرکدام ما وزن های متفاوتی بردار خود توجه کلمات را محاسبه کرده اند. در مرحله بعد بایستی بردار Z را به لایه feed-forward ورودی بدهیم. اما چالش اینجاست که لایه خود توجه انتظار یک بردار z را به عنوان ورودی دارد. پس ما به راهی نیاز داریم تا این 8 ماتریس را در به گونه ای در یک ماتریس ترکیب کنیم. اما سوال اینجاست چونه این کار را انجام دهیم؟ 
+					</p>
+
+                    <p>جواب این است که ابتدا این 8 ماتریس را با هم concat می کنیم. سپس ماتریس بدست آمده را در یک بردار وزن جدید به نام WO ضرب می کنیم. این کار باعث می شود تا با ترکیب بردار های مختلفی که برای Z بدست آوردیم یک بردار Z داشته باشیم. نکته جالب اینجاست که شبکه نحوه ترکیب این بردار ها با هم را   در طول آموزش یاد می گیرد.
+					</p>
+
+                    <div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/transformer_attention_heads_weight_matrix_o.png" class="center"/>
+						</figure>
+                    <br />
+
+                    </div>
+
+                    <p>خب این هم از مکانیزم خود-توجه و نحوه محاسبه آن. شکل زیر همه چیز هایی که تا الان گفتیم را جمع بندی می کند:
+					</p>
+
+                    <p><br /></p>
+
+                    <div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/transformer_multi-headed_self-attention-recap.png" class="center"/>
+						</figure>
+                    <br />
+
+                    </div>
+
+                    <p><br /></p>
+
+                    <p>حالا که با head های توجه آشنایی پیدا کردیم، بیایید دوباره به مثال قبل نگاه کنیم تا ببینیم در هنگام encode کلمه "it" هر کدام از سر ها به چه بخش هایی از جمله بیشتر توجه می کنند:&nbsp; &nbsp; &nbsp;</p>
+				  <div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/transformer_self-attention_visualization_2.png" class="center">
+							<br/>
+							<figcaption>حین encode کلمه "it" یک head بیشترین توجه را روی "the animal" دارد در حالی که یک سر دیگر بیشترین توجه را روی "tierd" دارد. به عبارتی representation مدل از کلمه "it" تحت تاثیر representation های "animal" و "tierd" قرار دارد.&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</figcaption>
+						
+						</figure>
+				  </div>
+
+                    <p><br /></p>
+
+                    <p>حال اگر به وزن های همه 6 سر نگاه کنیم وصف روابط سخت تر می شود.&nbsp; &nbsp; &nbsp; &nbsp;</p>
+
+                    <div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/transformer_self-attention_visualization_3.png" class="center"/>
+							<br />
+						</figure>
+                    </div>
+
+                    <h2 id="representing-the-order-of-the-sequence-using-positional-encoding">حفظ ترتیب در جمله با استفاده از Positional Encoding یا رمزنگاری مکانی&nbsp;</h2>
+                    <p>حال نوبت به این می رسد تا ببینیم مدل چگونه ترتیب کلمات در جمله ورودی را در نظر می گیرد.&nbsp; &nbsp;</p>
+
+                  <p>بدین منظور ترنسفورمر یک بردار به هر embedding جمله ورودی اضافه می کند. این بردارها از یک الگوی مشخی که مدل در حین آموزش یاد میگیرد، پیروی می کنند. این امر به مدل توانایی درک مکان کلمات مختلف جمله و همچنین فاصله آنها از یکدیگر را می دهد. درک شهودی این است که با اضافه کردن این بردار ها تفاوت معنی داری در فاصله بردار embedding کلمات جمله ایجاد می کند که در هنگام بدست آوردن بردارهای K/Q/V اثر گذار است.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>
+                    <p>The intuition here is that adding these values to the embeddings provides meaningful distances between the embedding vectors once they’re projected into Q/K/V vectors and during dot-product attention.</p>
+<p><br /></p>
+
+                    <div class="img-div-any-width">
+					  <figure>
+							<img src="../media/transformer/transformer_positional_encoding_vectors.png" class="center"/>
+							<br />
+							<figcaption>برای اینکه به مدل حسی از ترتیب کلمات بدهیم، بردار های رمزنگاری مکانی را اضافه می کنیم. بردارهایی که پس از آموزش مقادیر آنها از یک الگوی مشخصی پیروی می کند</figcaption>
+						</figure>
+                  </div>
+                    <p><br /></p>
+
+                    <p>اگر فرض کنیم که بردار embedding کلمات ابعادی برابر با 4 دارد، بردارهای رمزنگاری مکانی به شکل زیر خواهند بود:</p>
+
+					<div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/transformer_positional_encoding_example.png" class="center"/>
+							<br />
+							<figcaption>یک مثال واقعی از بردارهای رمزنگاری مکان با فرض بعد 4 برای بردارهای embedding</figcaption>
+						</figure>
+                    </div>
+
+                    <p><br /></p>
+
+                    <p>این الگو که راجع بهش صحبت کردیم میتواند چه شکلی باشد؟</p>
+
+                    <p>با توجه به شکلی که در ادامه آمده است، هر ردیف در تنسور positional encoding متناظر با رمزنگاری مکانی  بردار embedding یک کلمه در جمله ورودی است. بنابراین اولین ردیف برداری است که باید به embedding اولین کلمه جمله اضافه کنیم. اگر ابعاد بردار embedding کلمات را 512 در نظر بگیریم بردار مکان آن نیز ابعادی یکسان خواهد داشت و مقادیر آن بین -1 تا 1 خواهد بود.</p>
+					
+					<div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/attention-is-all-you-need-positional-encoding.png" class="center"/>
+							<br />
+						</figure>
+                    </div>
+					<p>فرمول محاسبه رمزنگاری مکانی در بخش 3.5 مقاله توضیح داده شده است. کد تولید این رمزنگاری در <a href="https://github.com/jalammar/jalammar.github.io/blob/master/notebookes/transformer/transformer_positional_encoding_graph.ipynb">اینجا</a> قرار دارد. قطعا راه های دیگری برای محاسبه رمزنگاری مکانی وجود دارد. برای نمونه &nbsp;تابع <a href="https://github.com/tensorflow/tensor2tensor/blob/23bd23b9830059fbc349381b70d9429b5c40a139/tensor2tensor/layers/common_attention.py"><code class="language-plaintext highlighter-rouge">get_timing_signal_1d()</code></a>&nbsp; &nbsp;در کدهای مربوط به Transformer2Transformer عملیات رمزنگاری مکانی را انجام می دهد.&nbsp; &nbsp;مزیت روش معرفی شده در  قابلیت مقیاس پذیری آن به جملات با طول دلخواه است. یعنی پس از آموزش مدل با جمله هایی با طول مشخص در زمان آزمون مدل توانایی پذیرش جملات طولانی تر را نیز دارد. شکل زیر نمونه ای از بردارهای تولید شده توسط این روش را نشان می دهد:</p>
+					
+				  <div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/transformer_positional_encoding_large_example.png" class="center"/>
+							<br />
+							<figcaption>&nbsp;یک مثال واقعی از رمزنگاری های مکانی برای 20 کلمه (شامل 20 ردیف) با سایز embedding 512 (512 ستون)</figcaption>
+					  </figure>
+                  	</div>
+					<br />
+
+                    <h2 id="the-residuals">اتصالات بازگشتی</h2>
+					<p>یکی از جزئیات دیگر در مدل Transformer که بایستی به آن اشاره کرد، وجود اتصالات بازگشتی در هر زیرلایه انکودر (شامل خود-توجه، شبکه feed-forward) است. به دنبال آن نیز عملیات <a href="https://arxiv.org/abs/1607.06450">layer-normalization</a> انجام می شود.&nbsp;</p>
+					<div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/transformer_resideual_layer_norm.png" class="center"/>
+							<br />
+					  </figure>
+                    </div>
+
+                    <p>شکل زیر عملیاتی را که در حین محاسبه بردار های خود توجه روی بردارها انجام می شود در لایه Add and Normalize را نشان می دهد</p>
+
+					<div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/transformer_resideual_layer_norm_2.png" class="center"/>
+							<br />
+					  </figure>
+                    </div>
+
+                    <p>این ساختار در بخش رمزگشا یا decoder نیز صادق است. اگر فرض کنیم ترنسفورمر متشکل از یک رمزنگار و رمزگشا باشد، شکل زیر ساختار آن را نشان می دهد.</p>
+					
+					<div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/transformer_resideual_layer_norm_3.png" class="center"/>
+							<br />
+					  </figure>
+                    </div>
+
+                    <h2 id="the-decoder-side">رمز گشا | The Decoder&nbsp;&nbsp;</h2>
+                    <p>در این بخش به توضیح ساختار رمزگشا یا همان decoder می پردازیم.</p>
+
+                  <p>&nbsp;همانطور که دیدیم،&nbsp; رمزنگار (Encoder) در آخرین لایه خود مجموعه ای از بردار های توجه K و V را تولید می کند. این بردار ها به تمام لایه های رمزنگار در بخش Decoder ورودی داده می شوند. با این کار رمزگشا می داند که بر کدام بخش های جمله تمرکز کند.&nbsp; &nbsp;</p>
+                    <div class="img-div-any-width">
+			             <figure>
+							<img src="../media/transformer/transformer_decoding_1.gif" class="center"/>
+							<br />
+                            <figcaption>After finishing the encoding phase, we begin the decoding phase. Each step in the decoding phase outputs an element from the output sequence (the English translation sentence in this case).</figcaption>
+		                  </figure>
+                  </div>
+
+                    <p>The following steps repeat the process until a special <end of="" sentence=""> symbol is reached indicating the transformer decoder has completed its output. The output of each step is fed to the bottom decoder in the next time step, and the decoders bubble up their decoding results just like the encoders did. And just like we did with the encoder inputs, we embed and add positional encoding to those decoder inputs to indicate the position of each word.</end></p>
+                    
+				  <div class="img-div-any-width">
+						<figure>
+							<img src="../media/transformer/transformer_decoding_2.gif" class="center"/>
+							<br />
+					  </figure>
+                  </div>
+
+                    <p>The self attention layers in the decoder operate in a slightly different way than the one in the encoder:</p>
+
+                    <p>In the decoder, the self-attention layer is only allowed to attend to earlier positions in the output sequence. This is done by masking future positions (setting them to <code class="language-plaintext highlighter-rouge">-inf</code>) before the softmax step in the self-attention calculation.</p>
+
+                    <p>The “Encoder-Decoder Attention” layer works just like multiheaded self-attention, except it creates its Queries matrix from the layer below it, and takes the Keys and Values matrix from the output of the encoder stack.</p>
+
+                    <h2 id="the-final-linear-and-softmax-layer">لایه خطی و softmax آخر</h2>
+
+                    <p>خروجی نهایی رمزگشا (decoder) یک بردار عددی است. یک لایه Linear به همراه تابع فعالسازی softmax این اعداد را به کلمه تبدیل می کند.
+                        The decoder stack outputs a vector of floats. How do we turn that into a word? That’s the job of the final Linear layer which is followed by a Softmax Layer.</p>
+
+                    <p> لایه Linear آخر در واقع یک شبکه عصبی تمام متصل است که که بردار خروجی رمزگشا را به یک بردار بسیار بزرگتر که شامل احتمالات اختصاص یافته به کلمات مختلف در vocabulary داده آموزش است. به این بردار بردار Logits نیز گفته می شود. برای مثال فرض کنید اندازه vocabulary 10000 کلمه باشد. در اینصورت اندازه بردار Logits که خروجی لایه خطی است دارای 10000 المان است. تابع فعالسازی softmax نیز این امتیازات را نرمالیزه می کند به طوریکه جمع همه این اعداد برابر با 1 شود. المانی که بیشترین احتمال برایش پیش بینی شده باشد انتخاب شده و به عنوان خروجی آن timestep در نظر گرفته می شود.
+
+                    <p><br /></p>
+                    
+                    <div class="img-div-any-width">
+			             <figure>
+							<img src="../media/transformer/transformer_decoder_output_softmax.png" class="center"/>
+							<br />
+                            <figcaption>This figure starts from the bottom with the vector produced as the output of the decoder stack. It is then turned into an output word.</figcaption>
+		                  </figure>
+                    </div>
+
+                    <p><br /></p>
+
+                    <h2 id="recap-of-training">Recap Of Training</h2>
+                    <p>Now that we’ve covered the entire forward-pass process through a trained Transformer, it would be useful to glance at the intuition of training the model.</p>
+
+                    <p>During training, an untrained model would go through the exact same forward pass. But since we are training it on a labeled training dataset, we can compare its output with the actual correct output.</p>
+
+                    <p>To visualize this, let’s assume our output vocabulary only contains six words(“a”, “am”, “i”, “thanks”, “student”, and “&lt;eos&gt;” (short for ‘end of sentence’)).</p>
+
+                    <div class="img-div">
+                    <img src="/images/t/vocabulary.png" />
+                    <br />
+                    The output vocabulary of our model is created in the preprocessing phase before we even begin training.
+                    </div>
+
+                    <p>Once we define our output vocabulary, we can use a vector of the same width to indicate each word in our vocabulary. This also known as one-hot encoding. So for example, we can indicate the word “am” using the following vector:</p>
+
+                    <div class="img-div">
+                    <img src="/images/t/one-hot-vocabulary-example.png" />
+                    <br />
+                    Example: one-hot encoding of our output vocabulary
+                    </div>
+
+                    <p>Following this recap, let’s discuss the model’s loss function – the metric we are optimizing during the training phase to lead up to a trained and hopefully amazingly accurate model.</p>
+
+                    <h2 id="the-loss-function">The Loss Function</h2>
+                    <p>Say we are training our model. Say it’s our first step in the training phase, and we’re training it on a simple example – translating “merci” into “thanks”.</p>
+
+                    <p>What this means, is that we want the output to be a probability distribution indicating the word “thanks”. But since this model is not yet trained, that’s unlikely to happen just yet.</p>
+
+                    <div class="img-div">
+                    <img src="/images/t/transformer_logits_output_and_label.png" />
+                    <br />
+                    Since the model's parameters (weights) are all initialized randomly, the (untrained) model produces a probability distribution with arbitrary values for each cell/word. We can compare it with the actual output, then tweak all the model's weights using backpropagation to make the output closer to the desired output.
+                    </div>
+
+                    <p><br /></p>
+
+                    <p>How do you compare two probability distributions? We simply subtract one from the other. For more details, look at  <a href="https://colah.github.io/posts/2015-09-Visual-Information/">cross-entropy</a> and <a href="https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained">Kullback–Leibler divergence</a>.</p>
+
+                    <p>But note that this is an oversimplified example. More realistically, we’ll use a sentence longer than one word. For example – input: “je suis étudiant” and expected output: “i am a student”. What this really means, is that we want our model to successively output probability distributions where:</p>
+
+                    <ul>
+                    <li>Each probability distribution is represented by a vector of width vocab_size (6 in our toy example, but more realistically a number like 30,000 or 50,000)</li>
+                    <li>The first probability distribution has the highest probability at the cell associated with the word “i”</li>
+                    <li>The second probability distribution has the highest probability at the cell associated with the word “am”</li>
+                    <li>And so on, until the fifth output distribution indicates ‘<code class="language-plaintext highlighter-rouge">&lt;end of sentence&gt;</code>’ symbol, which also has a cell associated with it from the 10,000 element vocabulary.</li>
+                    </ul>
+
+                    <div class="img-div">
+                    <img src="/images/t/output_target_probability_distributions.png" />
+                    <br />
+                    The targeted probability distributions we'll train our model against in the training example for one sample sentence.
+                    </div>
+
+                    <p><br /></p>
+
+                    <p>After training the model for enough time on a large enough dataset, we would hope the produced probability distributions would look like this:</p>
+
+                    <div class="img-div">
+                        <img src="/images/t/output_trained_model_probability_distributions.png" />
+                        <br />
+                        Hopefully upon training, the model would output the right translation we expect. Of course it's no real indication if this phrase was part of the training dataset (see: <a href="https://www.youtube.com/watch?v=TIgfjmp-4BA">cross validation</a>). Notice that every position gets a little bit of probability even if it's unlikely to be the output of that time step -- that's a very useful property of softmax which helps the training process.
+                    </div>
+
+                    <p>Now, because the model produces the outputs one at a time, we can assume that the model is selecting the word with the highest probability from that probability distribution and throwing away the rest. That’s one way to do it (called greedy decoding). Another way to do it would be to hold on to, say, the top two words (say, ‘I’ and ‘a’ for example), then in the next step, run the model twice: once assuming the first output position was the word ‘I’, and another time assuming the first output position was the word ‘a’, and whichever version produced less error considering both positions #1 and #2 is kept. We repeat this for positions #2 and #3…etc. This method is called “beam search”, where in our example, beam_size was two (meaning that at all times, two partial hypotheses (unfinished translations) are kept in memory), and top_beams is also two (meaning we’ll return two translations). These are both hyperparameters that you can experiment with.</p>
+
+                    <h2 id="go-forth-and-transform">Go Forth And Transform</h2>
+
+                    <p>امیدوارم با خواندن این مقاله درک خوبی نسبت به ساختار و نحوه عملکرد ترنسفورمر پیدا کرده باشید. اگر تمایل به مطالعه بیشتر دارید می توانید از منابع زیر کمک بگیرید:</p>
+
+                    <div dir="ltr">
+                        <ul>
+                        <li>Read the <a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a> paper, the Transformer blog post (<a href="https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html">Transformer: A Novel Neural Network Architecture for Language Understanding</a>), and the <a href="https://ai.googleblog.com/2017/06/accelerating-deep-learning-research.html">Tensor2Tensor announcement</a>.</li>
+                        <li>Watch <a href="https://www.youtube.com/watch?v=rBCqOTEfxvg">Łukasz Kaiser’s talk</a> walking through the model and its details</li>
+                        <li>Play with the <a href="https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb">Jupyter Notebook provided as part of the Tensor2Tensor repo</a></li>
+                        <li>Explore the <a href="https://github.com/tensorflow/tensor2tensor">Tensor2Tensor repo</a>.</li>
+                        </ul>
+
+                        <p>Follow-up works:</p>
+
+                        <ul>
+                        <li><a href="https://arxiv.org/abs/1706.03059">Depthwise Separable Convolutions for Neural Machine Translation</a></li>
+                        <li><a href="https://arxiv.org/abs/1706.05137">One Model To Learn Them All</a></li>
+                        <li><a href="https://arxiv.org/abs/1801.09797">Discrete Autoencoders for Sequence Models</a></li>
+                        <li><a href="https://arxiv.org/abs/1801.10198">Generating Wikipedia by Summarizing Long Sequences</a></li>
+                        <li><a href="https://arxiv.org/abs/1802.05751">Image Transformer</a></li>
+                        <li><a href="https://arxiv.org/abs/1804.00247">Training Tips for the Transformer Model</a></li>
+                        <li><a href="https://arxiv.org/abs/1803.02155">Self-Attention with Relative Position Representations</a></li>
+                        <li><a href="https://arxiv.org/abs/1803.03382">Fast Decoding in Sequence Models using Discrete Latent Variables</a></li>
+                        <li><a href="https://arxiv.org/abs/1804.04235">Adafactor: Adaptive Learning Rates with Sublinear Memory Cost</a></li>
+                        </ul>
+                    </div>
+
+                    <h2 id="acknowledgements">Acknowledgements</h2>
+                    <p>باتشکر از <a href="https://twitter.com/JayAlammar">JayAlammar</a>.</p>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; 2021</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

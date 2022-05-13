@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Taha Samavati">
+
+    <title>Video Object Segmentation: A Review | Taha Samavati</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SY0D1STNSD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-SY0D1STNSD');
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<style>
+	@font-face { font-family: Samim-FD; src: url('../fonts/Samim.ttf'); } 
+	h1,h2 {
+	   font-family: Samim-FD
+	}
+	p,br {
+	   font-family: Samim-FD
+	}
+
+	.center {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 80%;
+	}
+
+	.center-small {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 50%;
+	}
+
+	figure {
+		float: right;
+		width: 100%;
+		text-align: center;
+		font-family: Samim-FD;
+		font-size: smaller;
+		text-indent: 0;
+		border: thin silver solid;
+		margin: 0.5em;
+		padding: 0.5em;
+	}
+	.tags {
+	  margin-left:10%;
+	  margin-top:60px;
+	  margin-bottom: 50px;
+	  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+	  padding: 10px 20px 10px 20px;
+	  background-color: #fff;
+	  width: 680px;
+	  border-radius: 5px;  
+	}
+
+	.tags h4 {
+	  color:#5659C9;
+	  font-size:22px;
+	  margin-top: 10px;
+	  margin-bottom: 20px;
+	}
+
+	.tags a {
+	  font-size: 15px;
+	  text-decoration: none;
+	}
+
+	.tags span{
+	  display: inline-block;
+	}
+
+
+	.tags .tag {
+	  border: 1px solid #dee2e5;
+	  background-color: #dee2e5;
+	  border-radius: 5px;
+	  padding: 6px 15px;
+	  color: #8199A3;
+	  transition: all 300ms ease-in-out;
+	  margin-bottom: 20px;
+	}
+
+	.tags .tag:hover{
+	  color: #fff;
+	  background-color: #5659C9;
+	}
+  </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">Blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="../index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="../about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('../img/posts-dark.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>A Review on Video Object Segmentation Algorithms</h1>
+                        <h2 class="subheading">A look into recent works in the field</h2>
+                        <span class="meta">Posted by <a href="#">Taha Samavati</a> on August 24, 2021</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-14 col-lg-offset-20 col-md-10 col-md-offset-1">
+                    <p style="text-align:justify">Nowadays, with recent progress in deep learning algorithms, most of the computer vision tasks in many applications are solved using deep learning methods since they have demonstrated abiliy to achieve&nbsp;state-of-the-art results in almost any task. In order for these methods to have acceptable performance, they need to be trained on huge amounts of densely labeled data. However, densely labeling all the samples in a dataset is time-consuming and costly. To reduce the effort and cost, some novel methods try to automate the labeling process either in a self-supervised or semi-supervised manner. In this post, an overall insight over some previous works as well as recent novel ideas and publications is provided in the field of video object segmentation .</p>
+					
+                    <h2 class="section-heading">Task Defenition</h2>
+					
+					<figure class="figure">
+						<img src="../media/VOS/vos.png"> 
+					</figure>
+                    <p style="text-align:justify"><strong>Video object segmentation (VOS)</strong> is a fundamental task of computer vision in which we seek to automatically estimate the segmentation mask of some given objects in the frames of a video. To put it more accurately, Given a video along with a ground-truth segmentation mask in the first video frame, the aim here is to accurately predict object segmentation masks for the next video frames. The algorithms capable of performing this task are generally categorized based on the supervision degree, namely, <strong>unsupervised</strong> (self-supervised) and <strong>semi-supervised</strong>.</p>
+
+
+                    <h2 class="section-heading">Semi-supervised VOS</h2>
+                    <div class="img-div-any-width">
+                    <figure class="figure">
+                    	<img src="../media/VOS/OSVOS.png" class="center">
+                    	<figcaption>Fig1. Overview of OSVOS.</figcaption>
+                    </figure>
+                    </div>
+
+                    <p style="text-align:justify"> <strong>OSVOS</strong> [1] uses a fully convolutional (FCN) network pre-trained for foreground-background segmentation and fine-tunes the network at test time on first frame annotation of the input video. The proposed model has a U-Net like structure with skip connections. The encoder part is a VGG network pre-trained on ImageNet. The entire network namely, the base network&nbsp;is trained on DAVIS dataset for background-foreground segmentation. Finally, at test time the model is further fine-tuned on the first frame instance segmentation labels. Figure 1 shows the overview of this method. The loss function here is the modified version of per-pixel cross-entropy to handle class imbalance.</p>
+                    
+                    <div class="img-div-any-width"> 
+                    <figure class="figure">
+                    	<img src="../media/VOS/OSVOS-S.png" class="center">
+                    	<figcaption>Fig2. Overview of OSVOS-S.</figcaption>
+                    </figure>
+                    </div>
+
+                    <p style="text-align:justify">About a year later Maninis et. al. introduce <strong>OSVOS-S</strong> [2]. In this work the researchers argue that the information in a video is very redundant and neighboring frames carry very similar information. Therefore by ignoring the temporal information between video frames, they instead try to model the object appearance which allows processing each video frame independently. This not only improves the inference time but also opens the room for parallel processing. Another advantage of this strategy over <strong>OSVOS</strong> is that it can handle object occlusion and the errors are not temporally propagated. In this Algorithm, the authors first extract the semantic instance information from instance-aware semantic segmentation algorithms; namely, MNC [9], FCIS [8], and the most recent MaskRCNN [7]. They modify the algorithm and the network architecture to select and propagate the specific instances they are interested in. This is done by exploiting both ground-truth segmentation masks of the first frame and first-round foreground estimation results predicted by an <strong>OSVOS</strong> head. After selecting and propagating semantic information to the query frame, a conditional classifier refines the segmentation results of the previous stage conditioned on the appearance model to produce the output. The overview of this method is depicted in figure 2.</p>
+                    <div class="img-div-any-width"> 
+                    <figure class="figure">
+                    	<img src="../media/VOS/MaskRNN.png" class="center">
+                    	<figcaption>Fig3. Overview of Mask-RNN.</figcaption>
+                    </figure>
+                    </div>
+					<p style="text-align:justify">both <strong>OSVOS</strong> and <strong>OSVOS-S</strong> only address the foreground-background segmentation of a single object and are not directly applicable to instance level segmentation of multiple objects in videos. <strong>MaskRNN</strong> [3] uses a double stream network for estimating the instance-level segmentation of each object in the video. The algorithm predicts the binary segmentation for each object using 2 deep neural networks which perform binary segmentation and object localization respectively. The output for instance-level segmentation mask is obtained by combining the binary segmentation masks with&nbsp;argmax operation. To accurately predict instance-level segmentation of the next frame, optical flow from two consecutive frames along with object bounding box proposals are obtained and fed to the deep networks as well. The overview of this method is depicted in figure 3.</p>
+					
+					<div class="img-div-any-width"> 
+                    <figure class="figure">
+                    	<img src="../media/VOS/PReMVOS.png" class="center">
+                    	<figcaption>Fig4. Overview of PReMVOS.</figcaption>
+                    </figure>
+                    </div>
+					
+					<p style="text-align:justify"><strong>PReMVOS</strong> [4] solves the problem in two steps, first it generates a set of accurate object segmentation mask proposals for each video frame using Mask-RCNN. It then selects and merges these proposals into accurate and temporally consistent pixel-wise object tracks over a video sequence. The mask-RCNN's output is adjusted in a way that it only outputs one class (foreground). This pre-trained network is then trained on COCO and Mapillary datasets. It is worth noting that this network predicts coarse masks along with their corresponding bounding boxes and objectness scores. After proposal generation a fully convolutional network based on DeepLabV3+ [10] architecture, refines the proposals by receiving bounding boxes of objects. In order to measure the temporal consistency between two mask proposals they calculate optical flow between successive image pairs using FlowNet 2.0 and warp a proposed mask into the next frame. Their method also learns some embedding vectors called ReID for each mask proposal. The learned embedding vectors of masks that belong to a specific class are near each other in embedding space. These embeddings are then used to compare the visual similarity of generated object proposals and the first-frame ground truth object masks. Their algorithm finally tracks proposals in a greedy manner between consecutive frames. The overview of this method is depicted in figure 4.</p>
+
+                    <h2 class="section-heading">Semi-supervised VOS without first frame fine-tuning</h2>
+                    
+                    <div class="img-div-any-width"> 
+                    <figure class="figure">
+                    	<img src="../media/VOS/FEELVOS.png" class="center">
+                    	<figcaption>Fig5. Overview of FEELVOS.</figcaption>
+                    </figure>
+                    </div>
+
+                    <p style="text-align:justify">While most of the research focuses on semi-supervised VOS, some recent works aim to achieve a better runtime and usability by avoiding fine-tuning. Some of these methods outperform older semi-supervised methods. For example, <strong>RGMP</strong> and <strong>FEELVOS</strong> outperform <strong>OnAVOS</strong> by 3 and 4 percent respectively on DAVIS 2017 validation set without first frame fine-tuning.</p>
+                    <p style="text-align:justify">
+                    <strong> FEELVOS</strong>[5] segments the image of the current frame by extracting backbone features and pixel-wise embedding vectors from it. Afterward, the embedding vectors are globally matched to the first frame and locally matched to the previous frame to produce a global and a local distance map. These distance maps are then combined with the backbone features and also predictions of the previous frame and then fed to a dynamic segmentation head which produces the final segmentation. In order to handle multiple object segmentation, the lightweight segmentation head is dynamically instantiated once for each object in the video and produces a one-dimensional feature map of logits for each object. The logits for each object are then stacked together and softmax is applied. The overview of this method is depicted in figure 5.</p>
+                    
+                    <h2 class="section-heading">Unsupervised VOS</h2>
+                    
+                    <div class="img-div-any-width"> 
+                    <figure class="figure">
+                    	<img src="../media/VOS/DFNET.png" class="center">
+                    	<figcaption>Fig6. Overview of DFNET.</figcaption>
+                    </figure>
+                    </div>
+                    
+                    <p style="text-align:justify">This task is obviously more challenging than semi-supervised VOS as it requires a further step to distinguish the target object(s) from a diverse background without incorporating prior knowledge. Many recent papers focus on UVOS. for example <strong>DFNET</strong>[6] takes several images as input. a shared feature encoder, based on the fully convolutional DeepLabv3 [10], extracts  features from the input images. The obtained feature maps are then compressed into a lower depth. These feature maps for all input images are then fed t&nbsp; the discriminative feature module (DFM), which extracts the discriminative features (D-features). The encoded features for each image and the D-features pass through an attention module (ATM) to reconstruct a new feature map and then one 3 × 3 convolutional layer followed by ReLU, batch normalization (BN) layer and one 1 × 1 convolutional layer followed by a sigmoid operation are used to obtain the final binary output. The overview of this method is depicted in figure 6.</p>
+					
+					<h2 class="section-heading">Common Metrics in VOS</h2>
+					<p><strong>Region Similarity: </strong> Jaccard Index (IoU) between ground-truth mask and prediction.</p>
+					<p><strong>Contour accuracy: </strong> precision and recall of the boundary pixels (F-measure).</p>
+					<p><strong>Temporal Stability (No longer used): </strong> measures the evolution of the object shapes over video frames. (This measure causes instability when occlusion happens)</p>
+					
+					
+					<h2 class="section-heading">Recap</h2>
+					<p>So far we've got familiar with the task and reviewed some works in the field. I hope you find this article useful. If you wanted to know more about the task and its challenges you can check the nice video below by Prof. Laura Leal-Taixé.</p>
+					
+					<iframe class="center" width="560" height="315" src="https://www.youtube.com/embed/pMVAHH_6RlA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					
+                	<h2 class="section-heading">References</h2>
+                	<br />
+                	<ol>
+					  <li><a herf="http://openaccess.thecvf.com/content_cvpr_2017/papers/Caelles_One-Shot_Video_Object_CVPR_2017_paper.pdf">S. Caelles*, K.K. Maninis*, J. Pont-Tuset, L. Leal-Taixé, D. Cremers, and L. Van Gool
+					  One-Shot Video Object Segmentation, Computer Vision and Pattern Recognition (CVPR), 2017.</a></li>
+					  <br />
+					  <li><a herf="https://arxiv.org/pdf/1709.06031">Maninis, K-K., Sergi Caelles, Yuhua Chen, Jordi Pont-Tuset, Laura Leal-Taixé, Daniel Cremers, and Luc Van Gool. "Video object segmentation without temporal information." IEEE transactions on pattern analysis and machine intelligence 41, no. 6 (2018): 1515-1530.</a></li>
+					  <br />
+					  <li><a herf="https://arxiv.org/pdf/1803.11187">Hu, Yuan-Ting, Jia-Bin Huang, and Alexander G. Schwing. "Maskrnn: Instance level video object segmentation." arXiv preprint arXiv:1803.11187 (2018).</a></li>
+					  <br />
+					  <li><a herf="https://arxiv.org/pdf/1807.09190">Luiten, Jonathon, Paul Voigtlaender, and Bastian Leibe. "Premvos: Proposal-generation, refinement and merging for video object segmentation." In Asian Conference on Computer Vision, pp. 565-580. Springer, Cham, 2018.</a></li>
+					  <br />
+					  <li><a herf="https://openaccess.thecvf.com/content_CVPR_2019/papers/Voigtlaender_FEELVOS_Fast_End-To-End_Embedding_Learning_for_Video_Object_Segmentation_CVPR_2019_paper.pdf">Voigtlaender, Paul, Yuning Chai, Florian Schroff, Hartwig Adam, Bastian Leibe, and Liang-Chieh Chen. "Feelvos: Fast end-to-end embedding learning for video object segmentation." In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 9481-9490. 2019.</a></li>
+					  <br />
+					  <li><a herf="https://arxiv.org/pdf/2008.01270">Zhen, Mingmin, Shiwei Li, Lei Zhou, Jiaxiang Shang, Haoan Feng, Tian Fang, and Long Quan. "Learning discriminative feature with crf for unsupervised video object segmentation." In European Conference on Computer Vision, pp. 445-462. Springer, Cham, 2020.</a></li>
+					  <br />
+					  <li><a herf="http://openaccess.thecvf.com/content_ICCV_2017/papers/He_Mask_R-CNN_ICCV_2017_paper.pdf">He, Kaiming, Georgia Gkioxari, Piotr Dollár, and Ross Girshick. "Mask r-cnn." In Proceedings of the IEEE international conference on computer vision, pp. 2961-2969. 2017.</a></li>
+					  <br />
+					  <li><a herf="https://openaccess.thecvf.com/content_cvpr_2017/papers/Li_Fully_Convolutional_Instance-Aware_CVPR_2017_paper.pdf">Li, Yi, Haozhi Qi, Jifeng Dai, Xiangyang Ji, and Yichen Wei. "Fully convolutional instance-aware semantic segmentation." In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 2359-2367. 2017.</a></li>
+					  <br />
+					  <li><a herf="http://openaccess.thecvf.com/content_cvpr_2017/papers/Hayder_Boundary-Aware_Instance_Segmentation_CVPR_2017_paper.pdf">Hayder, Zeeshan, Xuming He, and Mathieu Salzmann. "Boundary-aware instance segmentation." In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 5696-5704. 2017.</a></li>
+					  <br />
+					  <li><a herf="http://openaccess.thecvf.com/content_ECCV_2018/papers/Liang-Chieh_Chen_Encoder-Decoder_with_Atrous_ECCV_2018_paper.pdf">Chen, Liang-Chieh, Yukun Zhu, George Papandreou, Florian Schroff, and Hartwig Adam. "Encoder-decoder with atrous separable convolution for semantic image segmentation." In Proceedings of the European conference on computer vision (ECCV), pp. 801-818. 2018.</a></li>
+					</ol>
+
+                </div>
+				<div class="tags">
+				  <h4>Tags</h4>
+				  <a href="#"><span class="tag">Video Object Segmentation</span></a>
+				  <a href="#"><span class="tag">VOS</span></a>
+				  <a href="#"><span class="tag">Deep Learning</span></a>
+				  <a href="#"><span class="tag">Computer Vision</span></a>
+				  <a href="#"><span class="tag">Semantic Segmentation</span></a>
+				  <a href="#"><span class="tag">Automated Labeling</span></a>
+				</div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; 2021</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

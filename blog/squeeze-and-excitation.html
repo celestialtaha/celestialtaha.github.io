@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Taha Samavati">
+
+    <title>Squeeze and Excitation networks | Taha Samavati</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SY0D1STNSD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-SY0D1STNSD');
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<style>
+	@font-face { font-family: Samim-FD; src: url('../fonts/Samim.ttf'); } 
+	h1,h2 {
+	   font-family: Samim-FD
+	}
+	p,br {
+	   font-family: Samim-FD
+	}
+
+	.center {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 80%;
+	}
+
+	.center-small {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 50%;
+	}
+
+	figure {
+		float: right;
+		width: 100%;
+		text-align: center;
+		font-family: Samim-FD;
+		font-size: smaller;
+		text-indent: 0;
+		border: thin silver solid;
+		margin: 0.5em;
+		padding: 0.5em;
+	}
+	.tags {
+	  margin-left:10%;
+	  margin-top:60px;
+	  margin-bottom: 50px;
+	  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+	  padding: 10px 20px 10px 20px;
+	  background-color: #fff;
+	  width: 680px;
+	  border-radius: 5px;  
+	}
+	.languages {
+	  margin-left:2%;
+	  margin-top:5px;
+	  margin-bottom: 5px;
+	  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+	  padding: 1px 2px 1px 2px;
+	  background-color: #fff;
+	  width: 680px;
+	  border-radius: 2px;  
+	}
+
+	.tags h4 {
+	  color:#5659C9;
+	  font-size:22px;
+	  margin-top: 10px;
+	  margin-bottom: 20px;
+	}
+		
+	.languages a {
+	  font-size: 15px;
+	  text-decoration: none;
+	}
+	.languages .tag {
+	  border: 1px solid #dee2e5;
+	  background-color: #dee2e5;
+	  border-radius: 5px;
+	  padding: 6px 15px;
+	  color: #8199A3;
+	  transition: all 300ms ease-in-out;
+	  margin-bottom: 20px;
+	}
+		
+	.languages .tag:hover{
+	  color: #fff;
+	  background-color: #5659C9;
+	}
+
+	.tags a {
+	  font-size: 15px;
+	  text-decoration: none;
+	}
+
+	.tags span{
+	  display: inline-block;
+	}
+
+
+	.tags .tag {
+	  border: 1px solid #dee2e5;
+	  background-color: #dee2e5;
+	  border-radius: 5px;
+	  padding: 6px 15px;
+	  color: #8199A3;
+	  transition: all 300ms ease-in-out;
+	  margin-bottom: 20px;
+	}
+
+	.tags .tag:hover{
+	  color: #fff;
+	  background-color: #5659C9;
+	}
+  </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">Blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="../index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="../about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('../img/posts-dark.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Squeeze-and-Excitation networks</h1>
+                        <h2 class="subheading">Boost your CNN accuracy</h2>
+                        <span class="meta">Posted by <a href="#">Taha Samavati</a> on Spetember 24, 2021</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-14 col-lg-offset-20 col-md-10 col-md-offset-1">
+					<div class="languages">
+					  <p>Languages: 
+					  <a href="squeeze-and-excitation.html"><span class="tag">English</span></a>
+					  <a href="squeeze-and-excitation-fa.html"><span class="tag">فارسی</span></a>
+					  </p>
+					</div>
+                    <p style="text-align:justify">Back in 2018, with the introduction of the SE (Squeeze and Excitation) block, the ImageNet accuracy improved from last year by 2.5%. This block takes into account the interdependencies between different feature channels of CNNs. In this post we're going to see "Why?" and "How?" these blocks can improve the performance of any convolutional neural network with little computational cost. </p>
+					
+                    <h2 class="section-heading">Main Idea</h2>
+					
+					<div class="img-div-any-width">
+						<figure class="figure">
+							<img src="../media/SE/se.png" class="center"> 
+						</figure>
+					</div>
+					
+                    <p style="text-align:justify">Consider a convolutional layer in a CNN, the weights of each channel are equal when computing the output. In other words, the weights are a 2D matrix that are convolved with every channel. The SE block, However, weights each channel adaptively based on the context of each channel. To put it more simply the SE block takes into account how relevant each feature map is when computing output.</p>
+
+
+                    <h2 class="section-heading">The Details</h2>
+
+
+                    <p style="text-align:justify">Now let's see a more detailed explanation of how the SE block's output is produced. At first, the block gains a global understanding of each channel by squeezing each one to a single numeric value. After This step, we have a vector of size n (determined by the number of channels in the input). This vector is then fed to a two-layer feed-forward network. The network outputs a vector of the same size (n). These n values are the weights of each channel that are used to scale each channel of the input tensor based on its context. </p>
+                    
+                    <h2 class="section-heading">The Implementation</h2>
+					<p style="text-align:justify">The SE block is defined below as a function. The function takes the feature map and number of channels as input. GlobalAveragePooling converts each channel to a single numerical value (Squeezing part). In the following a stack of two Dense blocks transform the n values to n weights for each channel (Excitation). Finally, the output is computed by applying weights to the channels by multiplication.</p>
+					
+					<code class="center">
+					def se_block(in_block, ch, ratio=16):<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;y = GlobalAveragePooling2D()(in_block)<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;y = Dense(ch//ratio, activation='relu')(y)<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;y = Dense(ch, activation='sigmoid')(y)<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;return multiply()([in_block, y])
+					</code>
+					
+					<p style="text-align:justify">The first layer of the feed-forward network has a relu activation function and the second (last) layer has a sigmoid activation function acting as a smooth gating function.</p>
+					
+					<h3>Pytorch Implementation</h3>
+					<code class="center">
+					class SE_Block(nn.Module):
+					&nbsp;&nbsp;def __init__(self, c, r=16):<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;self.squeeze = nn.AdaptiveAvgPool2d(1)<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;self.excitation = nn.Sequential(<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nn.Linear(c, c // r, bias=False),<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nn.ReLU(inplace=True),<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nn.Linear(c // r, c, bias=False),<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nn.Sigmoid()<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;)<br />
+					<br />
+					&nbsp;&nbsp;def forward(self, x):<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;bs, c, _, _ = x.shape<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;y = self.squeeze(x).view(bs, c)<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;y = self.excitation(y).view(bs, c, 1, 1)<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;return x * y.expand_as(x)
+
+					</code>
+					
+					<p><a herf="https://github.com/moskomule/senet.pytorch/blob/master/senet/se_module.py#L4">Credits</a></p>
+					
+
+                    <h2 class="section-heading">Performance</h2>
+					<p style="text-align:justify">Below you can see the Vanilla ResNet block (left) and the SE version called the SE-ResNet (right).</p>
+					
+					<div class="img-div-any-width">
+						<figure class="figure">
+							<img src="../media/SE/se-block.png" class="center"> 
+						</figure>
+					</div>
+					
+					<p style="text-align:justify">By adding SE-Blocks to ResNet-50 the network delivers almost the same accuracy as the ResNet-101! At the same time, the SE-ResNet50 has about 56% lower computational cost than ResNet-101! The table below from the original paper compares the new SE enhanced models and the past ones in terms of error on ImageNet and GFLOPS.</p>
+					<div class="img-div-any-width">
+						<figure class="figure">
+							<img src="../media/SE/se-table.png" class="center"> 
+						</figure>
+					</div>
+                    
+                	<h2 class="section-heading">References</h2>
+                	<br />
+                	<ol>
+					  <li><a herf="https://openaccess.thecvf.com/content_cvpr_2018/papers/Hu_Squeeze-and-Excitation_Networks_CVPR_2018_paper.pdf">Hu, Jie, Li Shen, and Gang Sun. "Squeeze-and-excitation networks." In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 7132-7141. 2018.</a></li>
+					  <br />
+					  <li><a herf="https://towardsdatascience.com/squeeze-and-excitation-networks-9ef5e71eacd7">Paul-Louis Pröve's post</a></li>
+					  <br />
+					  <li><a herf="https://github.com/moskomule/senet.pytorch/blob/master/senet/se_module.py#L4">Pytorch code repo</a></li>
+					  <br />
+					</ol>
+
+                </div>
+				<div class="tags">
+				  <h4>Tags</h4>
+				  <a href="#"><span class="tag">CNN</span></a>
+				  <a href="#"><span class="tag">Sequeeze-and-excitement</span></a>
+				  <a href="#"><span class="tag">Deep Learning</span></a>
+				  <a href="#"><span class="tag">Computer Vision</span></a>
+				  <a href="#"><span class="tag">ImageNet</span></a>
+				</div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; 2021</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
