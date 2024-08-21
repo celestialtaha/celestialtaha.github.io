@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://astro-nano-demo.vercel.app/sitemap-index.xml

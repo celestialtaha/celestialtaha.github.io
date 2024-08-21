@@ -1,2 +1,120 @@
-<!DOCTYPE html> <html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.5.10"><title>Blog | Taha Samavati</title><meta name="description" content="Thoughts, stories and ideas."><meta property="og:title" content="Blog | Taha Samavati"><meta property="og:description" content="Thoughts, stories and ideas."><meta property="og:image" content="/logo.webp"><!-- Include Tailwind CSS --><link rel="stylesheet" href="/_astro/about.DHQ-4qdz.css"><script type="module">const e=document.getElementById("link-menu-button"),n=document.getElementById("link-menu"),i=document.getElementById("open-indicator");e.addEventListener("click",()=>{n.classList.contains("opacity-0")?(n.classList.remove("pointer-events-none"),n.classList.remove("opacity-0"),i.innerText="-"):(n.classList.add("pointer-events-none"),n.classList.add("opacity-0"),i.innerText="+")});document.addEventListener("click",t=>{const s=t.target===e||e.contains(t.target),c=t.target===n||n.contains(t.target);!s&&!c&&(n.classList.add("pointer-events-none"),n.classList.add("opacity-0"),i.innerText="+")});
-</script></head> <body class="bg-black text-white"> <header> <div class="px-6 py-6 max-w-2xl mx-auto flex items-center justify-between"> <a href="/"> <img src="/logo.webp" alt="Logo" class="w-[50px] h-[50px] object-cover" width="50" height="50" loading="lazy" decoding="async"> </a> <nav class="ml-auto mr-6 sm:m-0"> <ul class="hidden sm:flex sm:items-center sm:gap-2"> <li> <a class="group px-4 py-2 rounded-lg hover:bg-gray-bg opacity-60 hover:opacity-100 transition-all" href="/" target="_self"> Home </a> </li><li> <a class="group px-4 py-2 rounded-lg hover:bg-gray-bg opacity-60 hover:opacity-100 transition-all" href="/about" target="_self"> About </a> </li><li> <a class="group px-4 py-2 rounded-lg hover:bg-gray-bg opacity-60 hover:opacity-100 transition-all" href="/projects" target="_self"> Projects </a> </li><li> <a class="group px-4 py-2 rounded-lg hover:bg-gray-bg opacity-60 hover:opacity-100 transition-all" href="/blog" target="_self"> Blog </a> </li> </ul> <div class="relative sm:hidden"> <button id="link-menu-button" class="relative font-medium opacity-60 p-4">Menu <span id="open-indicator">+</span></button> <div id="link-menu" class="absolute p-2 right-0 bg-gray-bg rounded-lg w-44 transition-opacity ease-in-out duration-300 opacity-0 z-40"> <ul> <li> <a class="block pl-4 py-3" href="/" target="_self"> Home </a> </li><li> <a class="block pl-4 py-3" href="/about" target="_self"> About </a> </li><li> <a class="block pl-4 py-3" href="/projects" target="_self"> Projects </a> </li><li> <a class="block pl-4 py-3" href="/blog" target="_self"> Blog </a> </li> </ul> </div> </div> </nav> <div> <a href="mailto:tahasamavati11@yahoo.com" class="block p-2 opacity-60 hover:opacity-100 transition-opacity" aria-label="Email"> <svg width="20" height="20" viewBox="0 0 24 24" data-icon="mdi:email">  <symbol id="ai:mdi:email"><path fill="currentColor" d="m20 8l-8 5l-8-5V6l8 5l8-5m0-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2"/></symbol><use xlink:href="#ai:mdi:email"></use>  </svg> </a> </div> </div> </header> <main class="mb-32">  <section class="mt-10 max-w-2xl mx-auto px-6"> <h1 class="font-bold text-3xl mb-1">Blog</h1> <p class="opacity-60 mb-14">Thoughts, stories and ideas.</p> <div class="grid grid-cols-1 gap-10 sm:gap-6 mb-10"> <a href="/blog/test-2" class=" sm:flex sm:flex-row-reverse sm:justify-between sm:gap-6 post"> <img src="/demo-1.jpg" alt="/demo-1.jpg" class="rounded-lg w-[100px] h-[100px] object-cover" width="100" height="100" loading="lazy" decoding="async"> <div class="mt-4 sm:my-auto"> <p class="opacity-60 mb-2"> 7/1/2022 ·  1 min read </p> <h3 class="font-medium hover-underline">My First Blog Post with a very long name</h3> <p class="text-sm opacity-60 mt-2 mb-3">Test</p> </div> </a><a href="/blog/test" class=" sm:flex sm:flex-row-reverse sm:justify-between sm:gap-6 post"> <img src="/logo.webp" alt="/logo.webp" class="rounded-lg w-[100px] h-[100px] object-cover" width="100" height="100" loading="lazy" decoding="async"> <div class="mt-4 sm:my-auto"> <p class="opacity-60 mb-2"> 7/1/2022 ·  0 min read </p> <h3 class="font-medium hover-underline">My First Blog Post with a very long name</h3> <p class="text-sm opacity-60 mt-2 mb-3">Test</p> </div> </a> </div> </section>  </main> <footer></footer> </body></html>
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/svg+xml" href="/favicon-light.svg" media="(prefers-color-scheme: light)"><link rel="icon" type="image/x-icon" href="/favicon-light.svg"><meta name="generator" content="Astro v4.14.3"><!-- Font preloads --><link rel="preload" href="/_astro/inter-latin-400-normal.BOOGhInR.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/_astro/inter-latin-600-normal.D273HNI0.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/_astro/lora-latin-400-normal.CvHVDnm4.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/_astro/lora-latin-600-normal.DUWh3m6k.woff2" as="font" type="font/woff2" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://astro-nano-demo.vercel.app/blog/"><!-- Primary Meta Tags --><title>Blog | Astro Nano</title><meta name="title" content="Blog | Astro Nano"><meta name="description" content="A collection of articles on topics I am passionate about."><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://astro-nano-demo.vercel.app/blog/"><meta property="og:title" content="Blog | Astro Nano"><meta property="og:description" content="A collection of articles on topics I am passionate about."><meta property="og:image" content="https://astro-nano-demo.vercel.app/nano.png"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://astro-nano-demo.vercel.app/blog/"><meta property="twitter:title" content="Blog | Astro Nano"><meta property="twitter:description" content="A collection of articles on topics I am passionate about."><meta property="twitter:image" content="https://astro-nano-demo.vercel.app/nano.png"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script>
+  function init() {
+    preloadTheme();
+    onScroll();
+    animate();
+
+    const backToTop = document.getElementById("back-to-top");
+    backToTop?.addEventListener("click", (event) => scrollToTop(event));
+
+    const backToPrev = document.getElementById("back-to-prev");
+    backToPrev?.addEventListener("click", () => window.history.back());
+
+    const lightThemeButton = document.getElementById("light-theme-button");
+    lightThemeButton?.addEventListener("click", () => {
+      localStorage.setItem("theme", "light");
+      toggleTheme(false);
+    });
+
+    const darkThemeButton = document.getElementById("dark-theme-button");
+    darkThemeButton?.addEventListener("click", () => {
+      localStorage.setItem("theme", "dark");
+      toggleTheme(true);
+    });
+
+    const systemThemeButton = document.getElementById("system-theme-button");
+    systemThemeButton?.addEventListener("click", () => {
+      localStorage.setItem("theme", "system");
+      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    });
+
+    window.matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", event => {
+        if (localStorage.theme === "system") {
+          toggleTheme(event.matches);
+        }
+      }
+    );
+
+    document.addEventListener("scroll", onScroll);
+  }
+
+  function animate() {
+    const animateElements = document.querySelectorAll(".animate");
+
+    animateElements.forEach((element, index) => {
+      setTimeout(() => {
+        element.classList.add("show");
+      }, index * 150);
+    });
+  }
+
+  function onScroll() {
+    if (window.scrollY > 0) {
+      document.documentElement.classList.add("scrolled");
+    } else {
+      document.documentElement.classList.remove("scrolled");
+    }
+  }
+
+  function scrollToTop(event) {
+    event.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+function toggleTheme(dark) {
+    const css = document.createElement("style");
+
+    css.appendChild(
+      document.createTextNode(
+        `* {
+             -webkit-transition: none !important;
+             -moz-transition: none !important;
+             -o-transition: none !important;
+             -ms-transition: none !important;
+             transition: none !important;
+          }
+        `,
+      )
+    );
+
+    document.head.appendChild(css);
+
+    if (dark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+  window.getComputedStyle(css).opacity;
+    document.head.removeChild(css);
+  }
+
+  function preloadTheme() {
+    const userTheme = localStorage.theme;
+
+    if (userTheme === "light" || userTheme === "dark") {
+      toggleTheme(userTheme === "dark");
+    } else {
+      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => init());
+  document.addEventListener("astro:after-swap", () => init());
+  preloadTheme();
+</script><link rel="stylesheet" href="/_astro/_slug_.CqyV0VVC.css"><script type="module" src="/_astro/hoisted.BZ3lSpnN.js"></script></head> <body> <header> <div class="mx-auto max-w-screen-sm px-5">  <div class="flex flex-wrap gap-y-2 justify-between"> <a href="/" target="_self" class="inline-block decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 text-current hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out">  <div class="font-semibold"> Astro Nano </div>  </a> <nav class="flex gap-1"> <a href="/blog" target="_self" class="inline-block decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 text-current hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out underline underline-offset-2"> 
+blog
+ </a> <span> / </span> <a href="/work" target="_self" class="inline-block decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 text-current hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out underline underline-offset-2"> 
+work
+ </a> <span> / </span> <a href="/projects" target="_self" class="inline-block decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 text-current hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out underline underline-offset-2"> 
+projects
+ </a> </nav> </div>  </div> </header> <main>  <div class="mx-auto max-w-screen-sm px-5">  <div class="space-y-10"> <div class="animate font-semibold text-black dark:text-white">
+Blog
+</div> <div class="space-y-4"> <section class="animate space-y-4"> <div class="font-semibold text-black dark:text-white"> 2024 </div> <div> <ul class="flex flex-col gap-4"> <li> <a href="/blog/01-getting-started" class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <div class="flex flex-col flex-1 truncate"> <div class="font-semibold"> Getting started </div> <div class="text-sm"> Hit the ground running. </div> </div> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> </a> </li><li> <a href="/blog/02-blog-collection" class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <div class="flex flex-col flex-1 truncate"> <div class="font-semibold"> Blog Collection </div> <div class="text-sm"> How to add posts to your blog. </div> </div> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> </a> </li><li> <a href="/blog/03-projects-collection" class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <div class="flex flex-col flex-1 truncate"> <div class="font-semibold"> Projects Collection </div> <div class="text-sm"> How to add projects to your portfolio. </div> </div> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> </a> </li><li> <a href="/blog/04-work-collection" class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <div class="flex flex-col flex-1 truncate"> <div class="font-semibold"> Work Collection </div> <div class="text-sm"> How to add work experience. </div> </div> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> </a> </li><li> <a href="/blog/05-markdown-syntax" class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <div class="flex flex-col flex-1 truncate"> <div class="font-semibold"> Markdown syntax guide </div> <div class="text-sm"> Get started writing content in markdown. </div> </div> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> </a> </li><li> <a href="/blog/06-mdx-syntax" class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <div class="flex flex-col flex-1 truncate"> <div class="font-semibold"> MDX syntax guide </div> <div class="text-sm"> Get started writing mdx in markdown. </div> </div> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> </a> </li> </ul> </div> </section><section class="animate space-y-4"> <div class="font-semibold text-black dark:text-white"> 2023 </div> <div> <ul class="flex flex-col gap-4"> <li> <a href="/blog/07-year-sorting-example" class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <div class="flex flex-col flex-1 truncate"> <div class="font-semibold"> Year sorting example </div> <div class="text-sm"> Nano groups posts by year. </div> </div> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> </a> </li> </ul> </div> </section><section class="animate space-y-4"> <div class="font-semibold text-black dark:text-white"> 2022 </div> <div> <ul class="flex flex-col gap-4"> <li> <a href="/blog/08-draft-example" class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <div class="flex flex-col flex-1 truncate"> <div class="font-semibold"> Draft example </div> <div class="text-sm"> Setting draft flag to true to hide this post. </div> </div> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> </a> </li> </ul> </div> </section> </div> </div>  </div>  </main> <footer class="animate"> <div class="mx-auto max-w-screen-sm px-5">  <div class="relative"> <div class="absolute right-0 -top-20"> <button id="back-to-top" class="relative group w-fit flex pl-8 pr-3 py-1.5 flex-nowrap rounded border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 left-2 -translate-y-1/2 size-4 stroke-2 fill-none stroke-current rotate-90"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-2 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 5 12 12 19" class="translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> <div class="text-sm">
+Back to top
+</div> </button> </div> </div> <div class="flex justify-between items-center"> <div>
+&copy; 2024 | Astro Nano </div> <div class="flex flex-wrap gap-1 items-center"> <button id="light-theme-button" aria-label="Light theme" class="group size-8 flex items-center justify-center rounded-full"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line> <line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line> <line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </button> <button id="dark-theme-button" aria-label="Dark theme" class="group size-8 flex items-center justify-center rounded-full"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> <button id="system-theme-button" aria-label="System theme" class="group size-8 flex items-center justify-center rounded-full"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"> <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect> <line x1="8" y1="21" x2="16" y2="21"></line> <line x1="12" y1="17" x2="12" y2="21"></line> </svg> </button> </div> </div>  </div> </footer> </body></html>
