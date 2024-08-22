@@ -20,17 +20,37 @@ export function readingTime(html: string) {
   return `${readingTimeMinutes} min read`;
 }
 
-export function dateRange(startDate: Date, endDate?: Date | string): string {
+export function dateRange(startDate: Date | string, endDate?: Date | string): string {
+  // If startDate is a string, attempt to convert it to a Date object
+  if (typeof startDate === 'string') {
+    startDate = new Date(startDate);
+  }
+
+  // Check if startDate is a valid Date instance
+  if (!(startDate instanceof Date) || isNaN(startDate.getTime())) {
+    throw new Error("Invalid startDate provided to dateRange function");
+  }
+
   const startMonth = startDate.toLocaleString("default", { month: "short" });
   const startYear = startDate.getFullYear().toString();
-  let endMonth;
-  let endYear;
+  let endMonth = "";
+  let endYear = "";
 
   if (endDate) {
     if (typeof endDate === "string") {
-      endMonth = "";
-      endYear = endDate;
-    } else {
+      // If it's a string, try converting it to a Date
+      const potentialDate = new Date(endDate);
+      if (!isNaN(potentialDate.getTime())) {
+        endDate = potentialDate;
+      } else if (/^\d{4}$/.test(endDate)) {
+        // If it's a valid year string
+        endYear = endDate;
+      } else {
+        throw new Error("Invalid endDate provided to dateRange function");
+      }
+    }
+
+    if (endDate instanceof Date && !isNaN(endDate.getTime())) {
       endMonth = endDate.toLocaleString("default", { month: "short" });
       endYear = endDate.getFullYear().toString();
     }
@@ -38,3 +58,23 @@ export function dateRange(startDate: Date, endDate?: Date | string): string {
 
   return `${startMonth}${startYear} - ${endMonth}${endYear}`;
 }
+
+
+// export function dateRange(startDate: Date, endDate?: Date | string): string {
+//   const startMonth = startDate.toLocaleString("default", { month: "short" });
+//   const startYear = startDate.getFullYear().toString();
+//   let endMonth;
+//   let endYear;
+
+//   if (endDate) {
+//     if (typeof endDate === "string") {
+//       endMonth = "";
+//       endYear = endDate;
+//     } else {
+//       endMonth = endDate.toLocaleString("default", { month: "short" });
+//       endYear = endDate.getFullYear().toString();
+//     }
+//   }
+
+//   return `${startMonth}${startYear} - ${endMonth}${endYear}`;
+// }
