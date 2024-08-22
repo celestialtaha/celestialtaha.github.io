@@ -1,7 +1,8 @@
-import type { Site, Metadata, Socials } from "@types";
+import type { Metadata, Site, Socials } from "@types";
 
 export const SITE: Site = {
-  NAME: "Taha Samavati",
+  TITLE: "Taha Samavati",
+  DESCRIPTION: "Astro Micro is an accessible and lightweight blog.",
   EMAIL: "tahasamavati12@gmail.com",
   NUM_POSTS_ON_HOMEPAGE: 3,
   NUM_WORKS_ON_HOMEPAGE: 3,
@@ -25,20 +26,21 @@ export const WORK: Metadata = {
 
 export const PROJECTS: Metadata = {
   TITLE: "Projects",
-  DESCRIPTION: "A collection of my projects, with links to repositories and demos.",
+  DESCRIPTION:
+    "A collection of my projects with links to repositories and live demos.",
 };
 
 export const SOCIALS: Socials = [
-  { 
-    NAME: "twitter-x",
+  {
+    NAME: "X (formerly Twitter)",
     HREF: "https://x.com/taha_iusm",
   },
-  { 
-    NAME: "github",
-    HREF: "https://github.com/celestialtaha"
+  {
+    NAME: "GitHub",
+    HREF: "https://github.com/celestialtaha",
   },
-  { 
-    NAME: "linkedin",
+  {
+    NAME: "LinkedIn",
     HREF: "https://www.linkedin.com/in/taha-samavati/",
-  }
+  },
 ];

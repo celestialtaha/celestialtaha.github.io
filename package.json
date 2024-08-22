@@ -1,36 +1,35 @@
 {
-  "name": "astro-nano",
+  "name": "astro-micro",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "dev:network": "astro dev --host",
+    "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "preview:network": "astro preview --host",
-    "astro": "astro",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.9",
-    "@astrojs/mdx": "^2.2.0",
-    "@astrojs/rss": "^4.0.5",
-    "@astrojs/sitemap": "^3.1.1",
+    "@astrojs/check": "^0.7.0",
+    "@astrojs/mdx": "^3.1.2",
+    "@astrojs/rss": "^4.0.7",
+    "@astrojs/sitemap": "^3.1.6",
     "@astrojs/tailwind": "^5.1.0",
-    "@fontsource/inter": "^5.0.17",
-    "@fontsource/lora": "^5.0.16",
-    "@tailwindcss/typography": "^0.5.10",
-    "@typescript-eslint/eslint-plugin": "^7.3.1",
-    "@typescript-eslint/parser": "^7.3.1",
-    "astro": "^4.5.6",
-    "clsx": "^2.1.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-astro": "^0.32.0",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
-    "sharp": "^0.33.3",
-    "tailwind-merge": "^2.2.2",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.4.2"
+    "@fontsource/geist-mono": "^5.0.3",
+    "@fontsource/geist-sans": "^5.0.3",
+    "astro": "^4.11.3",
+    "astro-pagefind": "^1.5.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
+    "pagefind": "^1.1.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "prettier-plugin-tailwindcss": "^0.5.14"
   }
 }
