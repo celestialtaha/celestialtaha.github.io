@@ -21,12 +21,12 @@ export function readingTime(html: string) {
 }
 
 export function dateRange(startDate: Date | string, endDate?: Date | string): string {
-  // If startDate is a string, attempt to convert it to a Date object
+  // Convert startDate to a Date object if it's a string
   if (typeof startDate === 'string') {
     startDate = new Date(startDate);
   }
 
-  // Check if startDate is a valid Date instance
+  // Validate startDate
   if (!(startDate instanceof Date) || isNaN(startDate.getTime())) {
     throw new Error("Invalid startDate provided to dateRange function");
   }
@@ -38,15 +38,20 @@ export function dateRange(startDate: Date | string, endDate?: Date | string): st
 
   if (endDate) {
     if (typeof endDate === "string") {
-      // If it's a string, try converting it to a Date
-      const potentialDate = new Date(endDate);
-      if (!isNaN(potentialDate.getTime())) {
-        endDate = potentialDate;
-      } else if (/^\d{4}$/.test(endDate)) {
-        // If it's a valid year string
-        endYear = endDate;
+      // Handle "Current" or "Present"
+      if (endDate.toLowerCase() === "current" || endDate.toLowerCase() === "present") {
+        endYear = "Present";
       } else {
-        throw new Error("Invalid endDate provided to dateRange function");
+        // Attempt to convert endDate to a Date object
+        const potentialDate = new Date(endDate);
+        if (!isNaN(potentialDate.getTime())) {
+          endDate = potentialDate;
+        } else if (/^\d{4}$/.test(endDate)) {
+          // If it's a valid year string
+          endYear = endDate;
+        } else {
+          throw new Error("Invalid endDate provided to dateRange function");
+        }
       }
     }
 
@@ -56,8 +61,12 @@ export function dateRange(startDate: Date | string, endDate?: Date | string): st
     }
   }
 
-  return `${startMonth}${startYear} - ${endMonth}${endYear}`;
+  // Return the formatted date range
+  return endYear === "Present"
+    ? `${startMonth}${startYear} - ${endYear}`
+    : `${startMonth}${startYear} - ${endMonth}${endYear}`;
 }
+
 
 
 // export function dateRange(startDate: Date, endDate?: Date | string): string {
