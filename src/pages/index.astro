@@ -35,6 +35,11 @@ const work = await Promise.all(
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
     <aside data-pagefind-ignore>
+      <img
+        src="/images/profile.jpg"
+        alt="Taha's Profile Picture"
+        class="w-20 h-20 rounded-full mx-auto md:mx-0 md:mr-4"
+      />
       <h1 class="animate font-semibold text-black dark:text-white">
         Hi, I'm Taha <span class="text-xl">👋🏻</span> 
       </h1>
@@ -142,17 +147,16 @@ const work = await Promise.all(
                     <img src={SOCIAL.LOGO} alt={`${SOCIAL.NAME} logo`} class="w-6 h-6" />
                     {SOCIAL.NAME}
                   </Link>
-                  {"  "}
+                  {"     "}
                 </li>
               ))
             }
-            <br>
             <li class="line-clamp-1">
               <Link
                 href={`mailto:${SITE.EMAIL}`}
                 aria-label={`Email ${SITE.TITLE}`}
               >
-                {SITE.EMAIL}
+                {"Mail"}
               </Link>
             </li>
           </ul>
