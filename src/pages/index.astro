@@ -35,10 +35,15 @@ const work = await Promise.all(
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.show-more-button').forEach(button => {
-      button.addEventListener('click', (event) => {
-        const description = (event.target as HTMLElement).previousElementSibling;
-        description.classList.toggle('line-clamp-none');
-        button.textContent = description.classList.contains('line-clamp-none') ? 'Show Less' : 'Show More';
+      button.addEventListener('click', (event: MouseEvent) => {
+        const description = event.target instanceof HTMLElement
+          ? event.target.previousElementSibling
+          : null;
+
+        if (description && description.classList) {
+          description.classList.toggle('line-clamp-none');
+          button.textContent = description.classList.contains('line-clamp-none') ? 'Show Less' : 'Show More';
+        }
       });
     });
   });
