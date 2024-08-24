@@ -39,7 +39,7 @@ export const SOCIALS: Socials = [
   {
     NAME: "GitHub",
     HREF: "https://github.com/celestialtaha",
-    LOGO: "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png",
+    LOGO: "/images/github-mark.png",
   },
   {
     NAME: "LinkedIn",

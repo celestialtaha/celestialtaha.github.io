@@ -32,6 +32,14 @@ const work = await Promise.all(
 );
 ---
 
+<script>
+  function showMore(event) {
+    const description = event.target.previousElementSibling;
+    description.classList.toggle('line-clamp-none');
+    event.target.textContent = description.classList.contains('line-clamp-none') ? 'Show Less' : 'Show More';
+  }
+</script>
+
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
     <aside data-pagefind-ignore>
@@ -101,7 +109,12 @@ const work = await Promise.all(
                   {dateRange(entry.data.dateStart, entry.data.dateEnd)}
                 </div>
                 <article>
-                  <entry.Content />
+                  <div class="line-clamp-2 overflow-hidden">
+                    <entry.Content />
+                  </div>
+                  <button onclick="showMore(event)" class="text-blue-500">
+                    Show More
+                  </button>
                 </article>
               </li>
             ))}
@@ -156,6 +169,7 @@ const work = await Promise.all(
                 href={`mailto:${SITE.EMAIL}`}
                 aria-label={`Email ${SITE.TITLE}`}
               >
+                <img src="/images/gmail.png" alt="Email logo" class="w-6 h-6" />
                 {"Mail"}
               </Link>
             </li>
