@@ -35,7 +35,7 @@ const work = await Promise.all(
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.show-more-button').forEach(button => {
-      button.addEventListener('click', (event: MouseEvent) => {
+      button.addEventListener('click', (event) => {  // Removed explicit MouseEvent type
         const description = event.target instanceof HTMLElement
           ? event.target.previousElementSibling
           : null;
