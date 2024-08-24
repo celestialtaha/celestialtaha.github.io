@@ -70,7 +70,7 @@ const work = await Promise.all(
               <p>
                 This is my personal portfolio and blog.<br>
                 🔭 I’m currently working on different AI products, powered by agent based generative AI <br>
-                👯 I’m looking to collaborate on any Generative AI projects. <br>
+                🤝 I’m looking to collaborate on any Generative AI projects. <br>
                 📫 This is my telegram channel posting news and experiences on AI: <br>
                 <Link href="https://t.me/ai_times_py">Join Now</Link>
               </p>
@@ -157,33 +157,35 @@ const work = await Promise.all(
               hi, reach out on social media or send me an email.
             </p>
           </article>
-          <ul class="not-prose flex flex-wrap gap-2">
-            {
-              SOCIALS.map((SOCIAL) => (
-                <li class="flex gap-x-2 text-nowrap">
-                  <Link
-                    href={SOCIAL.HREF}
-                    external
-                    aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
-                  >
-                    <img src={SOCIAL.LOGO} alt={`${SOCIAL.NAME} logo`} class="w-6 h-6" />
-                    {SOCIAL.NAME}
-                  </Link>
-                  {"     "}
-                </li>
-              ))
-            }
-            <li class="line-clamp-1">
-              <Link
-                href={`mailto:${SITE.EMAIL}`}
-                aria-label={`Email ${SITE.TITLE}`}
-              >
-                <img src="/images/gmail.png" alt="Email logo" class="w-6 h-6" />
-                {"Mail"}
-              </Link>
-            </li>
-          </ul>
+          <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg"> <!-- Container for the socials -->
+            <ul class="not-prose flex flex-wrap justify-between items-center"> <!-- Evenly distribute items -->
+              {
+                SOCIALS.map((SOCIAL) => (
+                  <li class="flex items-center gap-x-2 text-nowrap w-1/5"> <!-- Adjust width for spacing -->
+                    <Link
+                      href={SOCIAL.HREF}
+                      external
+                      aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
+                    >
+                      <img src={SOCIAL.LOGO} alt={`${SOCIAL.NAME} logo`} class="w-6 h-6" />
+                      {SOCIAL.NAME}
+                    </Link>
+                  </li>
+                ))
+              }
+              <li class="flex items-center gap-x-2 text-nowrap w-1/5">
+                <Link
+                  href={`mailto:${SITE.EMAIL}`}
+                  aria-label={`Email ${SITE.TITLE}`}
+                >
+                  <img src="/images/gmail.png" alt="Email logo" class="w-6 h-6" />
+                  {"Mail"}
+                </Link>
+              </li>
+            </ul>
+          </div>
         </section>
+
       </div>
     </aside>
   </Container>
