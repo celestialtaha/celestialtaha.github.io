@@ -42,11 +42,15 @@ const work = await Promise.all(
         <section>
           <article class="space-y-4">
             <span class="animate">
-              <p>
-                I am a generative AI engineer.
-              </p>
               <p class="animate">
+                A generative AI engineer.
+              </p>
+              <p>
                 This is my personal portfolio and blog.
+                🔭 I’m currently working on different AI products, powered by agent based generative AI
+                👯 I’m looking to collaborate on any Generative AI projects.
+                📫 This is my telegram channel posting news and experiences on AI:
+                    Join Now :  https://t.me/ai_times_py
               </p>
             </span>
           </article>
@@ -57,7 +61,7 @@ const work = await Promise.all(
             <h2 class="font-semibold text-black dark:text-white">
               Latest posts
             </h2>
-            <Link href="/blog"> See all posts </Link>
+            <Link href="/blog"> See all blog posts </Link>
           </div>
           <ul class="not-prose flex flex-col gap-4">
             {
@@ -135,6 +139,7 @@ const work = await Promise.all(
                     external
                     aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
                   >
+                    <img src={SOCIAL.LOGO} alt={`${SOCIAL.NAME} logo`} class="w-6 h-6" />
                     {SOCIAL.NAME}
                   </Link>
                   {"/"}

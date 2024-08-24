@@ -34,13 +34,16 @@ export const SOCIALS: Socials = [
   {
     NAME: "X (formerly Twitter)",
     HREF: "https://x.com/taha_iusm",
+    LOGO: "https://about.x.com/content/dam/about-twitter/x/brand-toolkit/logo-black.png.twimg.1920.png",
   },
   {
     NAME: "GitHub",
     HREF: "https://github.com/celestialtaha",
+    LOGO: "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png",
   },
   {
     NAME: "LinkedIn",
     HREF: "https://www.linkedin.com/in/taha-samavati/",
+    LOGO: "https://cdn-icons-png.flaticon.com/512/174/174857.png",
   },
 ];
