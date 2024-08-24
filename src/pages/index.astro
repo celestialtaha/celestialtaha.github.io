@@ -33,11 +33,15 @@ const work = await Promise.all(
 ---
 
 <script>
-  function showMore(event) {
-    const description = event.target.previousElementSibling;
-    description.classList.toggle('line-clamp-none');
-    event.target.textContent = description.classList.contains('line-clamp-none') ? 'Show Less' : 'Show More';
-  }
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.show-more-button').forEach(button => {
+      button.addEventListener('click', (event) => {
+        const description = (event.target as HTMLElement).previousElementSibling;
+        description.classList.toggle('line-clamp-none');
+        button.textContent = description.classList.contains('line-clamp-none') ? 'Show Less' : 'Show More';
+      });
+    });
+  });
 </script>
 
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
@@ -112,7 +116,7 @@ const work = await Promise.all(
                   <div class="line-clamp-2 overflow-hidden">
                     <entry.Content />
                   </div>
-                  <button onclick="showMore(event)" class="text-blue-500">
+                  <button class="text-blue-500 show-more-button">
                     Show More
                   </button>
                 </article>
