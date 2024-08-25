@@ -71,6 +71,7 @@ const work = await Promise.all(
                 This is my personal portfolio and blog.<br>
                 🔭 I’m currently working on different AI products, powered by agent based generative AI <br>
                 🤝 I’m looking to collaborate on any Generative AI projects. <br>
+                ✍️ Check out my articles on Medium: <Link href="https://medium.com/@tahasamavati">Read on Medium</Link><br>
                 📫 This is my telegram channel posting news and experiences on AI: <br>
                 <Link href="https://t.me/ai_times_py">Join Now</Link>
               </p>
@@ -96,7 +97,7 @@ const work = await Promise.all(
           </ul>
         </section>
 
-        <section class="animate space-y-6">
+        <!-- <section class="animate space-y-6">
           <div class="flex flex-wrap gap-y-2 items-center justify-between">
             <h5 class="font-semibold text-black dark:text-white">
               Work Experience
@@ -128,7 +129,7 @@ const work = await Promise.all(
               </li>
             ))}
           </ul>
-        </section>
+        </section> -->
         <!-- <section class="animate space-y-6">
           <div class="flex flex-wrap items-center justify-between gap-y-2">
             <h2 class="font-semibold text-black dark:text-white">
@@ -153,19 +154,19 @@ const work = await Promise.all(
           </h2>
           <article>
             <p>
-              If you want to get in touch with me about something or just to say
-              hi, reach out on social media or send me an email.
+              If you want to get in touch with me about something or just to say hi, reach out on social media or send me an email.
             </p>
           </article>
           <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg"> <!-- Container for the socials -->
-            <ul class="not-prose flex flex-wrap justify-between items-center"> <!-- Evenly distribute items -->
+            <ul class="not-prose flex flex-wrap justify-start gap-4"> <!-- Add gap between items -->
               {
                 SOCIALS.map((SOCIAL) => (
-                  <li class="flex items-center gap-x-2 text-nowrap w-1/5"> <!-- Adjust width for spacing -->
+                  <li class="flex items-center gap-x-2 text-nowrap w-1/3 md:w-1/4 lg:w-1/5"> <!-- Responsive width for different screen sizes -->
                     <Link
                       href={SOCIAL.HREF}
                       external
                       aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
+                      class="flex items-center gap-x-2"
                     >
                       <img src={SOCIAL.LOGO} alt={`${SOCIAL.NAME} logo`} class="w-6 h-6" />
                       {SOCIAL.NAME}
@@ -173,10 +174,11 @@ const work = await Promise.all(
                   </li>
                 ))
               }
-              <li class="flex items-center gap-x-2 text-nowrap w-1/5">
+              <li class="flex items-center gap-x-2 text-nowrap w-1/3 md:w-1/4 lg:w-1/5">
                 <Link
                   href={`mailto:${SITE.EMAIL}`}
                   aria-label={`Email ${SITE.TITLE}`}
+                  class="flex items-center gap-x-2"
                 >
                   <img src="/images/gmail.png" alt="Email logo" class="w-6 h-6" />
                   {"Mail"}
@@ -185,6 +187,7 @@ const work = await Promise.all(
             </ul>
           </div>
         </section>
+        
 
       </div>
     </aside>
