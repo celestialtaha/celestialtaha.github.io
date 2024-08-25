@@ -166,7 +166,6 @@ const work = await Promise.all(
                       href={SOCIAL.HREF}
                       external
                       aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
-                      class="flex items-center gap-x-2"
                     >
                       <img src={SOCIAL.LOGO} alt={`${SOCIAL.NAME} logo`} class="w-6 h-6" />
                       {SOCIAL.NAME}
@@ -178,7 +177,6 @@ const work = await Promise.all(
                 <Link
                   href={`mailto:${SITE.EMAIL}`}
                   aria-label={`Email ${SITE.TITLE}`}
-                  class="flex items-center gap-x-2"
                 >
                   <img src="/images/gmail.png" alt="Email logo" class="w-6 h-6" />
                   {"Mail"}
