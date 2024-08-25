@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import PageLayout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
+import Link from "@components/Link.astro";
 import { dateRange } from "@lib/utils";
 import { RESEARCH } from "@consts";
 
@@ -40,7 +41,7 @@ const research = await Promise.all(
           }
         </ul>
       </div>
-
+      <hr class="border-gray-300 dark:border-gray-700 my-6" />
       <!-- Research Publications Section -->
       <div class="font-semibold text-black dark:text-white">
         Research Publications
@@ -49,9 +50,9 @@ const research = await Promise.all(
         { 
           research.map(entry => (
             <li class="animate">
-                <a href={entry.data.link} target="_blank" class="underline hover:text-blue-600">
+                <Link href={entry.data.link}>
                   {entry.data.title}
-                </a>
+                </Link>
               <div class="text-sm opacity-75">
                 {entry.data.journal}, {dateRange(entry.data.publicationDate)}
               </div>
