@@ -24,6 +24,11 @@ export const WORK: Metadata = {
   DESCRIPTION: "Where I have worked and what I have done.",
 };
 
+export const RESEARCH: Metadata = {
+  TITLE: "Research",
+  DESCRIPTION: "A collection of my research publications.",
+};
+
 export const PROJECTS: Metadata = {
   TITLE: "Projects",
   DESCRIPTION:
