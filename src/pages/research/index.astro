@@ -49,9 +49,9 @@ const research = await Promise.all(
         { 
           research.map(entry => (
             <li class="animate">
-              <div class="font-semibold text-black dark:text-white text-lg">
-                {entry.data.title}
-              </div>
+                <a href={entry.data.link} target="_blank" class="underline hover:text-blue-600">
+                  {entry.data.title}
+                </a>
               <div class="text-sm opacity-75">
                 {entry.data.journal}, {dateRange(entry.data.publicationDate)}
               </div>
