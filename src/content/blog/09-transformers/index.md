@@ -12,25 +12,25 @@ author: "Taha Samavati"
 
 ترانسفورمر را می‌توان به صورت یک جعبه سیاه در نظر گرفت. مانند یک مدل ترجمه زیانی که از یک طرف جمله‌ای به آن وارد و در طرف دیگر یعنی خروجی جمله‌ای دیگر به عنوان ترجمه تولید می‌شود.
 
-![Transformer Overview](../media/transformer/the_transformer_3.png)
+![Transformer Overview](/blog/transformer/the_transformer_3.png)
 
 اگر یک قدم جلوتر برویم و اصطلاحاً در جعبه سیاه را باز کنیم، یک رمزنگار و رمزگشا خواهیم دید که به شکل زیر به هم متصل شده‌اند.
 
-![Encoder-Decoder Structure](../media/transformer/The_transformer_encoders_decoders.png)
+![Encoder-Decoder Structure](/blog/transformer/The_transformer_encoders_decoders.png)
 
 بخش رمزنگار خود از ۶ رمزنگار کوچک تشکیل شده است (دلیلی برای ۶تا وجود ندارد. شما می‌توانید هر چندتا در مدل خود داشته باشید). مجموعه این رمزنگارهای کوچک در قالب یک پشته یا استک بلوک رمزنگار را می‌سازند. در مقابل و در بخش رمزگشا همین تعداد رمزگشا کوچک داریم که با استک خروجی‌هایشان خروجی نهایی بلوک رمزگشا بدست می‌آید.
 
-![Encoder Decoder Stack](../media/transformer/The_transformer_encoder_decoder_stack.png)
+![Encoder Decoder Stack](/blog/transformer/The_transformer_encoder_decoder_stack.png)
 
 رمزنگارها ساختار یکسانی دارند اما هر کدام وزن‌های مختص به خود را دارند. هر کدام از این رمزنگارها دارای دو بخش است:
 
-![Transformer Encoder](../media/transformer/Transformer_encoder.png)
+![Transformer Encoder](/blog/transformer/Transformer_encoder.png)
 
 ورودی‌های رمزگشا ابتدا از یک لایه خود-توجه عبور می‌کنند. لایه خود-توجه به رمزنگار کمک می‌کند تا در هنگام رمزنگاری هر کلمه به کلمات دیگر موجود در جمله ورودی نیز توجه کند. در ادامه توضیحات مفصل‌تری در مورد این بخش خواهم آورد.
 
 خروجی‌های لایه خود توجه به یک شبکه feed-forward ورودی داده می‌شوند. در واقع بردار مربوط به هر کلمه ورودی به صورت مجزا به این شبکه ورودی داده می‌شود. هر رمزگشا یا دیکودر نیز مانند رمزنگار دو لایه مذکور را دارد. با این تفاوت که بین این دو لایه یک لایه توجه وجود دارد که به رمزگشا کمک می‌کند تا تمرکز خود را بر روی بخش‌های مربوط جمله ورودی قرار دهد (شبیه مکانیزم توجه در مدل‌های sequence2sequence).
 
-![Transformer Decoder](../media/transformer/Transformer_decoder.png)
+![Transformer Decoder](/blog/transformer/Transformer_decoder.png)
 
 ## شرح نحوه محاسبه خروجی با استفاده از مثال
 
@@ -38,13 +38,13 @@ author: "Taha Samavati"
 
 همانطور که می‌دانید برای آنکه کلمات را به یک بردار قابل درک برای یک شبکه عصبی تبدیل کنیم، از یک [embedding algorithm](https://medium.com/deeper-learning/glossary-of-deep-learning-word-embedding-f90c3cec34ca) استفاده می‌کنیم.
 
-![Embeddings](../media/transformer/embeddings.png)
+![Embeddings](/blog/transformer/embeddings.png)
 
 به هر کلمه یک بردار با سایز ۵۱۲ اختصاص داده می‌شود. برای سادگی ما این بردارها را به شکل بالا نمایش می‌دهیم.
 
 هر کدام از رمزنگارها با دریافت یک لیست از بردارهای ۵۱۲تایی خروجی مربوط به خود را تولید می‌کند. لازم به ذکر است اولین رمزنگار در توالی رمزنگارها لیستی از بردارهای امبدینگ را دریافت می‌کند و خروجی آن نیز لیستی به همان طول از بردارهای ۵۱۲تایی خواهد بود. لیست خروجی این رمزنگار به رمزنگار بعدی در توالی ورودی داده می‌شود. طول لیست مذکور یکی از ابرپارامترهای مدل ترنسفورمر است که معمولاً ما آن را به اندازه طول بزرگترین جمله موجود در مجموعه داده انتخاب می‌کنیم.
 
-![Encoder with Tensors](../media/transformer/encoder_with_tensors.png)
+![Encoder with Tensors](/blog/transformer/encoder_with_tensors.png)
 
 در این مرحله می‌توانیم یک ویژگی کلیدی از ترنسفورمر را مشاهده کنیم، که کلمه در هر موقعیت از طریق مسیر مخصوص خود در رمزنگار جریان می‌یابد. در لایه خود-توجه، وابستگی‌هایی بین این مسیرها وجود دارد. اما لایه feed-forward این وابستگی‌ها را ندارد و بنابراین مسیرهای مختلف می‌توانند به صورت موازی در حین عبور از لایه feed-forward اجرا شوند.
 
@@ -54,7 +54,7 @@ author: "Taha Samavati"
 
 همانطور که پیشتر گفتیم رمزنگار با دریافت لیستی از بردارها آنها را از دو لایه خود-توجه و سپس feed-forward عبور داده و خروجی را به انکودر بعدی که در توالی قرار دارد می‌دهد.
 
-![Encoder with Tensors 2](../media/transformer/encoder_with_tensors_2.png)
+![Encoder with Tensors 2](/blog/transformer/encoder_with_tensors_2.png)
 
 هر کلمه که در مکانی مشخص از جمله قرار دارد از لایه خود توجه عبور می‌کند. سپس هر کدام از بردارها به صورت مستقل از یک شبکه feed-forward عبور می‌کند.
 
@@ -74,7 +74,7 @@ author: "Taha Samavati"
 
 اگر با RNN ها آشنا هستید، می‌دانید که حفظ یک وضعیت مخفی به RNN اجازه می‌دهد تا نمایش خود از کلمات/بردارهای قبلی را که پردازش کرده است با بردار کنونی که در حال پردازش است ترکیب کند. خود-توجه روشی است که ترنسفورمر از آن برای بکارگیری “درک” کلمات مرتبط دیگر در آنچه که هم اکنون پردازش می‌شود، استفاده می‌کند.
 
-![Self-Attention Visualization](../media/transformer/transformer_self-attention_visualization.png)
+![Self-Attention Visualization](/blog/transformer/transformer_self-attention_visualization.png)
 
 همانطور که مشاهده می‌شود در هنگام رمزنگاری کلمه "it" در رمزنگار پنجم (از 6) مکانیزم خود-توجه به بردار کلمات "The Animal" وزن بیشتری اختصاص می‌دهد و آنها را در پروسه رمزنگاری کلمه "it" بیشتر دخالت می‌دهد.
 
@@ -92,7 +92,7 @@ The **first step** in calculating self-attention is to create three vectors from
 
 this is an architecture choice to make the computation of multiheaded attention (mostly) constant.
 
-![Self Attention Vectors](../media/transformer/transformer_self_attention_vectors.png)
+![Self Attention Vectors](/blog/transformer/transformer_self_attention_vectors.png)
 
 Multiplying `x1` by the `WQ` weight matrix produces `q1`, the "query" vector associated with that word. We end up creating a "query", a "key", and a "value" projection of each word in the input sentence.
 
@@ -107,13 +107,13 @@ The **second step** in calculating self-attention is to calculate a score. Say w
 
 The score is calculated by taking the dot product of the `query vector` with the `key vector` of the respective word we’re scoring. So if we’re processing the self-attention for the word in position `#1`, the first score would be the dot product of `q1` and `k1`. The second score would be the dot product of `q1` and `k2`.
 
-![Self Attention Score](../media/transformer/transformer_self_attention_score.png)
+![Self Attention Score](/blog/transformer/transformer_self_attention_score.png)
 
 قدم سوم یکی تقسیم امتیازهای بدست آمده از قدم اول بر مجذور اندازه بردار "Key" است. در اینجا این مقدار برابر با 8 می‌شود. قدم چهارم هم اعمال Softmax به امتیازات است. این مقدار امتیازها را نرمالیزه و جمع آنها را برابر با 1 قرار می‌دهد.
 
 The **third and fourth steps** are to divide the scores by 8 (the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other possible values here, but this is the default), then pass the result through a softmax operation. Softmax normalizes the scores so they’re all positive and add up to 1.
 
-![Self Attention Softmax](../media/transformer/self-attention_softmax.png)
+![Self Attention Softmax](/blog/transformer/self-attention_softmax.png)
 
 امتیاز اختصاص داده شده به هر کلمه میزان ارتباط آن را با کلمه مورد بررسی مشخص می‌کند و به همین میزان در محاسبه بردار انکودینگ کلمه مورد نظر نقش دارد. طبعا این امتیاز برای خود کلمه مورد بررسی بیشترین مقدار را دارد.
 
@@ -123,7 +123,7 @@ This softmax score determines how much each word will be expressed at this posit
 
 The **fifth step** is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out irrelevant words (by multiplying them by tiny numbers like 0.001, for example).
 
-![Self Attention Output](../media/transformer/self-attention-output.png)
+![Self Attention Output](/blog/transformer/self-attention-output.png)
 
 خروجی بدست آمده در مرحله بعد به شبکه feed-forward ورودی داده می‌شود. در بخش بعد خواهیم دید این عملیات چطور به صورت ماتریسی (برای پردازش سریعتر) پیاده‌سازی می‌شود.
 
@@ -131,13 +131,13 @@ The **fifth step** is to multiply each value vector by the softmax score (in pre
 
 قدم اول محاسبه بردارهای Query، Key و Value است. طبق شکل زیر اگر بردارهای امبدینگ کلمات را در ماتریس X قرار دهیم، باضرب این بردار در بردارهای وزن مختص به هریک از این سه بردار یعنی (`WQ`, `WK`, `WV`) که مقادیرشان هنگام آموزش شبکه تنظیم شده‌اند می‌توان مقادیر سه بردار مذکور را برای هر کلمه محاسبه کرد.
 
-![Self Attention Matrix Calculation](../media/transformer/self-attention-matrix-calculation.png)
+![Self Attention Matrix Calculation](/blog/transformer/self-attention-matrix-calculation.png)
 
 هر ردیف در ماتریس X متناظر با بردار امبدینگ مربوط به یک کلمه در جمله ورودی است. همانطور که مشاهده می‌شود ابعاد ماتریس امبدینگ کلمات (در اینجا 512) بیشتر از ابعاد بردارهای Q, K, V (در اینجا 64) است.
 
 در نهایت، چون با ماتریس سروکار داریم قدم‌های 2 تا 6، که در بخش قبل توضیح داده شدند، در فرمول زیر خلاصه می‌شوند:
 
-![Self Attention Matrix Calculation 2](../media/transformer/self-attention-matrix-calculation-2.png)
+![Self Attention Matrix Calculation 2](/blog/transformer/self-attention-matrix-calculation-2.png)
 
 ## اژدهای چند سر
 
@@ -149,33 +149,33 @@ The **fifth step** is to multiply each value vector by the softmax score (in pre
 
 It gives the attention layer multiple “representation subspaces”. As we’ll see next, with multi-headed attention we have not only one, but multiple sets of Query/Key/Value weight matrices (the Transformer uses eight attention heads, so we end up with eight sets for each encoder/decoder). Each of these sets is randomly initialized. Then, after training, each set is used to project the input embeddings (or vectors from lower encoders/decoders) into a different representation subspace.
 
-![Transformer Attention Heads](../media/transformer/transformer_attention_heads_qkv.png)
+![Transformer Attention Heads](/blog/transformer/transformer_attention_heads_qkv.png)
 
 با کمک توجه چند-سر، ما به ازای هر سر ماتریس وزن جداگانه‌ای برای بردارهای Q, K, V داریم که در طول آموزش منجر به بدست آمدن ماتریس‌های متفاوتی برای Q, K, V می‌شوند. مانند قبل با ضرب ماتریسی X با ضرایب بردارهای سه‌گانه یعنی `WQ`, `WK`, `WV` ماتریس‌های Q, K, V بدست می‌آیند.
 
 با توجه به اینکه 8 سر برای محاسبه خود توجه داریم، اگر 8 بار با ماتریس‌های وزن متفاوت محاسبات لایه خود توجه را مانند توضیحات گذشته انجام دهیم به 8 ماتریس متفاوت Z خواهیم رسید.
 
-![Transformer Attention Heads Z](../media/transformer/transformer_attention_heads_z.png)
+![Transformer Attention Heads Z](/blog/transformer/transformer_attention_heads_z.png)
 
 تا اینجا ما 8 ماتریس مختلف برای Z بدست آوردیم که هرکدام ما وزن‌های متفاوتی بردار خود توجه کلمات را محاسبه کرده‌اند. در مرحله بعد بایستی بردار Z را به لایه feed-forward ورودی بدهیم. اما چالش اینجاست که لایه خود توجه انتظار یک بردار z را به عنوان ورودی دارد. پس ما به راهی نیاز داریم تا این 8 ماتریس را در به گونه‌ای در یک ماتریس ترکیب کنیم. اما سوال اینجاست چونه این کار را انجام دهیم؟ 
 
 جواب این است که ابتدا این 8 ماتریس را با هم concat می‌کنیم. سپس ماتریس بدست آمده را در یک بردار وزن جدید به نام `WO` ضرب می‌کنیم. این کار باعث می‌شود تا با ترکیب بردارهای مختلفی که برای Z بدست آوردیم یک بردار Z داشته باشیم. نکته جالب اینجاست که شبکه نحوه ترکیب این بردارها با هم را در طول آموزش یاد می‌گیرد.
 
-![Transformer Attention Heads Weight Matrix O](../media/transformer/transformer_attention_heads_weight_matrix_o.png)
+![Transformer Attention Heads Weight Matrix O](/blog/transformer/transformer_attention_heads_weight_matrix_o.png)
 
 خب این هم از مکانیزم خود-توجه و نحوه محاسبه آن. شکل زیر همه چیزهایی که تا الان گفتیم را جمع‌بندی می‌کند:
 
-![Multi-Headed Self-Attention Recap](../media/transformer/transformer_multi-headed_self-attention-recap.png)
+![Multi-Headed Self-Attention Recap](/blog/transformer/transformer_multi-headed_self-attention-recap.png)
 
 حالا که با head های توجه آشنایی پیدا کردیم، بیایید دوباره به مثال قبل نگاه کنیم تا ببینیم در هنگام encode کلمه "it" هر کدام از سرها به چه بخش‌هایی از جمله بیشتر توجه می‌کنند: 
 
-![Self-Attention Visualization 2](../media/transformer/transformer_self-attention_visualization_2.png)
+![Self-Attention Visualization 2](/blog/transformer/transformer_self-attention_visualization_2.png)
 
 حین encode کلمه "it" یک head بیشترین توجه را روی "the animal" دارد در حالی که یک سر دیگر بیشترین توجه را روی "tired" دارد. به عبارتی representation مدل از کلمه "it" تحت تاثیر representation های "animal" و "tired" قرار دارد.
 
 حال اگر به وزن‌های همه 6 سر نگاه کنیم وصف روابط سخت‌تر می‌شود.
 
-![Self-Attention Visualization 3](../media/transformer/transformer_self-attention_visualization_3.png)
+![Self-Attention Visualization 3](/blog/transformer/transformer_self-attention_visualization_3.png)
 
 ## حفظ ترتیب در جمله با استفاده از Positional Encoding یا رمزنگاری مکانی
 
@@ -185,23 +185,23 @@ It gives the attention layer multiple “representation subspaces”. As we’ll
 
 The intuition here is that adding these values to the embeddings provides meaningful distances between the embedding vectors once they’re projected into Q/K/V vectors and during dot-product attention.
 
-![Positional Encoding Vectors](../media/transformer/transformer_positional_encoding_vectors.png)
+![Positional Encoding Vectors](/blog/transformer/transformer_positional_encoding_vectors.png)
 
 برای اینکه به مدل حسی از ترتیب کلمات بدهیم، بردارهای رمزنگاری مکانی را اضافه می‌کنیم. بردارهایی که پس از آموزش مقادیر آنها از یک الگوی مشخصی پیروی می‌کند.
 
 اگر فرض کنیم که بردار embedding کلمات ابعادی برابر با 4 دارد، بردارهای رمزنگاری مکانی به شکل زیر خواهند بود:
 
-![Positional Encoding Example](../media/transformer/transformer_positional_encoding_example.png)
+![Positional Encoding Example](/blog/transformer/transformer_positional_encoding_example.png)
 
 این الگو که راجع بهش صحبت کردیم می‌تواند چه شکلی باشد؟
 
 با توجه به شکلی که در ادامه آمده است، هر ردیف در تنسور positional encoding متناظر با رمزنگاری مکانی بردار embedding یک کلمه در جمله ورودی است. بنابراین اولین ردیف برداری است که باید به embedding اولین کلمه جمله اضافه کنیم. اگر ابعاد بردار embedding کلمات را 512 در نظر بگیریم بردار مکان آن نیز ابعادی یکسان خواهد داشت و مقادیر آن بین -1 تا 1 خواهد بود.
 
-![Positional Encoding Tensor](../media/transformer/attention-is-all-you-need-positional-encoding.png)
+![Positional Encoding Tensor](/blog/transformer/attention-is-all-you-need-positional-encoding.png)
 
 فرمول محاسبه رمزنگاری مکانی در بخش 3.5 مقاله توضیح داده شده است. کد تولید این رمزنگاری در [اینجا](https://github.com/jalammar/jalammar.github.io/blob/master/notebookes/transformer/transformer_positional_encoding_graph.ipynb) قرار دارد. قطعا راه‌های دیگری برای محاسبه رمزنگاری مکانی وجود دارد. برای نمونه تابع [get_timing_signal_1d()](https://github.com/tensorflow/tensor2tensor/blob/23bd23b9830059fbc349381b70d9429b5c40a139/tensor2tensor/layers/common_attention.py) در کدهای مربوط به Transformer2Transformer عملیات رمزنگاری مکانی را انجام می‌دهد. مزیت روش معرفی شده در قابلیت مقیاس‌پذیری آن به جملات با طول دلخواه است. یعنی پس از آموزش مدل با جمله‌هایی با طول مشخص در زمان آزمون مدل توانایی پذیرش جملات طولانی‌تر را نیز دارد. شکل زیر نمونه‌ای از بردارهای تولید شده توسط این روش را نشان می‌دهد:
 
-![Large Positional Encoding Example](../media/transformer/transformer_positional_encoding_large_example.png)
+![Large Positional Encoding Example](/blog/transformer/transformer_positional_encoding_large_example.png)
 
 یک مثال واقعی از رمزنگاری‌های مکانی برای 20 کلمه (شامل 20 ردیف) با سایز embedding 512 (512 ستون)
 
@@ -209,15 +209,15 @@ The intuition here is that adding these values to the embeddings provides meanin
 
 یکی از جزئیات دیگر در مدل Transformer که بایستی به آن اشاره کرد، وجود اتصالات بازگشتی در هر زیرلایه انکودر (شامل خود-توجه، شبکه feed-forward) است. به دنبال آن نیز عملیات [layer-normalization](https://arxiv.org/abs/1607.06450) انجام می‌شود.
 
-![Residual Layer Norm](../media/transformer/transformer_resideual_layer_norm.png)
+![Residual Layer Norm](/blog/transformer/transformer_resideual_layer_norm.png)
 
 شکل زیر عملیاتی را که در حین محاسبه بردارهای خود توجه روی بردارها انجام می‌شود در لایه Add and Normalize را نشان می‌دهد.
 
-![Residual Layer Norm 2](../media/transformer/transformer_resideual_layer_norm_2.png)
+![Residual Layer Norm 2](/blog/transformer/transformer_resideual_layer_norm_2.png)
 
 این ساختار در بخش رمزگشا یا decoder نیز صادق است. اگر فرض کنیم ترنسفورمر متشکل از یک رمزنگار و رمزگشا باشد، شکل زیر ساختار آن را نشان می‌دهد.
 
-![Residual Layer Norm 3](../media/transformer/transformer_resideual_layer_norm_3.png)
+![Residual Layer Norm 3](/blog/transformer/transformer_resideual_layer_norm_3.png)
 
 ## رمز گشا | The Decoder
 
@@ -225,9 +225,9 @@ The intuition here is that adding these values to the embeddings provides meanin
 
 همانطور که دیدیم، رمزنگار (Encoder) در آخرین لایه خود مجموعه‌ای از بردارهای توجه K و V را تولید می‌کند. این بردارها به تمام لایه‌های رمزنگار در بخش Decoder ورودی داده می‌شوند. با این کار رمزگشا می‌داند که بر کدام بخش‌های جمله تمرکز کند.
 
-![Decoding 1](../media/transformer/transformer_decoding_1.gif)
+![Decoding 1](/blog/transformer/transformer_decoding_1.gif)
 
-![Decoding 2](../media/transformer/transformer_decoding_2.gif)
+![Decoding 2](/blog/transformer/transformer_decoding_2.gif)
 
 عملیات خود-توجه در رمزگشا به شکلی کمی متفاوت با آنچه در رمزنگار وجود دارد عمل می‌کند:
 
@@ -243,7 +243,7 @@ The decoder stack outputs a vector of floats. How do we turn that into a word? T
 
 لایه Linear آخر در واقع یک شبکه عصبی تمام متصل است که بردار خروجی رمزگشا را به یک بردار بسیار بزرگتر که شامل احتمالات اختصاص یافته به کلمات مختلف در vocabulary داده آموزش است. به این بردار بردار Logits نیز گفته می‌شود. برای مثال فرض کنید اندازه vocabulary 10000 کلمه باشد. در اینصورت اندازه بردار Logits که خروجی لایه خطی است دارای 10000 المان است. تابع فعالسازی softmax نیز این امتیازات را نرمالیزه می‌کند به طوریکه جمع همه این اعداد برابر با 1 شود. المانی که بیشترین احتمال برایش پیش‌بینی شده باشد انتخاب شده و به عنوان خروجی آن timestep در نظر گرفته می‌شود.
 
-![Decoder Output Softmax](../media/transformer/transformer_decoder_output_softmax.png)
+![Decoder Output Softmax](/blog/transformer/transformer_decoder_output_softmax.png)
 
 ## Recap Of Training
 
