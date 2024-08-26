@@ -253,11 +253,11 @@ During training, an untrained model would go through the exact same forward pass
 
 To visualize this, let’s assume our output vocabulary only contains six words (“a”, “am”, “i”, “thanks”, “student”, and “<eos>” (short for ‘end of sentence’)).
 
-![Vocabulary](../images/t/vocabulary.png)
+![Vocabulary](/blog/transformer/vocabulary.png)
 
 Once we define our output vocabulary, we can use a vector of the same width to indicate each word in our vocabulary. This also known as one-hot encoding. So for example, we can indicate the word “am” using the following vector:
 
-![One-Hot Vocabulary Example](../images/t/one-hot-vocabulary-example.png)
+![One-Hot Vocabulary Example](/blog/transformer/one-hot-vocabulary-example.png)
 
 Following this recap, let’s discuss the model’s loss function – the metric we are optimizing during the training phase to lead up to a trained and hopefully amazingly accurate model.
 
@@ -267,7 +267,7 @@ Say we are training our model. Say it’s our first step in the training phase, 
 
 What this means, is that we want the output to be a probability distribution indicating the word “thanks”. But since this model is not yet trained, that’s unlikely to happen just yet.
 
-![Transformer Logits Output and Label](../images/t/transformer_logits_output_and_label.png)
+![Transformer Logits Output and Label](/blog/transformer/transformer_logits_output_and_label.png)
 
 Since the model's parameters (weights) are all initialized randomly, the (untrained) model produces a probability distribution with arbitrary values for each cell/word. We can compare it with the actual output, then tweak all the model's weights using backpropagation to make the output closer to the desired output.
 
@@ -280,11 +280,11 @@ But note that this is an oversimplified example. More realistically, we’ll use
 - The second probability distribution has the highest probability at the cell associated with the word “am”
 - And so on, until the fifth output distribution indicates ‘<end of sentence>’ symbol, which also has a cell associated with it from the 10,000 element vocabulary.
 
-![Output Target Probability Distributions](../images/t/output_target_probability_distributions.png)
+![Output Target Probability Distributions](/blog/transformer/output_target_probability_distributions.png)
 
 After training the model for enough time on a large enough dataset, we would hope the produced probability distributions would look like this:
 
-![Output Trained Model Probability Distributions](../images/t/output_trained_model_probability_distributions.png)
+![Output Trained Model Probability Distributions](/blog/transformer/output_trained_model_probability_distributions.png)
 
 Hopefully upon training, the model would output the right translation we expect. Of course it's no real indication if this phrase was part of the training dataset (see: [cross-validation](https://www.youtube.com/watch?v=TIgfjmp-4BA)). Notice that every position gets a little bit of probability even if it's unlikely to be the output of that time step -- that's a very useful property of softmax which helps the training process.
 
