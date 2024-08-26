@@ -47,7 +47,7 @@ function getPrevPost() {
 const nextPost = getNextPost();
 const prevPost = getPrevPost();
 
-const {post, rtl } = Astro.props;
+const post = Astro.props;
 const { Content, headings } = await post.render();
 ---
 
@@ -71,7 +71,7 @@ const { Content, headings } = await post.render();
       </h1>
     </div>
     {headings.length > 0 && <TableOfContents headings={headings} />}
-    {rtl && <link rel="stylesheet" href="./src/styles/rtl.css" />}
+    {post.data.rtl && <link rel="stylesheet" href="./src/styles/rtl.css" />}
     <article class="animate">
       <Content />
       <div class="mt-24">
