@@ -1,0 +1,27 @@
+/* rtl.css */
+body {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  p, h1, h2, h3, h4, h5, h6, blockquote {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  ul, ol {
+    direction: rtl;
+    padding-right: 40px;
+    padding-left: 0;
+  }
+  
+  li {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  pre, code {
+    direction: ltr;
+    text-align: left;
+  }
+  
