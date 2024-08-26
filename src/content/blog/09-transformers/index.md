@@ -1,5 +1,6 @@
 ---
 title: "شرح دقیق و بصری ترانسفورمر"
+description: "در مورد ترنسفورمر"
 date: "2021-08-07"
 author: "Taha Samavati"
 ---
