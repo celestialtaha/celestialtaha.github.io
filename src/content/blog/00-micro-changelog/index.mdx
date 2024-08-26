@@ -2,6 +2,7 @@
 title: "Everything new in Astro Micro"
 description: "Features, enhancements, and changes."
 date: "2024-05-09"
+draft: true
 ---
 
 import Callout from "@/components/Callout.astro";
