@@ -49,7 +49,7 @@ const prevPost = getPrevPost();
 
 const post = Astro.props;
 const { Content, headings } = await post.render();
----
+
 
 <Layout title={post.data.title} description={post.data.description}>
   <Container>
@@ -71,8 +71,7 @@ const { Content, headings } = await post.render();
       </h1>
     </div>
     {headings.length > 0 && <TableOfContents headings={headings} />}
-    {post.data.rtl && <link rel="stylesheet" href="./src/styles/rtl.css" />}
-    <article class="animate">
+    <article class={`animate ${post.data.rtl ? 'rtl' : ''}`}>
       <Content />
       <div class="mt-24">
         <PostNavigation prevPost={prevPost} nextPost={nextPost} />

@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './rtl.css';
 
 html {
   overflow-y: auto;

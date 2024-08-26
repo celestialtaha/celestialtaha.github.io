@@ -1,26 +1,36 @@
 /* rtl.css */
-body {
+
+/* General RTL direction and text alignment */
+.rtl {
     direction: rtl;
     text-align: right;
   }
   
-  p, h1, h2, h3, h4, h5, h6, blockquote {
-    direction: rtl;
+  /* Specific element adjustments */
+  .rtl h1, 
+  .rtl h2, 
+  .rtl h3, 
+  .rtl h4, 
+  .rtl h5, 
+  .rtl h6, 
+  .rtl p, 
+  .rtl blockquote {
     text-align: right;
   }
   
-  ul, ol {
-    direction: rtl;
+  .rtl ul, 
+  .rtl ol {
     padding-right: 40px;
     padding-left: 0;
   }
   
-  li {
-    direction: rtl;
+  .rtl li {
     text-align: right;
   }
   
-  pre, code {
+  /* Code blocks should maintain LTR direction */
+  .rtl pre, 
+  .rtl code {
     direction: ltr;
     text-align: left;
   }
