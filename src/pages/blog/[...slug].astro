@@ -8,6 +8,7 @@ import BackToPrevious from "@components/BackToPrevious.astro";
 import PostNavigation from "@components/PostNavigation.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Giscus from "@components/Giscus.astro";
+import '../styles/rtl.css';
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
@@ -49,7 +50,7 @@ const prevPost = getPrevPost();
 
 const post = Astro.props;
 const { Content, headings } = await post.render();
-
+---
 
 <Layout title={post.data.title} description={post.data.description}>
   <Container>
