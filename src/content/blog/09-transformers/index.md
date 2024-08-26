@@ -5,7 +5,6 @@ date: "2021-08-07"
 author: "Taha Samavati"
 ---
 
-![Blog Header](../img/posts-dark.jpg)
 
 ترانسفورمر در مقاله [Attention is All You Need](https://arxiv.org/abs/1706.03762) معرفی شد. پیاده سازی آن در فریمورک TensorFlow در این [این لینک](https://github.com/tensorflow/tensor2tensor) قابل دسترسی است. در این پست سعی داریم تا یک نگاه کلی و در عین حال به دور از پیچیدگی به مدل ترنسفورمر، اجزای آن و نحوه کارکرد آن داشته باشیم.
 
