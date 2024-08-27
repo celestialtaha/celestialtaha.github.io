@@ -87,15 +87,11 @@ rtl: true
 
 قدم اول در محاسبه خروجی لایه خود-توجه، ساخت 3 بردار "Key"،"Query" و "Value" به ازای هر بردار کلمه ورودی است. همانطور که قبلا گفتیم در اینجا منظور از بردار کلمات همان بردار امبدینگ کلمات است. هر کدام از این سه بردار (Key, Query, value) وزن مختص به خود را دارد که در طول آموزش مدل تنظیم می‌شود. این بردارهای وزن با ضرب در بردار امبدینگ هر کلمه مقداردهی می‌شوند.
 
-The **first step** in calculating self-attention is to create three vectors from each of the encoder’s input vectors (in this case, the embedding of each word). So for each word, we create a Query vector, a Key vector, and a Value vector. These vectors are created by multiplying the embedding by three matrices that we trained during the training process.
-
 لازم به ذکر است که ابعاد بردارهای سه‌گانه مذکور کمتر از ابعاد امبدینگ کلمات است و برابر با 64 است. البته این اندازه می‌تواند بسته به انتخاب شما در هنگام طراحی مدل تغییر کند.
-
-this is an architecture choice to make the computation of multiheaded attention (mostly) constant.
 
 ![Self Attention Vectors](/blog/transformer/transformer_self_attention_vectors.png)
 
-Multiplying `x1` by the `WQ` weight matrix produces `q1`, the "query" vector associated with that word. We end up creating a "query", a "key", and a "value" projection of each word in the input sentence.
+ضرب x1 در ماتریس وزن WQ، بردار q1 را تولید می‌کند که همان بردار "query" مرتبط با آن کلمه است. در نهایت، ما یک افکنش از "query"، یک "key" و یک "value" برای هر کلمه در جمله ورودی ایجاد می‌کنیم.
 
 بردارهای "Query"،"Key" و "Value" دقیقا چه تعریف و نقشی دارند؟
 این بردارها انتزاع و به اصطلاح abstraction هستند که از طریق آنها مکانیزم توجه پیاده‌سازی و اعمال می‌شود. در ادامه در مورد نحوه محاسبه آنها توضیح می‌دهیم تا نقش هرکدام برایتان روشن‌تر شود.
@@ -246,50 +242,49 @@ The decoder stack outputs a vector of floats. How do we turn that into a word? T
 
 ![Decoder Output Softmax](/blog/transformer/transformer_decoder_output_softmax.png)
 
-## Recap Of Training
+## مرور آموزش
+اکنون که کل فرآیند گذر از شبکه‌ی پیش‌بینی یک ترانسفورمر آموزش‌دیده را پوشش داده‌ایم، مرور شهودی از آموزش مدل می‌تواند مفید باشد.
 
-Now that we’ve covered the entire forward-pass process through a trained Transformer, it would be useful to glance at the intuition of training the model.
+در طول آموزش، یک مدل آموزش‌ندیده نیز دقیقاً همین گذر رو به جلو را تجربه می‌کند. اما از آنجا که ما آن را بر روی یک مجموعه داده‌ی آموزشی با برچسب آموزش می‌دهیم، می‌توانیم خروجی آن را با خروجی صحیح واقعی مقایسه کنیم.
 
-During training, an untrained model would go through the exact same forward pass. But since we are training it on a labeled training dataset, we can compare its output with the actual correct output.
-
-To visualize this, let’s assume our output vocabulary only contains six words (“a”, “am”, “i”, “thanks”, “student”, and “<eos>” (short for ‘end of sentence’)).
+برای تجسم این موضوع، فرض کنیم که واژگان خروجی ما فقط شامل شش کلمه است ("a"، "am"، "i"، "thanks"، "student"، و "<eos>" (مخفف "پایان جمله")).
 
 ![Vocabulary](/blog/transformer/vocabulary.png)
 
-Once we define our output vocabulary, we can use a vector of the same width to indicate each word in our vocabulary. This also known as one-hot encoding. So for example, we can indicate the word “am” using the following vector:
+پس از تعریف واژگان خروجی، می‌توانیم از یک بردار با همان عرض برای نشان دادن هر کلمه در واژگانمان استفاده کنیم. این روش همچنین به عنوان کدگذاری تک‌مقداری یا one-hot encoding شناخته می‌شود. بنابراین، به عنوان مثال، می‌توانیم کلمه "am" را با استفاده از بردار زیر نشان دهیم:
 
 ![One-Hot Vocabulary Example](/blog/transformer/one-hot-vocabulary-example.png)
 
-Following this recap, let’s discuss the model’s loss function – the metric we are optimizing during the training phase to lead up to a trained and hopefully amazingly accurate model.
+پس از این مرور، بیایید در مورد تابع خطای مدل صحبت کنیم - معیاری که در طی مرحله‌ی آموزش برای بهینه‌سازی مدل استفاده می‌کنیم تا به یک مدل آموزش‌دیده و بسیار دقیق دست یابیم.
 
-## The Loss Function
+## تابع خطا
 
-Say we are training our model. Say it’s our first step in the training phase, and we’re training it on a simple example – translating “merci” into “thanks”.
+فرض کنید در حال آموزش مدل خود هستیم. فرض کنید این اولین قدم ما در مرحله‌ی آموزش است و در حال آموزش مدل با یک مثال ساده هستیم – ترجمه "merci" به "thanks".
 
-What this means, is that we want the output to be a probability distribution indicating the word “thanks”. But since this model is not yet trained, that’s unlikely to happen just yet.
+این بدان معناست که ما می‌خواهیم خروجی یک توزیع احتمالی باشد که کلمه "thanks" را نشان می‌دهد. اما از آنجا که این مدل هنوز آموزش ندیده است، احتمالاً این اتفاق هنوز رخ نمی‌دهد.
 
 ![Transformer Logits Output and Label](/blog/transformer/transformer_logits_output_and_label.png)
 
-Since the model's parameters (weights) are all initialized randomly, the (untrained) model produces a probability distribution with arbitrary values for each cell/word. We can compare it with the actual output, then tweak all the model's weights using backpropagation to make the output closer to the desired output.
+از آنجا که پارامترهای مدل (وزن‌ها) به‌صورت تصادفی مقداردهی اولیه شده‌اند، مدل (آموزش‌ندیده) یک توزیع احتمالی با مقادیر دلخواه برای هر سلول/کلمه تولید می‌کند. ما می‌توانیم آن را با خروجی واقعی مقایسه کرده و سپس تمام وزن‌های مدل را با استفاده از الگوریتم پس‌انتشار خطا تغییر دهیم تا خروجی به خروجی مطلوب نزدیک‌تر شود.
 
-How do you compare two probability distributions? We simply subtract one from the other. For more details, look at [cross-entropy](https://colah.github.io/posts/2015-09-Visual-Information/) and [Kullback–Leibler divergence](https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained).
+چگونه می‌توان دو توزیع احتمالی را مقایسه کرد؟ به‌سادگی یکی را از دیگری کم می‌کنیم. برای جزئیات بیشتر، به [cross-entropy](https://colah.github.io/posts/2015-09-Visual-Information/) و [Kullback–Leibler divergence](https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained) مراجعه کنید.
 
-But note that this is an oversimplified example. More realistically, we’ll use a sentence longer than one word. For example – input: “je suis étudiant” and expected output: “i am a student”. What this really means, is that we want our model to successively output probability distributions where:
+اما توجه داشته باشید که این یک مثال بیش‌ازحد ساده‌شده است. در واقعیت، ما از جمله‌ای طولانی‌تر از یک کلمه استفاده خواهیم کرد. به عنوان مثال – ورودی: "je suis étudiant" و خروجی مورد انتظار: "i am a student". این به این معنی است که ما می‌خواهیم مدل ما به طور پیوسته توزیع‌های احتمالی‌ای تولید کند که:
 
-- Each probability distribution is represented by a vector of width vocab_size (6 in our toy example, but more realistically a number like 30,000 or 50,000)
-- The first probability distribution has the highest probability at the cell associated with the word “i”
-- The second probability distribution has the highest probability at the cell associated with the word “am”
-- And so on, until the fifth output distribution indicates ‘<end of sentence>’ symbol, which also has a cell associated with it from the 10,000 element vocabulary.
+- هر توزیع احتمالی با یک بردار با عرض vocab_size (در مثال ساده‌ی ما 6، اما در واقعیت رقمی مثل 30,000 یا 50,000) نشان داده می‌شود.
+- اولین توزیع احتمالی، بالاترین احتمال را در سلولی که با کلمه "i" مرتبط است، دارد.
+- دومین توزیع احتمالی، بالاترین احتمال را در سلولی که با کلمه "am" مرتبط است، دارد.
+- و به همین ترتیب، تا زمانی که توزیع خروجی پنجم، نماد "پایان جمله" را نشان دهد که آن هم سلولی مرتبط با خود در میان واژگان 10,000 عنصری دارد.
 
 ![Output Target Probability Distributions](/blog/transformer/output_target_probability_distributions.png)
 
-After training the model for enough time on a large enough dataset, we would hope the produced probability distributions would look like this:
+پس از آموزش مدل به مدت کافی و بر روی یک مجموعه داده‌ی به اندازه کافی بزرگ، امیدواریم که توزیع‌های احتمالی تولیدشده به این شکل باشند:
 
 ![Output Trained Model Probability Distributions](/blog/transformer/output_trained_model_probability_distributions.png)
 
-Hopefully upon training, the model would output the right translation we expect. Of course it's no real indication if this phrase was part of the training dataset (see: [cross-validation](https://www.youtube.com/watch?v=TIgfjmp-4BA)). Notice that every position gets a little bit of probability even if it's unlikely to be the output of that time step -- that's a very useful property of softmax which helps the training process.
+امیدواریم پس از آموزش، مدل خروجی ترجمه‌ی درستی را که انتظار داریم تولید کند. البته، اگر این عبارت بخشی از مجموعه داده‌ی آموزشی بوده باشد، این موضوع نشانه‌ی واقعی از عملکرد مدل نیست  (see: [cross-validation](https://www.youtube.com/watch?v=TIgfjmp-4BA)). توجه کنید که هر موقعیت حتی اگر خروجی آن در آن مرحله زمانی بعید باشد، مقدار کمی احتمال دریافت می‌کند -- این یک ویژگی بسیار مفید از softmax است که به فرآیند آموزش کمک می‌کند.
 
-Now, because the model produces the outputs one at a time, we can assume that the model is selecting the word with the highest probability from that probability distribution and throwing away the rest. That’s one way to do it (called greedy decoding). Another way to do it would be to hold on to, say, the top two words (say, ‘I’ and ‘a’ for example), then in the next step, run the model twice: once assuming the first output position was the word ‘I’, and another time assuming the first output position was the word ‘a’, and whichever version produced less error considering both positions #1 and #2 is kept. We repeat this for positions #2 and #3…etc. This method is called “beam search”, where in our example, beam_size was two (meaning that at all times, two partial hypotheses (unfinished translations) are kept in memory), and top_beams is also two (meaning we’ll return two translations). These are both hyperparameters that you can experiment with.
+اکنون، به دلیل اینکه مدل خروجی‌ها را یکی‌یکی تولید می‌کند، می‌توانیم فرض کنیم که مدل در هر مرحله کلمه‌ای با بالاترین احتمال را از آن توزیع احتمالی انتخاب کرده و بقیه را کنار می‌گذارد. این یکی از روش‌های انجام این کار است (که به آن "کدگذاری حریصانه" گفته می‌شود). روش دیگر این است که فرض کنیم دو کلمه‌ی اول (مثلاً "I" و "a") با بالاترین احتمال انتخاب شده‌اند، سپس در مرحله بعد، مدل را دوباره دو بار اجرا کنیم: یک بار با فرض اینکه موقعیت اول خروجی کلمه‌ی "I" بوده و بار دیگر با فرض اینکه موقعیت اول خروجی کلمه‌ی "a" بوده است، و نسخه‌ای که خطای کمتری در نظر گرفتن هر دو موقعیت #1 و #2 تولید کرد، حفظ می‌شود. این روند را برای موقعیت‌های #2 و #3 و… ادامه می‌دهیم. این روش "جستجوی پرتو" نامیده می‌شود که در مثال ما، beam_size دو بود (یعنی در هر زمان، دو فرضیه‌ی جزئی (ترجمه‌های ناتمام) در حافظه نگهداری می‌شوند) و top_beams نیز دو بود (یعنی ما دو ترجمه بازگشتی خواهیم داشت). این‌ها هر دو هایپرپارامترهایی هستند که می‌توانید با آن‌ها آزمایش کنید.
 
 ## Go Forth And Transform
 
@@ -300,7 +295,7 @@ Now, because the model produces the outputs one at a time, we can assume that th
 - Play with the [Jupyter Notebook provided as part of the Tensor2Tensor repo](https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb).
 - Explore the [Tensor2Tensor repo](https://github.com/tensorflow/tensor2tensor).
 
-Follow-up works:
+در ادامه می توانید مقالات زیر را نیز بخوانید:
 
 - [Depthwise Separable Convolutions for Neural Machine Translation](https://arxiv.org/abs/1706.03059)
 - [One Model To Learn Them All](https://arxiv.org/abs/1706.05137)
@@ -312,6 +307,6 @@ Follow-up works:
 - [Fast Decoding in Sequence Models using Discrete Latent Variables](https://arxiv.org/abs/1803.03382)
 - [Adafactor: Adaptive Learning Rates with Sublinear Memory Cost](https://arxiv.org/abs/1804.04235)
 
-## Acknowledgements
+## تشکر و قدردانی
 
 باتشکر از [JayAlammar](https://twitter.com/JayAlammar).
