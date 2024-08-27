@@ -1,7 +1,7 @@
 ---
 company: "Binj"
 role: "Data Scientist and Generative AI Engineer"
-dateStart: "01/06/2021"
+dateStart: "06/01/2022"
 dateEnd: "Current"
 ---
 
