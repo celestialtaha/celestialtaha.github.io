@@ -98,27 +98,23 @@ rtl: true
 
 قدم دوم در محاسبه خروجی خود-توجه محاسبه یک امتیاز برای هر کلمه نسبت به کلمات دیگر موجود در جمله است. فرض کنید جمله ورودی ما : "Thinking Machines" باشد. ما می‌خواهیم خروجی خود-توجه را برای کلمه اول یعنی "Thinking" محاسبه کنیم. بدین منظور لازم است تا به تمام کلمات موجود در جمله یک امتیاز نسبت به کلمه مورد بررسی اختصاص دهیم. جمع این امتیازها بایستی برابر 1 شود. این امتیازها در واقع مشخص می‌کند هر کلمه در جمله چه سهمی در محاسبه انکودینگ کلمه مورد نظر ما داشته باشد.
 
-The **second step** in calculating self-attention is to calculate a score. Say we’re calculating the self-attention for the first word in this example, “Thinking”. We need to score each word of the input sentence against this word. The score determines how much focus to place on other parts of the input sentence as we encode a word at a certain position.
-
 برای محاسبه امتیاز هر کلمه نسبت به "Thinking"، بردار "Query" این کلمه که در اینجا q1 است را در بردار "Key" آن ضرب می‌کنیم. مثلا در اینجا برای محاسبه امتیاز کلمه "Thinking" نسبت به خودش بایستی ضرب داخلی q1 و k1 را محاسبه کنیم. به همین ترتیب برای محاسبه امتیاز "Machines" نسبت به "Thinking" بایستی q1.k2 را محاسبه کنیم. این عملیات در شکل زیر نمایش داده شده است.
-
-The score is calculated by taking the dot product of the `query vector` with the `key vector` of the respective word we’re scoring. So if we’re processing the self-attention for the word in position `#1`, the first score would be the dot product of `q1` and `k1`. The second score would be the dot product of `q1` and `k2`.
 
 ![Self Attention Score](/blog/transformer/transformer_self_attention_score.png)
 
 قدم سوم یکی تقسیم امتیازهای بدست آمده از قدم اول بر مجذور اندازه بردار "Key" است. در اینجا این مقدار برابر با 8 می‌شود. قدم چهارم هم اعمال Softmax به امتیازات است. این مقدار امتیازها را نرمالیزه و جمع آنها را برابر با 1 قرار می‌دهد.
 
-The **third and fourth steps** are to divide the scores by 8 (the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other possible values here, but this is the default), then pass the result through a softmax operation. Softmax normalizes the scores so they’re all positive and add up to 1.
+<!-- The **third and fourth steps** are to divide the scores by 8 (the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other possible values here, but this is the default), then pass the result through a softmax operation. Softmax normalizes the scores so they’re all positive and add up to 1. -->
 
 ![Self Attention Softmax](/blog/transformer/self-attention_softmax.png)
 
 امتیاز اختصاص داده شده به هر کلمه میزان ارتباط آن را با کلمه مورد بررسی مشخص می‌کند و به همین میزان در محاسبه بردار انکودینگ کلمه مورد نظر نقش دارد. طبعا این امتیاز برای خود کلمه مورد بررسی بیشترین مقدار را دارد.
 
-This softmax score determines how much each word will be expressed at this position. Clearly, the word at this position will have the highest softmax score, but sometimes it’s useful to attend to another word that is relevant to the current word.
+<!-- This softmax score determines how much each word will be expressed at this position. Clearly, the word at this position will have the highest softmax score, but sometimes it’s useful to attend to another word that is relevant to the current word. -->
 
 قدم پنجم، ضرب بردار Value هر کلمه در امتیاز Softmax آن است. قدم ششم، جمع بردارهای وزن‌دهی شده شده است. با این کار بردار خروجی لایه خود-توجه برای کلمه "Thinking" بدست می‌آید.
 
-The **fifth step** is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out irrelevant words (by multiplying them by tiny numbers like 0.001, for example).
+<!-- The **fifth step** is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out irrelevant words (by multiplying them by tiny numbers like 0.001, for example). -->
 
 ![Self Attention Output](/blog/transformer/self-attention-output.png)
 
@@ -144,7 +140,7 @@ The **fifth step** is to multiply each value vector by the softmax score (in pre
 
 2. این مکانیزم چند زیرفضا برای representation توجه به ما می‌دهد. این موجب می‌شود تا ما به جای یک مجموعه سه تایی Query\Key\Value چند مجموعه داشته باشیم. در واقع مدل ترنسفورمر از 8 سر برای توجه استفاده می‌کند لذا 8 مجموعه به ازای هر encoder/decoder خواهیم داشت که هر کدام به ما یک زیر فضا برای مکانیزم توجه به ما می‌دهند.
 
-It gives the attention layer multiple “representation subspaces”. As we’ll see next, with multi-headed attention we have not only one, but multiple sets of Query/Key/Value weight matrices (the Transformer uses eight attention heads, so we end up with eight sets for each encoder/decoder). Each of these sets is randomly initialized. Then, after training, each set is used to project the input embeddings (or vectors from lower encoders/decoders) into a different representation subspace.
+<!-- It gives the attention layer multiple “representation subspaces”. As we’ll see next, with multi-headed attention we have not only one, but multiple sets of Query/Key/Value weight matrices (the Transformer uses eight attention heads, so we end up with eight sets for each encoder/decoder). Each of these sets is randomly initialized. Then, after training, each set is used to project the input embeddings (or vectors from lower encoders/decoders) into a different representation subspace. -->
 
 ![Transformer Attention Heads](/blog/transformer/transformer_attention_heads_qkv.png)
 
@@ -180,7 +176,7 @@ It gives the attention layer multiple “representation subspaces”. As we’ll
 
 بدین منظور ترنسفورمر یک بردار به هر embedding جمله ورودی اضافه می‌کند. این بردارها از یک الگوی مشخص که مدل در حین آموزش یاد می‌گیرد، پیروی می‌کنند. این امر به مدل توانایی درک مکان کلمات مختلف جمله و همچنین فاصله آنها از یکدیگر را می‌دهد. درک شهودی این است که با اضافه کردن این بردارها تفاوت معنی‌داری در فاصله بردار embedding کلمات جمله ایجاد می‌کند که در هنگام بدست آوردن بردارهای K/Q/V اثرگذار است.
 
-The intuition here is that adding these values to the embeddings provides meaningful distances between the embedding vectors once they’re projected into Q/K/V vectors and during dot-product attention.
+<!-- The intuition here is that adding these values to the embeddings provides meaningful distances between the embedding vectors once they’re projected into Q/K/V vectors and during dot-product attention. -->
 
 ![Positional Encoding Vectors](/blog/transformer/transformer_positional_encoding_vectors.png)
 
@@ -236,7 +232,7 @@ The intuition here is that adding these values to the embeddings provides meanin
 
 خروجی نهایی رمزگشا (decoder) یک بردار عددی است. یک لایه Linear به همراه تابع فعالسازی softmax این اعداد را به کلمه تبدیل می‌کند.
 
-The decoder stack outputs a vector of floats. How do we turn that into a word? That’s the job of the final Linear layer which is followed by a Softmax Layer.
+<!-- The decoder stack outputs a vector of floats. How do we turn that into a word? That’s the job of the final Linear layer which is followed by a Softmax Layer. -->
 
 لایه Linear آخر در واقع یک شبکه عصبی تمام متصل است که بردار خروجی رمزگشا را به یک بردار بسیار بزرگتر که شامل احتمالات اختصاص یافته به کلمات مختلف در vocabulary داده آموزش است. به این بردار بردار Logits نیز گفته می‌شود. برای مثال فرض کنید اندازه vocabulary 10000 کلمه باشد. در اینصورت اندازه بردار Logits که خروجی لایه خطی است دارای 10000 المان است. تابع فعالسازی softmax نیز این امتیازات را نرمالیزه می‌کند به طوریکه جمع همه این اعداد برابر با 1 شود. المانی که بیشترین احتمال برایش پیش‌بینی شده باشد انتخاب شده و به عنوان خروجی آن timestep در نظر گرفته می‌شود.
 
