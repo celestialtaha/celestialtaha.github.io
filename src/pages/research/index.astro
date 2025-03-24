@@ -3,7 +3,6 @@ import { getCollection } from "astro:content";
 import PageLayout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
-import { dateRange } from "@lib/utils";
 import { RESEARCH } from "@lib/constants";
 
 // Type definition for research entry
@@ -96,7 +95,7 @@ const researchWithContent = await Promise.all(
         </div>
         <div class="grid grid-cols-1 gap-6">
           { 
-            researchWithContent.map((entry: ResearchEntry, index: number) => (
+            researchWithContent.map((entry: ResearchEntry) => (
               <div class="publication-card bg-white dark:bg-gray-800/60 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700">
                 <div class="p-5">
                   <div class="flex items-center gap-2 mb-3">

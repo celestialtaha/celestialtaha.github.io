@@ -1,33 +1,12 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Container from "@components/Container.astro";
 import { SITE, HOME, SOCIALS } from "@consts";
-import ArrowCard from "@components/ArrowCard.astro";
-import Link from "@components/Link.astro";
 import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
-import { dateRange } from "@lib/utils";
-
-const EMAIL_ICON = {
-  src: "/images/gmail.png",
-  alt: "Email icon"
-};
 
 const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
-
-const allwork = (await getCollection("work"))
-  .sort((a, b) => new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf())
-  .slice(0,SITE.NUM_WORKS_ON_HOMEPAGE);
-
-const work = await Promise.all(
-  allwork.map(async (item) => {
-    const { Content } = await item.render();
-    return { ...item, Content };
-  })
-);
 
 // Get featured research
 const featuredResearch = (await getCollection('research'))
@@ -157,18 +136,6 @@ const skills = [
   // For view transitions API (if supported)
   document.addEventListener('astro:page-load', initializePage);
   
-  // Throttle function to limit frequent function calls
-  function throttle(callback, delay) {
-    let lastCall = 0;
-    return function(...args) {
-      const now = new Date().getTime();
-      if (now - lastCall >= delay) {
-        lastCall = now;
-        callback(...args);
-      }
-    };
-  }
-  
   // Mouse-tracking gradient effect with throttling
   const aboutSection = document.getElementById('about-section');
   if (aboutSection) {
@@ -224,7 +191,7 @@ const skills = [
   }
   
   // Shared gradient update function
-  function updateGradient(element, mouseX, mouseY) {
+  function updateGradient(element: HTMLElement, mouseX: number, mouseY: number): void {
     const rect = element.getBoundingClientRect();
     
     // Calculate mouse position relative to the element (0-100%)
@@ -376,24 +343,24 @@ const skills = [
                 </h3>
                 <ul class="space-y-3">
                   <li>
-                    <Link href="https://medium.com/@tahasamavati" className="flex items-center group">
+                    <a href="https://medium.com/@tahasamavati" class="flex items-center group">
                       <span class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-colors mr-3">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75S24 8.83 24 12z"/>
                         </svg>
                       </span>
                       <span class="text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Read my articles on Medium</span>
-                    </Link>
+                    </a>
                   </li>
                   <li>
-                    <Link href="https://t.me/ai_times_py" className="flex items-center group">
+                    <a href="https://t.me/ai_times_py" class="flex items-center group">
                       <span class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-colors mr-3">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path d="M11.955 4.05a8.1 8.1 0 0 1 0 14.12M21.314 9l-6.248 6.248-3.536-3.536L12 13.569l4.838 4.838L21.314 9z"/>
                         </svg>
                       </span>
                       <span class="text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Join my AI news Telegram channel</span>
-                    </Link>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -411,7 +378,7 @@ const skills = [
             </svg>
             Latest Posts
           </h2>
-          <Link href="/blog" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">See all blog posts</Link>
+          <a href="/blog" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">See all blog posts</a>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -444,7 +411,7 @@ const skills = [
             </svg>
             Featured Research
           </h2>
-          <Link href="/research" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">See all research</Link>
+          <a href="/research" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">See all research</a>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -459,9 +426,9 @@ const skills = [
                     </span>
                   </div>
                 }
-                <Link href={research.data.link} className="text-lg font-bold hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a href={research.data.link} class="text-lg font-bold hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                   {research.data.title}
-                </Link>
+                </a>
               </div>
               
               <div class="text-sm text-gray-700 dark:text-gray-300 mb-2">
@@ -599,15 +566,15 @@ const skills = [
   @keyframes pulse {
     0% {
       opacity: 0.15;
-      transform: scale(1);
+      transform: scale(0.9) translate(0, 0);
     }
     50% {
       opacity: 0.25;
-      transform: scale(1.05);
+      transform: scale(1.05) translate(5%, 5%);
     }
     100% {
       opacity: 0.15;
-      transform: scale(1);
+      transform: scale(0.9) translate(0, 0);
     }
   }
   
@@ -806,13 +773,17 @@ const skills = [
   }
   
   @keyframes pulse {
-    0%, 100% {
+    0% {
       opacity: 0.1;
       transform: scale(0.9) translate(0, 0);
     }
     50% {
       opacity: 0.3;
       transform: scale(1.1) translate(5%, 5%);
+    }
+    100% {
+      opacity: 0.1;
+      transform: scale(0.9) translate(0, 0);
     }
   }
   
