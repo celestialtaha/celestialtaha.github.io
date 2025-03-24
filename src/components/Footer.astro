@@ -1,23 +1,142 @@
 ---
 import Container from "@components/Container.astro";
-import { SITE } from "@consts";
+import { SITE, SOCIALS } from "@consts";
 import BackToTop from "@components/BackToTop.astro";
 ---
 
-<footer class="animate">
+<footer class="py-8 border-t border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md">
   <Container>
     <div class="relative">
       <div class="absolute -top-12 right-0">
         <BackToTop />
       </div>
     </div>
-    <div class="flex items-center justify-between">
-      <div>&copy; {new Date().getFullYear()} • {SITE.TITLE} 🔬</div>
-      <div class="flex flex-wrap items-center gap-1.5">
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <!-- Creative Section -->
+      <div class="space-y-4">
+        <div class="group">
+          <h3 class="text-lg font-bold mb-3 inline-block relative">
+            <span class="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 text-transparent bg-clip-text">
+              Digital Playground
+            </span>
+            <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full"></div>
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Welcome to my corner of the internet where research, code, and creativity converge. Exploring the intersection of technology and innovation, one pixel at a time.
+          </p>
+          <div class="mt-3 text-sm">
+            <span class="inline-block px-2 py-1 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 text-blue-600 dark:text-blue-400">research</span>
+            <span class="inline-block px-2 py-1 rounded-full bg-gradient-to-r from-purple-500/10 to-indigo-500/10 text-purple-600 dark:text-purple-400">code</span>
+            <span class="inline-block px-2 py-1 rounded-full bg-gradient-to-r from-indigo-500/10 to-teal-500/10 text-indigo-600 dark:text-indigo-400">ideas</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Quick Links -->
+      <div class="space-y-4">
+        <div class="group">
+          <h3 class="text-lg font-bold mb-3 inline-block relative">
+            <span class="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 text-transparent bg-clip-text">
+              Quick Links
+            </span>
+            <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full"></div>
+          </h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="/blog" class="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300 flex items-center gap-1 group">
+                <span class="w-0 h-px bg-blue-500 transition-all duration-300 group-hover:w-2"></span>
+                Blog
+              </a>
+            </li>
+            <li>
+              <a href="/projects" class="text-sm text-gray-600 dark:text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition-colors duration-300 flex items-center gap-1 group">
+                <span class="w-0 h-px bg-purple-500 transition-all duration-300 group-hover:w-2"></span>
+                Projects
+              </a>
+            </li>
+            <li>
+              <a href="/work" class="text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors duration-300 flex items-center gap-1 group">
+                <span class="w-0 h-px bg-indigo-500 transition-all duration-300 group-hover:w-2"></span>
+                Work
+              </a>
+            </li>
+            <li>
+              <a href="/research" class="text-sm text-gray-600 dark:text-gray-400 hover:text-teal-500 dark:hover:text-teal-400 transition-colors duration-300 flex items-center gap-1 group">
+                <span class="w-0 h-px bg-teal-500 transition-all duration-300 group-hover:w-2"></span>
+                Research
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Connect -->
+      <div class="space-y-4">
+        <div class="group">
+          <h3 class="text-lg font-bold mb-3 inline-block relative">
+            <span class="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 text-transparent bg-clip-text">
+              Connect
+            </span>
+            <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full"></div>
+          </h3>
+          <div class="flex gap-3">
+            <!-- GitHub -->
+            <a href={SOCIALS.find(social => social.NAME === "GitHub")?.HREF || "https://github.com/celestialtaha"} target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="GitHub">
+              <div class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+              </div>
+            </a>
+            
+            <!-- Twitter/X -->
+            <a href={SOCIALS.find(social => social.NAME === "X (Twitter)")?.HREF || "https://x.com/taha_iusm"} target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Twitter">
+              <div class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                </svg>
+              </div>
+            </a>
+            
+            <!-- LinkedIn -->
+            <a href={SOCIALS.find(social => social.NAME === "LinkedIn")?.HREF || "https://www.linkedin.com/in/taha-samavati/"} target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="LinkedIn">
+              <div class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </div>
+            </a>
+            
+            <!-- Google Scholar -->
+            <a href="https://scholar.google.com/citations?user=YOUR_ID" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Google Scholar">
+              <div class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                  <path d="M12 14l-6.16-3.422a12.083 12.083 0 00-.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 016.824-2.998 12.078 12.078 0 00-.665-6.479L12 14z"></path>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="flex flex-col md:flex-row md:items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-800">
+      <div class="flex items-center mb-4 md:mb-0">
+        <span class="text-sm text-gray-600 dark:text-gray-400">&copy; {new Date().getFullYear()} • </span>
+        <span class="ml-1 text-sm font-medium bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 text-transparent bg-clip-text">{SITE.TITLE}</span>
+        <span class="ml-1 logo-emoji relative inline-block">🔬</span>
+      </div>
+      
+      <div class="flex flex-wrap items-center gap-2">
         <button
           id="light-theme-button"
           aria-label="Light theme"
-          class="group flex size-9 items-center justify-center rounded border border-black/15 hover:bg-black/5 focus-visible:bg-black/5 dark:border-white/20 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
+          class="theme-button"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +148,7 @@ import BackToTop from "@components/BackToTop.astro";
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="transition-colors duration-300 ease-in-out group-hover:animate-pulse group-hover:stroke-black group-focus-visible:animate-pulse group-focus-visible:stroke-black group-hover:dark:stroke-white dark:group-focus-visible:stroke-white"
+            class="theme-icon"
           >
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -45,7 +164,7 @@ import BackToTop from "@components/BackToTop.astro";
         <button
           id="dark-theme-button"
           aria-label="Dark theme"
-          class="group flex size-9 items-center justify-center rounded border border-black/15 hover:bg-black/5 focus-visible:bg-black/5 dark:border-white/20 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
+          class="theme-button"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +176,7 @@ import BackToTop from "@components/BackToTop.astro";
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="transition-colors duration-300 ease-in-out group-hover:animate-pulse group-hover:stroke-black group-focus-visible:animate-pulse group-focus-visible:stroke-black group-hover:dark:stroke-white dark:group-focus-visible:stroke-white"
+            class="theme-icon"
           >
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
@@ -65,7 +184,7 @@ import BackToTop from "@components/BackToTop.astro";
         <button
           id="system-theme-button"
           aria-label="System theme"
-          class="group flex size-9 items-center justify-center rounded border border-black/15 hover:bg-black/5 focus-visible:bg-black/5 dark:border-white/20 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
+          class="theme-button"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +196,7 @@ import BackToTop from "@components/BackToTop.astro";
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="transition-colors duration-300 ease-in-out group-hover:animate-pulse group-hover:stroke-black group-focus-visible:animate-pulse group-focus-visible:stroke-black group-hover:dark:stroke-white dark:group-focus-visible:stroke-white"
+            class="theme-icon"
           >
             <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
             <line x1="8" y1="21" x2="16" y2="21"></line>
@@ -88,3 +207,203 @@ import BackToTop from "@components/BackToTop.astro";
     </div>
   </Container>
 </footer>
+
+<style>
+  /* Logo animations */
+  .logo-emoji {
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+  
+  .logo-emoji:hover {
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  
+  /* Theme button styles */
+  .theme-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
+  
+  :global(.dark) .theme-button {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .theme-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50%;
+  }
+  
+  .theme-button:hover::before {
+    opacity: 1;
+  }
+  
+  .theme-icon {
+    transition: all 0.3s ease;
+  }
+  
+  .theme-button:hover .theme-icon {
+    transform: scale(1.1);
+    stroke: #3b82f6;
+  }
+  
+  :global(.dark) .theme-button:hover .theme-icon {
+    stroke: #60a5fa;
+  }
+  
+  /* Social icon styles */
+  .social-icon-link {
+    display: inline-block;
+    text-decoration: none;
+  }
+  
+  .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #4b5563;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  :global(.dark) .social-icon {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #9ca3af;
+  }
+  
+  .social-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50%;
+  }
+  
+  .social-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  :global(.dark) .social-icon:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .social-icon:hover::before {
+    opacity: 1;
+  }
+  
+  .social-icon:hover svg {
+    stroke: #3b82f6;
+    transform: scale(1.1);
+  }
+  
+  :global(.dark) .social-icon:hover svg {
+    stroke: #60a5fa;
+  }
+  
+  /* Footer animations */
+  footer {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    // Theme switcher functionality
+    const lightThemeButton = document.getElementById('light-theme-button');
+    const darkThemeButton = document.getElementById('dark-theme-button');
+    const systemThemeButton = document.getElementById('system-theme-button');
+    
+    if (lightThemeButton && darkThemeButton && systemThemeButton) {
+      lightThemeButton.addEventListener('click', () => {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        updateActiveThemeButton('light');
+      });
+      
+      darkThemeButton.addEventListener('click', () => {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        updateActiveThemeButton('dark');
+      });
+      
+      systemThemeButton.addEventListener('click', () => {
+        localStorage.removeItem('theme');
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        updateActiveThemeButton('system');
+      });
+      
+      // Set initial active button
+      updateActiveThemeButton(getCurrentTheme());
+    }
+    
+    // Helper function to get current theme
+    function getCurrentTheme(): 'light' | 'dark' | 'system' {
+      if (localStorage.getItem('theme') === 'light') {
+        return 'light';
+      } else if (localStorage.getItem('theme') === 'dark') {
+        return 'dark';
+      } else {
+        return 'system';
+      }
+    }
+    
+    // Helper function to update active theme button
+    function updateActiveThemeButton(theme: 'light' | 'dark' | 'system'): void {
+      if (lightThemeButton && darkThemeButton && systemThemeButton) {
+        lightThemeButton.classList.remove('ring-2', 'ring-blue-500');
+        darkThemeButton.classList.remove('ring-2', 'ring-blue-500');
+        systemThemeButton.classList.remove('ring-2', 'ring-blue-500');
+        
+        if (theme === 'light') {
+          lightThemeButton.classList.add('ring-2', 'ring-blue-500');
+        } else if (theme === 'dark') {
+          darkThemeButton.classList.add('ring-2', 'ring-blue-500');
+        } else {
+          systemThemeButton.classList.add('ring-2', 'ring-blue-500');
+        }
+      }
+    }
+  });
+</script>

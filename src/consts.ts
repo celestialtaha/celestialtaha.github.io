@@ -39,16 +39,19 @@ export const SOCIALS: Socials = [
   {
     NAME: "X (Twitter)",
     HREF: "https://x.com/taha_iusm",
-    LOGO: "https://about.x.com/content/dam/about-twitter/x/brand-toolkit/logo-black.png.twimg.1920.png",
+    ICON: "/images/twitter.svg",
+    DESCRIPTION: "Follow me for updates"
   },
   {
     NAME: "GitHub",
     HREF: "https://github.com/celestialtaha",
-    LOGO: "/images/github-mark.png",
+    ICON: "/images/github.svg",
+    DESCRIPTION: "Check out my code"
   },
   {
     NAME: "LinkedIn",
     HREF: "https://www.linkedin.com/in/taha-samavati/",
-    LOGO: "https://cdn-icons-png.flaticon.com/512/174/174857.png",
+    ICON: "/images/linkedin.svg",
+    DESCRIPTION: "Connect professionally"
   },
 ];

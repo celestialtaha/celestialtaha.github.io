@@ -11,6 +11,7 @@ type Props = {
 };
 
 const { title, description } = Astro.props;
+const isHomePage = Astro.url.pathname === "/" || Astro.url.pathname === "/index.html";
 ---
 
 <!doctype html>
@@ -28,11 +29,464 @@ const { title, description } = Astro.props;
     </script>
   </head>
   <body>
+    <!-- Background - advanced for home page, simple for other pages -->
+    <div class={`space-background fixed inset-0 -z-10 ${isHomePage ? 'home-background' : 'simple-background'}`}>
+      {isHomePage && <canvas id="space-canvas" class="absolute inset-0 w-full h-full"></canvas>}
+      {isHomePage && <div class="nebula"></div>}
+    </div>
+    
     <Header />
     <main>
       <slot />
     </main>
     <Footer />
     <PageFind />
+    
+    {isHomePage && (
+      <script is:inline>
+        // Advanced space background with tech elements - only on home page
+        document.addEventListener('astro:page-load', initTechSpaceBackground);
+        
+        function initTechSpaceBackground() {
+          const canvas = document.getElementById('space-canvas');
+          if (!canvas) return;
+          
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return;
+          
+          // Set canvas size
+          const setCanvasSize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+          };
+          
+          setCanvasSize();
+          window.addEventListener('resize', setCanvasSize);
+          
+          // Python code snippets to display
+          const pythonSnippets = [
+            "def neural_network(x):",
+            "    return model.predict(x)",
+            "import numpy as np",
+            "import tensorflow as tf",
+            "class AIAgent:",
+            "def __init__(self):",
+            "x = np.array(data)",
+            "y_pred = model(x)",
+            "for i in range(epochs):",
+            "loss = tf.reduce_mean()",
+            "if __name__ == '__main__':",
+            "plt.scatter(x, y)",
+            "@tf.function",
+            "def train_step(x, y):",
+            "class LLM(Model):",
+            "def transformer(inputs):",
+            "attention = self.mha(query, key)",
+            "embeddings = self.embed(tokens)",
+            "def backprop(grads):",
+            "optimizer.apply_gradients()"
+          ];
+          
+          // AI/ML symbols to display
+          const techSymbols = [
+            "∑", "∫", "π", "λ", "θ", "Ω", "μ", "σ", "∇", "∆", 
+            "α", "β", "γ", "φ", "ψ", "ε", "δ", "ρ", "τ", "ξ"
+          ];
+          
+          // Colors for tech theme
+          const codeColors = [
+            "#4285F4", // Google Blue
+            "#34A853", // Google Green
+            "#FBBC05", // Google Yellow
+            "#EA4335", // Google Red
+            "#8429F6", // Purple
+            "#00C9FF", // Cyan
+            "#FF5286", // Pink
+            "#00E676"  // Bright Green
+          ];
+          
+          // Create stars
+          const stars = [];
+          const starCount = Math.min(window.innerWidth, window.innerHeight) * 0.3;
+          
+          for (let i = 0; i < starCount; i++) {
+            stars.push({
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height,
+              radius: Math.random() * 1.2,
+              color: "#ffffff",
+              opacity: Math.random() * 0.8 + 0.2,
+              twinkleSpeed: Math.random() * 0.01 + 0.003,
+              twinkleDirection: Math.random() > 0.5 ? 1 : -1
+            });
+          }
+          
+          // Create code particles
+          const codeParticles = [];
+          const codeParticleCount = 25;
+          
+          for (let i = 0; i < codeParticleCount; i++) {
+            const text = pythonSnippets[Math.floor(Math.random() * pythonSnippets.length)];
+            codeParticles.push({
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height,
+              text: text,
+              color: codeColors[Math.floor(Math.random() * codeColors.length)],
+              opacity: Math.random() * 0.7 + 0.3,
+              size: Math.random() * 10 + 10,
+              speedX: (Math.random() - 0.5) * 0.5,
+              speedY: (Math.random() - 0.5) * 0.5,
+              rotationSpeed: (Math.random() - 0.5) * 0.01,
+              rotation: Math.random() * Math.PI * 2
+            });
+          }
+          
+          // Create symbol particles
+          const symbolParticles = [];
+          const symbolParticleCount = 30;
+          
+          for (let i = 0; i < symbolParticleCount; i++) {
+            const symbol = techSymbols[Math.floor(Math.random() * techSymbols.length)];
+            symbolParticles.push({
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height,
+              symbol: symbol,
+              color: codeColors[Math.floor(Math.random() * codeColors.length)],
+              opacity: Math.random() * 0.8 + 0.2,
+              size: Math.random() * 15 + 15,
+              speedX: (Math.random() - 0.5) * 0.3,
+              speedY: (Math.random() - 0.5) * 0.3,
+              pulseSpeed: Math.random() * 0.02 + 0.01,
+              pulseDirection: Math.random() > 0.5 ? 1 : -1,
+              pulseFactor: 1
+            });
+          }
+          
+          // Create neural network nodes
+          const neuralNodes = [];
+          const nodeCount = 40;
+          const layerCount = 4;
+          const nodesPerLayer = Math.floor(nodeCount / layerCount);
+          
+          // Create nodes in layers
+          for (let layer = 0; layer < layerCount; layer++) {
+            const layerX = (canvas.width / (layerCount + 1)) * (layer + 1);
+            
+            for (let i = 0; i < nodesPerLayer; i++) {
+              const layerHeight = canvas.height * 0.6;
+              const spacing = layerHeight / (nodesPerLayer - 1);
+              const nodeY = (canvas.height - layerHeight) / 2 + i * spacing;
+              
+              neuralNodes.push({
+                x: layerX,
+                y: nodeY,
+                radius: Math.random() * 2 + 3,
+                color: codeColors[Math.floor(Math.random() * codeColors.length)],
+                opacity: Math.random() * 0.5 + 0.5,
+                layer: layer,
+                pulseSpeed: Math.random() * 0.03 + 0.01,
+                pulseDirection: Math.random() > 0.5 ? 1 : -1,
+                connections: []
+              });
+            }
+          }
+          
+          // Create connections between layers
+          for (let i = 0; i < neuralNodes.length; i++) {
+            const node = neuralNodes[i];
+            
+            // Connect to next layer
+            if (node.layer < layerCount - 1) {
+              const nextLayerNodes = neuralNodes.filter(n => n.layer === node.layer + 1);
+              
+              // Connect to 2-3 random nodes in next layer
+              const connectionCount = Math.floor(Math.random() * 2) + 2;
+              for (let c = 0; c < connectionCount; c++) {
+                const targetIndex = Math.floor(Math.random() * nextLayerNodes.length);
+                const target = nextLayerNodes[targetIndex];
+                
+                node.connections.push({
+                  targetIndex: neuralNodes.indexOf(target),
+                  opacity: Math.random() * 0.4 + 0.1,
+                  pulseSpeed: Math.random() * 0.05 + 0.02,
+                  pulseState: Math.random(),
+                  active: Math.random() > 0.7
+                });
+              }
+            }
+          }
+          
+          // Create data flow particles
+          const dataFlowParticles = [];
+          
+          // Mouse tracking for interactive effects
+          let mouseX = 0;
+          let mouseY = 0;
+          let lastMouseX = 0;
+          let lastMouseY = 0;
+          
+          document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+          });
+          
+          // Animation loop
+          function animate() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Calculate mouse movement effect
+            const mouseSpeedX = mouseX - lastMouseX;
+            const mouseSpeedY = mouseY - lastMouseY;
+            const mouseSpeed = Math.sqrt(mouseSpeedX * mouseSpeedX + mouseSpeedY * mouseSpeedY) * 0.05;
+            lastMouseX = mouseX;
+            lastMouseY = mouseY;
+            
+            // Update and draw stars
+            for (let i = 0; i < stars.length; i++) {
+              const star = stars[i];
+              
+              // Twinkle effect
+              star.opacity += star.twinkleSpeed * star.twinkleDirection;
+              if (star.opacity > 1) {
+                star.opacity = 1;
+                star.twinkleDirection = -1;
+              } else if (star.opacity < 0.2) {
+                star.opacity = 0.2;
+                star.twinkleDirection = 1;
+              }
+              
+              // Draw star
+              ctx.beginPath();
+              ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+              ctx.fillStyle = star.color;
+              ctx.globalAlpha = star.opacity;
+              ctx.fill();
+            }
+            
+            // Draw neural network
+            // First draw connections
+            for (let i = 0; i < neuralNodes.length; i++) {
+              const node = neuralNodes[i];
+              
+              for (let c = 0; c < node.connections.length; c++) {
+                const conn = node.connections[c];
+                const target = neuralNodes[conn.targetIndex];
+                
+                // Update pulse state
+                conn.pulseState += conn.pulseSpeed;
+                if (conn.pulseState > 1) conn.pulseState = 0;
+                
+                // Only draw active connections
+                if (conn.active) {
+                  // Draw connection line
+                  ctx.beginPath();
+                  ctx.moveTo(node.x, node.y);
+                  ctx.lineTo(target.x, target.y);
+                  ctx.strokeStyle = `rgba(255, 255, 255, ${conn.opacity})`;
+                  ctx.lineWidth = 0.5;
+                  ctx.stroke();
+                  
+                  // Draw data flow particles
+                  if (Math.random() < 0.03) {
+                    dataFlowParticles.push({
+                      startX: node.x,
+                      startY: node.y,
+                      endX: target.x,
+                      endY: target.y,
+                      progress: 0,
+                      speed: Math.random() * 0.01 + 0.005,
+                      color: node.color,
+                      size: Math.random() * 2 + 1
+                    });
+                  }
+                }
+              }
+            }
+            
+            // Update and draw data flow particles
+            for (let i = dataFlowParticles.length - 1; i >= 0; i--) {
+              const particle = dataFlowParticles[i];
+              
+              // Update progress
+              particle.progress += particle.speed;
+              
+              // Remove if completed
+              if (particle.progress >= 1) {
+                dataFlowParticles.splice(i, 1);
+                continue;
+              }
+              
+              // Calculate position
+              const x = particle.startX + (particle.endX - particle.startX) * particle.progress;
+              const y = particle.startY + (particle.endY - particle.startY) * particle.progress;
+              
+              // Draw particle
+              ctx.beginPath();
+              ctx.arc(x, y, particle.size, 0, Math.PI * 2);
+              ctx.fillStyle = particle.color;
+              ctx.globalAlpha = 1 - Math.abs(particle.progress - 0.5) * 2; // Fade in and out
+              ctx.fill();
+            }
+            
+            // Draw neural nodes
+            for (let i = 0; i < neuralNodes.length; i++) {
+              const node = neuralNodes[i];
+              
+              // Pulse effect
+              node.opacity += node.pulseSpeed * node.pulseDirection;
+              if (node.opacity > 1) {
+                node.opacity = 1;
+                node.pulseDirection = -1;
+              } else if (node.opacity < 0.3) {
+                node.opacity = 0.3;
+                node.pulseDirection = 1;
+              }
+              
+              // Draw node
+              ctx.beginPath();
+              ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+              ctx.fillStyle = node.color;
+              ctx.globalAlpha = node.opacity;
+              ctx.fill();
+            }
+            
+            // Update and draw code particles
+            ctx.globalAlpha = 1;
+            for (let i = 0; i < codeParticles.length; i++) {
+              const particle = codeParticles[i];
+              
+              // Move particle
+              particle.x += particle.speedX;
+              particle.y += particle.speedY;
+              particle.rotation += particle.rotationSpeed;
+              
+              // Wrap around edges
+              if (particle.x < -100) particle.x = canvas.width + 100;
+              if (particle.x > canvas.width + 100) particle.x = -100;
+              if (particle.y < -30) particle.y = canvas.height + 30;
+              if (particle.y > canvas.height + 30) particle.y = -30;
+              
+              // Draw code snippet
+              ctx.save();
+              ctx.translate(particle.x, particle.y);
+              ctx.rotate(particle.rotation);
+              ctx.font = `${particle.size}px monospace`;
+              ctx.fillStyle = particle.color;
+              ctx.globalAlpha = particle.opacity;
+              ctx.fillText(particle.text, 0, 0);
+              ctx.restore();
+            }
+            
+            // Update and draw symbol particles
+            for (let i = 0; i < symbolParticles.length; i++) {
+              const particle = symbolParticles[i];
+              
+              // Move particle
+              particle.x += particle.speedX;
+              particle.y += particle.speedY;
+              
+              // Pulse size
+              particle.pulseFactor += particle.pulseSpeed * particle.pulseDirection;
+              if (particle.pulseFactor > 1.2) {
+                particle.pulseFactor = 1.2;
+                particle.pulseDirection = -1;
+              } else if (particle.pulseFactor < 0.8) {
+                particle.pulseFactor = 0.8;
+                particle.pulseDirection = 1;
+              }
+              
+              // Wrap around edges
+              if (particle.x < -30) particle.x = canvas.width + 30;
+              if (particle.x > canvas.width + 30) particle.x = -30;
+              if (particle.y < -30) particle.y = canvas.height + 30;
+              if (particle.y > canvas.height + 30) particle.y = -30;
+              
+              // Draw symbol
+              ctx.font = `${particle.size * particle.pulseFactor}px Arial`;
+              ctx.fillStyle = particle.color;
+              ctx.globalAlpha = particle.opacity;
+              ctx.fillText(particle.symbol, particle.x, particle.y);
+            }
+            
+            // Reset global alpha
+            ctx.globalAlpha = 1;
+            
+            requestAnimationFrame(animate);
+          }
+          
+          // Start animation
+          animate();
+        }
+        
+        // Initialize on page load
+        if (document.readyState === 'complete') {
+          initTechSpaceBackground();
+        } else {
+          window.addEventListener('load', initTechSpaceBackground);
+        }
+      </script>
+    )}
   </body>
 </html>
+
+<style>
+  /* Space background effect */
+  .space-background {
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  /* Home page background */
+  .home-background::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, 
+      rgba(5, 10, 25, 0.97) 0%, 
+      rgba(2, 5, 15, 0.98) 50%, 
+      rgba(0, 2, 10, 1) 100%
+    );
+  }
+  
+  /* Simple background for other pages */
+  .simple-background {
+    background-color: var(--color-bg);
+  }
+  
+  /* Nebula effects - only for home page */
+  .nebula {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0) 50%),
+      radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.15) 0%, rgba(236, 72, 153, 0) 60%),
+      radial-gradient(circle at 40% 80%, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0) 50%),
+      radial-gradient(circle at 60% 50%, rgba(6, 182, 212, 0.1) 0%, rgba(6, 182, 212, 0) 70%);
+    filter: blur(40px);
+    opacity: 0.6;
+    animation: nebula-shift 60s ease-in-out infinite alternate;
+  }
+  
+  /* Light mode adjustments */
+  html:not(.dark) .home-background::before {
+    background: radial-gradient(ellipse at center, 
+      rgba(240, 245, 255, 0.97) 0%, 
+      rgba(230, 240, 255, 0.98) 50%, 
+      rgba(220, 230, 250, 1) 100%
+    );
+  }
+  
+  html:not(.dark) .nebula {
+    opacity: 0.3;
+  }
+  
+  @keyframes nebula-shift {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 100% 100%;
+    }
+  }
+</style>

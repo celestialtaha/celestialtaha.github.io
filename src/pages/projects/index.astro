@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import ArrowCard from "@components/ArrowCard.astro";
 import { PROJECTS } from "@consts";
 
 const projects = (await getCollection("projects"))
@@ -12,21 +11,112 @@ const projects = (await getCollection("projects"))
 
 <Layout title={PROJECTS.TITLE} description={PROJECTS.DESCRIPTION}>
   <Container>
-    <aside data-pagefind-ignore>
-      <div class="space-y-10">
-        <div class="animate font-semibold text-black dark:text-white">
+    <div class="space-y-10">
+      <div class="animate">
+        <h1 class="font-semibold text-3xl md:text-4xl text-gray-900 dark:text-white mb-4">
           Projects
-        </div>
-        <ul class="animate not-prose flex flex-col gap-4">
-          {
-            projects.map((project) => (
-              <li>
-                <ArrowCard entry={project} />
-              </li>
-            ))
-          }
-        </ul>
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400 max-w-2xl text-lg">
+          A collection of my technical projects and research work. Each project showcases different skills and technologies I've worked with.
+        </p>
       </div>
-    </aside>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {projects.map((project) => (
+          <div class="publication-card bg-white dark:bg-gray-800/60 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700">
+            <div class="p-5">
+              <div class="flex items-center gap-2 mb-3">
+                {new Date(project.data.date) > new Date() && 
+                  <div class="forthcoming-badge" title="Forthcoming">
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-gradient-to-r from-blue-500 to-purple-500"></span>
+                    </span>
+                  </div>
+                }
+                <a href={`/${project.collection}/${project.slug}`}>
+                  <span class="text-lg font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                    {project.data.title}
+                  </span>
+                </a>
+              </div>
+              
+              <p class="text-gray-700 dark:text-gray-300 mb-3">
+                {project.data.description}
+              </p>
+              
+              <div class="flex flex-wrap items-center text-xs text-gray-500 dark:text-gray-400 mb-3 gap-2">
+                <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+                  {new Date(project.data.date) > new Date() 
+                    ? "Forthcoming" 
+                    : new Date(project.data.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short'
+                      })
+                  }
+                </span>
+              </div>
+              
+              <div class="mt-4 flex space-x-3">
+                {project.data.repoURL && (
+                  <a href={project.data.repoURL} target="_blank" rel="noopener noreferrer" 
+                     class="inline-flex items-center text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                    Repository
+                  </a>
+                )}
+                {project.data.demoURL && (
+                  <a href={project.data.demoURL} target="_blank" rel="noopener noreferrer" 
+                     class="inline-flex items-center text-xs font-medium text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    Live Demo
+                  </a>
+                )}
+                <a href={`/${project.collection}/${project.slug}`} class="inline-flex items-center text-xs font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                  View Details
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   </Container>
 </Layout>
+
+<style>
+  .publication-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+  
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .publication-card:nth-child(1) { animation-delay: 0.1s; }
+  .publication-card:nth-child(2) { animation-delay: 0.2s; }
+  .publication-card:nth-child(3) { animation-delay: 0.3s; }
+  .publication-card:nth-child(4) { animation-delay: 0.4s; }
+  .publication-card:nth-child(5) { animation-delay: 0.5s; }
+  .publication-card:nth-child(6) { animation-delay: 0.6s; }
+  
+  .forthcoming-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

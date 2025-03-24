@@ -1,9 +1,22 @@
 ---
 import { getCollection } from "astro:content";
 import PageLayout from "@layouts/Layout.astro";
-import Container from "@components/Container.astro";
 import { dateRange } from "@lib/utils";
 import { WORK } from "@consts";
+
+// Type definition for work entry
+type WorkEntry = {
+  data: {
+    company: string;
+    role: string;
+    dateStart: string;
+    dateEnd: string;
+    logo?: string;
+    skills?: string[];
+    website?: string;
+  };
+  Content: any;
+};
 
 const collection = (await getCollection("work"))
   .sort((a, b) => new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf());
@@ -17,35 +30,94 @@ const work = await Promise.all(
 ---
 
 <PageLayout title={WORK.TITLE} description={WORK.DESCRIPTION}>
-  <Container>
-    <div class="space-y-10">
-      <div class="animate font-semibold text-black dark:text-white">
-        Work
+  <div class="mx-auto max-w-screen-lg px-3">
+    <div class="space-y-12">
+      <!-- Hero Section -->
+      <div class="text-center py-8 border-b border-gray-200 dark:border-gray-800">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Professional Experience</h1>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          A journey through my career in data science, AI, and product development.
+        </p>
       </div>
-      <ul class="flex flex-col space-y-4">
-        { 
-          work.map(entry => (
-            <li class="animate">
-              <div class="font-semibold text-black dark:text-white">
-                {entry.data.company}
+      
+      <!-- Timeline Section -->
+      <div class="relative">
+        <!-- Timeline Line -->
+        <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-blue-500 to-purple-500"></div>
+        
+        <div class="space-y-12 relative">
+          {work.map((entry: WorkEntry, index: number) => (
+            <div class={`work-card relative ${index % 2 === 0 ? 'md:pr-12 md:ml-auto md:mr-0' : 'md:pl-12'} md:w-1/2 w-full pl-8 md:pl-0`}>
+              <!-- Timeline Dot -->
+              <div class="absolute left-0 md:left-auto md:right-auto md:-translate-x-1/2 md:-ml-px top-0 w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-md z-10"></div>
+              
+              <div class="bg-white dark:bg-gray-800/60 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700 p-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                  <div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                      {entry.data.company}
+                      {entry.data.website && !entry.data.website.startsWith('#') && (
+                        <a href={entry.data.website} target="_blank" rel="noopener noreferrer" class="ml-2 text-blue-500 hover:text-blue-600 inline-flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      )}
+                    </h3>
+                    <div class="text-lg font-medium text-gray-700 dark:text-gray-300">{entry.data.role}</div>
+                  </div>
+                  <div class="mt-2 md:mt-0 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-medium">
+                    {dateRange(entry.data.dateStart, entry.data.dateEnd)}
+                  </div>
+                </div>
+                
+                {entry.data.skills && (
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    {entry.data.skills.map((skill: string) => (
+                      <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-md text-xs text-gray-700 dark:text-gray-300">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                
+                <div class="prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-400">
+                  <entry.Content />
+                </div>
               </div>
-              <div class="text-sm opacity-75">
-                {entry.data.role}
-              </div>
-              <div class="text-sm opacity-75">
-                {dateRange(entry.data.dateStart, entry.data.dateEnd)}
-              </div>
-              <article>
-                <entry.Content />
-              </article>
-            </li>
-          ))
-        }
-      </ul>
-<!-- 
-      <ul class="animate flex flex-col gap-4">
-
-      </ul> -->
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
-  </Container>
+  </div>
 </PageLayout>
+
+<style>
+  .work-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+  
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .work-card:nth-child(1) { animation-delay: 0.1s; }
+  .work-card:nth-child(2) { animation-delay: 0.2s; }
+  .work-card:nth-child(3) { animation-delay: 0.3s; }
+  .work-card:nth-child(4) { animation-delay: 0.4s; }
+  .work-card:nth-child(5) { animation-delay: 0.5s; }
+  
+  @media (max-width: 768px) {
+    .work-card {
+      margin-left: 0 !important;
+      padding-left: 2rem !important;
+      width: 100% !important;
+    }
+  }
+</style>
