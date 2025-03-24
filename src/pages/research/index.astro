@@ -15,7 +15,6 @@ type ResearchEntry = {
     authors: string[];
     link: string;
     paperId?: string;
-    citations?: number;
     pdf?: string;
     code?: string;
     demo?: string;
@@ -129,14 +128,6 @@ const researchWithContent = await Promise.all(
                         ? new Date(entry.data.publicationDate).toLocaleDateString('en-US', {year: 'numeric', month: 'short'})
                         : 'Forthcoming'}
                     </span>
-                    {entry.data.citations && 
-                      <span class="bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                        </svg>
-                        {entry.data.citations} citations
-                      </span>
-                    }
                   </div>
                   
                   <div class="prose prose-sm dark:prose-invert mt-3 max-w-none text-gray-600 dark:text-gray-400">

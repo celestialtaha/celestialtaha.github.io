@@ -32,7 +32,6 @@ const research = defineCollection({
     authors: z.array(z.string()),
     link: z.string(),
     paperId: z.string().optional(),
-    citations: z.number().optional(),
     pdf: z.string().optional(),
     code: z.string().optional(),
     demo: z.string().optional(),
