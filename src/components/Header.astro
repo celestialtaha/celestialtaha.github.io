@@ -4,9 +4,9 @@ import Link from "@components/Link.astro";
 import { SITE } from "@consts";
 ---
 
-<header transition:persist class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800 shadow-sm">
+<header transition:persist class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800 shadow-sm w-full">
   <Container>
-    <div class="flex flex-wrap justify-between gap-y-2 py-4">
+    <div class="flex flex-wrap justify-between gap-y-3 py-4">
       <div class="group">
         <Link href="/" underline={false}>
           <div class="font-bold text-lg relative overflow-hidden logo-container">
@@ -19,8 +19,8 @@ import { SITE } from "@consts";
         </Link>
       </div>
       
-      <nav class="flex items-center gap-4 text-sm">
-        <div class="nav-links flex items-center gap-4">
+      <nav class="flex items-center gap-2 sm:gap-4 text-sm">
+        <div class="nav-links flex items-center gap-2 sm:gap-4 overflow-x-visible">
           <div class="nav-link-container">
             <Link href="/blog">
               <span class="nav-link flex items-center gap-1 relative group">
@@ -89,7 +89,7 @@ import { SITE } from "@consts";
               fill="currentColor"
             ></path>
           </svg>
-          <span class="ml-1 search-text">Search</span>
+          <span class="ml-1 search-text hidden sm:inline">Search</span>
         </button>
       </nav>
     </div>
@@ -141,6 +141,7 @@ import { SITE } from "@consts";
     overflow: hidden;
     position: relative;
     z-index: 1;
+    white-space: nowrap;
   }
   
   .search-button::before {
@@ -178,6 +179,13 @@ import { SITE } from "@consts";
     width: 100%;
     opacity: 1;
     box-shadow: 0 0 8px rgba(139, 92, 246, 0.5);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .nav-links {
+      flex-wrap: nowrap;
+    }
   }
 </style>
 
