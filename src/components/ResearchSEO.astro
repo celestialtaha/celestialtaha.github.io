@@ -1,0 +1,66 @@
+---
+// ResearchSEO.astro - Add to your research pages for enhanced academic SEO
+interface Props {
+  paper: {
+    data: {
+      title: string;
+      abstract: string;
+      publicationDate: string;
+      authors: string[];
+      venue?: string;
+      doi?: string;
+      keywords?: string[];
+    };
+    slug: string;
+  };
+}
+
+const { paper } = Astro.props;
+const { title, abstract, publicationDate, authors, venue, doi, keywords = [] } = paper.data;
+const canonicalURL = new URL(`/research/${paper.slug}`, Astro.site);
+
+// Format authors for structured data
+const authorStructuredData = authors.map(author => ({
+  "@type": "Person",
+  "name": author
+}));
+
+// Determine if paper is forthcoming
+const isForthcoming = publicationDate === 'Forthcoming' || publicationDate === 'In Review';
+
+// Format date for structured data (only for published papers)
+const formattedDate = isForthcoming ? null : new Date(publicationDate).toISOString();
+---
+
+<!-- Academic-specific SEO metadata -->
+{keywords.map((keyword) => <meta name="keywords" content={keyword} />)}
+{doi && <meta name="citation_doi" content={doi} />}
+<meta name="citation_title" content={title} />
+{authors.map((author) => <meta name="citation_author" content={author} />)}
+{venue && <meta name="citation_journal_title" content={venue} />}
+{!isForthcoming && <meta name="citation_publication_date" content={publicationDate} />}
+{isForthcoming && <meta name="citation_publication_date" content="Forthcoming" />}
+
+<!-- JSON-LD for ScholarlyArticle -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": title,
+  "name": title,
+  "description": abstract,
+  "author": authorStructuredData,
+  ...(formattedDate && { "datePublished": formattedDate }),
+  ...(isForthcoming && { "datePublished": "Forthcoming" }),
+  ...(venue && { "isPartOf": {
+    "@type": "Periodical",
+    "name": venue
+  }}),
+  ...(doi && { "sameAs": `https://doi.org/${doi}` }),
+  "url": canonicalURL.toString(),
+  "keywords": keywords.join(", "),
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": canonicalURL.toString()
+  }
+})}>
+</script>

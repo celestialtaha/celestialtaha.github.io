@@ -9,11 +9,19 @@ interface Props {
   title: string;
   description: string;
   image?: string;
+  article?: boolean;
+  keywords?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = "/blog-placeholder.svg" } = Astro.props;
+const { 
+  title, 
+  description, 
+  image = "/blog-placeholder.svg",
+  article = false,
+  keywords = "data science, machine learning, generative AI, research, portfolio" 
+} = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -26,8 +34,28 @@ const { title, description, image = "/blog-placeholder.svg" } = Astro.props;
 />
 <meta name="generator" content={Astro.generator} />
 
-<!-- Canonical URL -->
+<!-- Performance Optimizations -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" href="/preload.js" as="script" />
+<script src="/preload.js" defer></script>
+<script src="/lazy-load.js" defer></script>
+<script src="/seo-helper.js" defer></script>
+
+<!-- SEO Metadata -->
 <link rel="canonical" href={canonicalURL} />
+<meta name="robots" content="index, follow" />
+<meta name="keywords" content={keywords} />
+<meta name="author" content="Taha" />
+<meta name="language" content="English" />
+
+<!-- PWA Support -->
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#3b82f6" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Taha's Portfolio" />
+<link rel="apple-touch-icon" href="/icon-192.png" />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
@@ -35,11 +63,13 @@ const { title, description, image = "/blog-placeholder.svg" } = Astro.props;
 <meta name="description" content={description} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={article ? "article" : "website"} />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:site_name" content="Taha's Portfolio" />
+<meta property="og:locale" content="en_US" />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -47,10 +77,82 @@ const { title, description, image = "/blog-placeholder.svg" } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta name="twitter:creator" content="@celestialtaha" />
 
 <!-- PageFind -->
 <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
 <script is:inline src="/pagefind/pagefind-ui.js"></script>
+
+<!-- JSON-LD Structured Data for Personal Website -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Taha",
+    "url": "https://celestialtaha.github.io",
+    "jobTitle": ["Data Scientist", "Generative AI Engineer", "Researcher"],
+    "sameAs": [
+      "https://github.com/celestialtaha",
+      "https://linkedin.com/in/celestialtaha"
+    ],
+    "knowsAbout": ["Machine Learning", "Generative AI", "Data Science", "Backend Development"]
+  }
+</script>
+
+<!-- JSON-LD for Article if applicable -->
+{article && (
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": title,
+    "description": description,
+    "image": new URL(image, Astro.url).toString(),
+    "author": {
+      "@type": "Person",
+      "name": "Taha"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Taha"
+    },
+    "url": canonicalURL.toString(),
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalURL.toString()
+    }
+  })}></script>
+)}
+
+<!-- JSON-LD for BreadcrumbList -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://celestialtaha.github.io"
+    },
+    ...(Astro.url.pathname !== "/" ? [
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": Astro.url.pathname.split('/')[1].charAt(0).toUpperCase() + 
+                Astro.url.pathname.split('/')[1].slice(1),
+        "item": `https://celestialtaha.github.io${Astro.url.pathname.split('/').slice(0, 2).join('/')}`
+      }
+    ] : []),
+    ...(Astro.url.pathname.split('/').length > 2 && Astro.url.pathname.split('/')[2] ? [
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": title,
+        "item": canonicalURL.toString()
+      }
+    ] : [])
+  ]
+})}></script>
 
 <ViewTransitions />
 

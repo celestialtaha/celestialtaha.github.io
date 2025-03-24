@@ -1,0 +1,59 @@
+---
+// ResearchStatusIndicator.astro - Visual indicator for research publication status
+interface Props {
+  status: "Forthcoming" | "In Review" | "Published";
+}
+
+const { status } = Astro.props;
+
+// Generate a unique ID for the indicator
+const indicatorId = `indicator-${Math.random().toString(36).substring(2, 11)}`;
+
+// Determine colors based on status
+let gradientColors = "";
+let tooltip = "";
+
+switch (status) {
+  case "Forthcoming":
+    gradientColors = "from-blue-400 to-indigo-500";
+    tooltip = "Forthcoming";
+    break;
+  case "In Review":
+    gradientColors = "from-purple-400 to-pink-500";
+    tooltip = "In Review";
+    break;
+  case "Published":
+    gradientColors = "from-green-400 to-emerald-500";
+    tooltip = "Published";
+    break;
+}
+---
+
+<div class="relative inline-flex">
+  <div 
+    id={indicatorId}
+    class={`w-4 h-4 rounded-full bg-gradient-to-r ${gradientColors} shadow-md cursor-help`}
+    title={tooltip}
+    aria-label={`Publication Status: ${status}`}
+  >
+    <span class="sr-only">{status}</span>
+    <div class="absolute inset-0 rounded-full bg-gradient-to-r ${gradientColors} opacity-50 animate-pulse"></div>
+  </div>
+</div>
+
+<style>
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.3;
+      transform: scale(1.05);
+    }
+  }
+  
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+</style>

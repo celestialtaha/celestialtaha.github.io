@@ -1,0 +1,76 @@
+---
+// ForthcomingPaperIndicator.astro - Visual indicator for forthcoming papers with SEO benefits
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+// Generate a unique ID for the indicator
+const indicatorId = `forthcoming-${Math.random().toString(36).substring(2, 11)}`;
+---
+
+<div class="relative inline-flex items-center">
+  <div 
+    id={indicatorId}
+    class="w-4 h-4 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 shadow-md cursor-help mr-2"
+    title="Forthcoming Paper"
+    aria-label={`Forthcoming Paper: ${title}`}
+  >
+    <span class="sr-only">Forthcoming</span>
+    <!-- Animated gradient background for the indicator -->
+    <div class="absolute inset-0 rounded-full opacity-50"></div>
+  </div>
+</div>
+
+<style>
+  /* Subtle animation for the indicator */
+  #forthcoming-indicator .absolute {
+    background: linear-gradient(-45deg, #4f46e5, #3b82f6, #8b5cf6, #6366f1);
+    background-size: 400% 400%;
+    animation: gradient-shift 3s ease infinite, pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.3;
+      transform: scale(1.05);
+    }
+  }
+</style>
+
+<script define:vars={{ indicatorId }}>
+// Add hover effect and accessibility
+document.addEventListener('DOMContentLoaded', () => {
+  const indicator = document.getElementById(indicatorId);
+  if (indicator) {
+    // Add hover effect
+    indicator.addEventListener('mouseenter', () => {
+      indicator.style.transform = 'scale(1.1)';
+    });
+    
+    indicator.addEventListener('mouseleave', () => {
+      indicator.style.transform = 'scale(1)';
+    });
+    
+    // Add transition for smooth scaling
+    indicator.style.transition = 'transform 0.2s ease-in-out';
+  }
+});
+</script>

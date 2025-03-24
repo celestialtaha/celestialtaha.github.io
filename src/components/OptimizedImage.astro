@@ -1,0 +1,69 @@
+---
+// OptimizedImage.astro - SEO-optimized image component
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  className?: string;
+  loading?: "lazy" | "eager";
+  decoding?: "async" | "sync" | "auto";
+}
+
+const { 
+  src, 
+  alt, 
+  width, 
+  height, 
+  className = "", 
+  loading = "lazy", 
+  decoding = "async" 
+} = Astro.props;
+
+// Determine if this is a local or external image
+const isExternal = src.startsWith('http') || src.startsWith('//');
+const imgSrc = isExternal ? src : src;
+
+// Generate a unique ID for the image
+const imgId = `img-${Math.random().toString(36).substring(2, 11)}`;
+---
+
+<img
+  id={imgId}
+  src={imgSrc}
+  alt={alt}
+  width={width}
+  height={height}
+  class={className}
+  loading={loading}
+  decoding={decoding}
+/>
+
+<script define:vars={{ imgId, imgSrc }}>
+// Add fade-in effect when image loads
+document.addEventListener('DOMContentLoaded', () => {
+  const img = document.getElementById(imgId);
+  if (img) {
+    // Apply initial styles
+    img.style.opacity = '0';
+    img.style.transition = 'opacity 0.5s ease-in-out';
+    
+    // When image loads, fade it in
+    img.onload = () => {
+      img.style.opacity = '1';
+    };
+    
+    // If image is already loaded, fade it in immediately
+    if (img.complete) {
+      img.style.opacity = '1';
+    }
+  }
+});
+</script>
+
+<style>
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
