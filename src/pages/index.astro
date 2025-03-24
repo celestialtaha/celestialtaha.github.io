@@ -75,7 +75,7 @@ const skills = [
       });
     });
 
-    // Initialize scroll animations
+    // Initialize scroll animations with optimized options
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -83,7 +83,10 @@ const skills = [
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { 
+      threshold: 0.1,
+      rootMargin: '100px' // Preload elements before they come into view
+    });
 
     document.querySelectorAll('.animate-on-scroll').forEach(el => {
       observer.observe(el);
@@ -154,24 +157,37 @@ const skills = [
   // For view transitions API (if supported)
   document.addEventListener('astro:page-load', initializePage);
   
-  // Mouse-tracking gradient effect
+  // Throttle function to limit frequent function calls
+  function throttle(callback, delay) {
+    let lastCall = 0;
+    return function(...args) {
+      const now = new Date().getTime();
+      if (now - lastCall >= delay) {
+        lastCall = now;
+        callback(...args);
+      }
+    };
+  }
+  
+  // Mouse-tracking gradient effect with throttling
   const aboutSection = document.getElementById('about-section');
   if (aboutSection) {
+    // Use requestAnimationFrame for smoother performance
+    let ticking = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    
     aboutSection.addEventListener('mousemove', (e) => {
-      const rect = aboutSection.getBoundingClientRect();
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
       
-      // Calculate mouse position relative to the element (0-100%)
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      
-      // Create gradient based on mouse position with increased brightness
-      const isDarkMode = document.documentElement.classList.contains('dark');
-      const color1 = isDarkMode ? 'rgba(59, 130, 246, 0.6)' : 'rgba(59, 130, 246, 0.3)';
-      const color2 = isDarkMode ? 'rgba(147, 51, 234, 0.6)' : 'rgba(147, 51, 234, 0.3)';
-      const color3 = isDarkMode ? 'rgba(236, 72, 153, 0.5)' : 'rgba(236, 72, 153, 0.25)';
-      
-      // Apply the gradient with mouse position and increased intensity
-      aboutSection.style.background = `radial-gradient(circle at ${x}% ${y}%, ${color1} 0%, ${color3} 30%, ${color2} 70%)`;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateGradient(aboutSection, lastMouseX, lastMouseY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
     
     // Reset gradient when mouse leaves
@@ -180,41 +196,57 @@ const skills = [
     });
   }
   
-  // Mouse-tracking gradient effect for Connect section
+  // Mouse-tracking gradient effect for Connect section with throttling
   const connectSection = document.getElementById('connect-section');
   if (connectSection) {
+    // Use requestAnimationFrame for smoother performance
+    let ticking = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    
     connectSection.addEventListener('mousemove', (e) => {
-      const rect = connectSection.getBoundingClientRect();
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
       
-      // Calculate mouse position relative to the element (0-100%)
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      
-      // Create gradient based on mouse position with increased brightness
-      const isDarkMode = document.documentElement.classList.contains('dark');
-      const color1 = isDarkMode ? 'rgba(79, 70, 229, 0.6)' : 'rgba(79, 70, 229, 0.3)';
-      const color2 = isDarkMode ? 'rgba(147, 51, 234, 0.6)' : 'rgba(147, 51, 234, 0.3)';
-      const color3 = isDarkMode ? 'rgba(219, 39, 119, 0.5)' : 'rgba(219, 39, 119, 0.25)';
-      
-      // Apply the gradient with mouse position and increased intensity
-      connectSection.style.background = `radial-gradient(circle at ${x}% ${y}%, ${color1} 0%, ${color3} 30%, ${color2} 70%)`;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateGradient(connectSection, lastMouseX, lastMouseY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
     
     // Reset gradient when mouse leaves
     connectSection.addEventListener('mouseleave', () => {
       connectSection.style.background = '';
     });
+  }
+  
+  // Shared gradient update function
+  function updateGradient(element, mouseX, mouseY) {
+    const rect = element.getBoundingClientRect();
     
-    // Add hover effects for connect cards
-    document.querySelectorAll('.connect-card').forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        card.classList.add('card-active');
-      });
-      
-      card.addEventListener('mouseleave', () => {
-        card.classList.remove('card-active');
-      });
-    });
+    // Calculate mouse position relative to the element (0-100%)
+    const x = ((mouseX - rect.left) / rect.width) * 100;
+    const y = ((mouseY - rect.top) / rect.height) * 100;
+    
+    // Create gradient based on mouse position with increased brightness
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    
+    // Use simplified gradient with fewer color stops
+    let color1, color2;
+    
+    if (element.id === 'about-section') {
+      color1 = isDarkMode ? 'rgba(59, 130, 246, 0.6)' : 'rgba(59, 130, 246, 0.3)';
+      color2 = isDarkMode ? 'rgba(147, 51, 234, 0.6)' : 'rgba(147, 51, 234, 0.3)';
+    } else {
+      color1 = isDarkMode ? 'rgba(79, 70, 229, 0.6)' : 'rgba(79, 70, 229, 0.3)';
+      color2 = isDarkMode ? 'rgba(219, 39, 119, 0.5)' : 'rgba(219, 39, 119, 0.25)';
+    }
+    
+    // Apply simplified gradient with mouse position
+    element.style.background = `radial-gradient(circle at ${x}% ${y}%, ${color1} 0%, ${color2} 100%)`;
   }
 </script>
 
@@ -542,13 +574,14 @@ const skills = [
   }
   
   .animated-gradient {
-    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #6366f1, #ec4899, #06b6d4);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+    background-size: 300% 300%;
+    animation: gradient 20s ease infinite;
     border-radius: inherit;
     filter: blur(24px);
     margin: -20px;
     inset: -20px;
+    will-change: background-position;
   }
   
   @keyframes gradient {
@@ -603,15 +636,16 @@ const skills = [
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #6366f1, #ec4899, #06b6d4);
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
     opacity: 0.2;
     z-index: -1;
   }
   
   .hero-gradient {
     transition: background-position 0.3s ease-out;
-    background-size: 400% 400%;
+    background-size: 300% 300%;
     background-position: 0% 50%;
+    will-change: background-position;
   }
   
   .hero-gradient:hover {
@@ -620,51 +654,35 @@ const skills = [
   
   .hero-gradient {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+    background-size: 300% 300%;
+    animation: gradient 20s ease infinite;
   }
 
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-  
   .animate-float {
     animation: float 6s ease-in-out infinite;
+    will-change: transform;
   }
   
   @keyframes float {
-    0% {
+    0%, 100% {
       transform: translateY(0px);
     }
     50% {
       transform: translateY(-20px);
     }
-    100% {
-      transform: translateY(0px);
-    }
   }
   
   .animate-float-slow {
     animation: float-slow 8s ease-in-out infinite;
+    will-change: transform;
   }
   
   @keyframes float-slow {
-    0% {
+    0%, 100% {
       transform: translateY(0px);
     }
     50% {
       transform: translateY(-15px);
-    }
-    100% {
-      transform: translateY(0px);
     }
   }
   
@@ -686,6 +704,7 @@ const skills = [
   .floating-card {
     animation: floating 4s ease-in-out infinite;
     transition: all 0.3s ease;
+    will-change: transform;
   }
   
   .floating-card:hover {
@@ -697,6 +716,7 @@ const skills = [
   .floating-card-slow {
     animation: floating-slow 6s ease-in-out infinite;
     transition: all 0.3s ease;
+    will-change: transform;
   }
   
   .floating-card-slow:hover {
@@ -706,32 +726,27 @@ const skills = [
   }
   
   @keyframes floating {
-    0% {
+    0%, 100% {
       transform: translateY(0px);
     }
     50% {
       transform: translateY(-10px);
     }
-    100% {
-      transform: translateY(0px);
-    }
   }
   
   @keyframes floating-slow {
-    0% {
+    0%, 100% {
       transform: translateY(0px);
     }
     50% {
       transform: translateY(-8px);
-    }
-    100% {
-      transform: translateY(0px);
     }
   }
   
   .floating-card-medium {
     animation: floating-medium 5s ease-in-out infinite;
     transition: all 0.3s ease;
+    will-change: transform;
   }
   
   .floating-card-medium:hover {
@@ -741,14 +756,11 @@ const skills = [
   }
   
   @keyframes floating-medium {
-    0% {
+    0%, 100% {
       transform: translateY(0px);
     }
     50% {
       transform: translateY(-12px);
-    }
-    100% {
-      transform: translateY(0px);
     }
   }
   
@@ -780,28 +792,27 @@ const skills = [
   
   .pulse-animation {
     animation: pulse 8s ease-in-out infinite alternate;
+    will-change: transform, opacity;
   }
   
   .pulse-animation-slow {
     animation: pulse 12s ease-in-out infinite alternate-reverse;
+    will-change: transform, opacity;
   }
   
   .pulse-animation-medium {
     animation: pulse 10s ease-in-out infinite alternate;
+    will-change: transform, opacity;
   }
   
   @keyframes pulse {
-    0% {
+    0%, 100% {
       opacity: 0.1;
       transform: scale(0.9) translate(0, 0);
     }
     50% {
       opacity: 0.3;
       transform: scale(1.1) translate(5%, 5%);
-    }
-    100% {
-      opacity: 0.1;
-      transform: scale(0.9) translate(0, 0);
     }
   }
   
@@ -837,5 +848,6 @@ const skills = [
   
   .animate-pulse-slow {
     animation: pulse-slow 3s ease-in-out infinite;
+    will-change: transform, opacity;
   }
 </style>
