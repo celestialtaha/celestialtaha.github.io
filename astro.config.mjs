@@ -8,6 +8,10 @@ import pagefind from "astro-pagefind";
 // https://astro.build/config
 export default defineConfig({
   site: "https://celestialtaha.github.io",
+  compressHTML: true,
+  build: {
+    inlineStylesheets: 'auto'
+  },
   integrations: [
     tailwind(), 
     sitemap({

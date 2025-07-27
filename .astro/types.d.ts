@@ -257,6 +257,20 @@ declare module 'astro:content' {
   collection: "projects";
   data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
+"psql-query-builder/index.md": {
+	id: "psql-query-builder/index.md";
+  slug: "psql-query-builder";
+  body: string;
+  collection: "projects";
+  data: InferEntrySchema<"projects">
+} & { render(): Render[".md"] };
+"pypoint/index.md": {
+	id: "pypoint/index.md";
+  slug: "pypoint";
+  body: string;
+  collection: "projects";
+  data: InferEntrySchema<"projects">
+} & { render(): Render[".md"] };
 "unbalanced-dataset-classification/index.md": {
 	id: "unbalanced-dataset-classification/index.md";
   slug: "unbalanced-dataset-classification";
@@ -267,6 +281,13 @@ declare module 'astro:content' {
 "visual-semantic-search/index.md": {
 	id: "visual-semantic-search/index.md";
   slug: "visual-semantic-search";
+  body: string;
+  collection: "projects";
+  data: InferEntrySchema<"projects">
+} & { render(): Render[".md"] };
+"weavelet/index.md": {
+	id: "weavelet/index.md";
+  slug: "weavelet";
   body: string;
   collection: "projects";
   data: InferEntrySchema<"projects">

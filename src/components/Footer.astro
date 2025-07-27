@@ -4,83 +4,40 @@ import { SITE, SOCIALS } from "@consts";
 import BackToTop from "@components/BackToTop.astro";
 ---
 
-<footer class="py-8 border-t border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md">
+<footer class="py-6 border-t border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md">
   <Container>
     <div class="relative">
-      <div class="absolute -top-12 right-0">
+      <div class="absolute -top-10 right-0">
         <BackToTop />
       </div>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
       <!-- Creative Section -->
-      <div class="space-y-4">
+      <div class="space-y-3">
         <div class="group">
-          <h3 class="text-lg font-bold mb-3 inline-block relative">
+          <h3 class="text-base font-bold mb-2 inline-block relative">
             <span class="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 text-transparent bg-clip-text">
               Digital Playground
             </span>
             <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full"></div>
           </h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
-            Welcome to my corner of the internet where research, code, and creativity converge. Exploring the intersection of technology and innovation, one pixel at a time.
+          <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+            Where research, code, and creativity converge. Exploring AI innovation one project at a time.
           </p>
-          <div class="mt-3 text-sm">
-            <span class="inline-block px-2 py-1 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 text-blue-600 dark:text-blue-400">research</span>
-            <span class="inline-block px-2 py-1 rounded-full bg-gradient-to-r from-purple-500/10 to-indigo-500/10 text-purple-600 dark:text-purple-400">code</span>
-            <span class="inline-block px-2 py-1 rounded-full bg-gradient-to-r from-indigo-500/10 to-teal-500/10 text-indigo-600 dark:text-indigo-400">ideas</span>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Quick Links -->
-      <div class="space-y-4">
-        <div class="group">
-          <h3 class="text-lg font-bold mb-3 inline-block relative">
-            <span class="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 text-transparent bg-clip-text">
-              Quick Links
-            </span>
-            <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full"></div>
-          </h3>
-          <ul class="space-y-2">
-            <li>
-              <a href="/blog" class="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300 flex items-center gap-1 group">
-                <span class="w-0 h-px bg-blue-500 transition-all duration-300 group-hover:w-2"></span>
-                Blog
-              </a>
-            </li>
-            <li>
-              <a href="/projects" class="text-sm text-gray-600 dark:text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition-colors duration-300 flex items-center gap-1 group">
-                <span class="w-0 h-px bg-purple-500 transition-all duration-300 group-hover:w-2"></span>
-                Projects
-              </a>
-            </li>
-            <li>
-              <a href="/work" class="text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors duration-300 flex items-center gap-1 group">
-                <span class="w-0 h-px bg-indigo-500 transition-all duration-300 group-hover:w-2"></span>
-                Work
-              </a>
-            </li>
-            <li>
-              <a href="/research" class="text-sm text-gray-600 dark:text-gray-400 hover:text-teal-500 dark:hover:text-teal-400 transition-colors duration-300 flex items-center gap-1 group">
-                <span class="w-0 h-px bg-teal-500 transition-all duration-300 group-hover:w-2"></span>
-                Research
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
       
       <!-- Connect -->
-      <div class="space-y-4">
+      <div class="space-y-3">
         <div class="group">
-          <h3 class="text-lg font-bold mb-3 inline-block relative">
+          <h3 class="text-base font-bold mb-2 inline-block relative">
             <span class="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 text-transparent bg-clip-text">
               Connect
             </span>
             <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full"></div>
           </h3>
-          <div class="flex gap-3">
+          <div class="flex gap-2">
             <!-- GitHub -->
             <a href={SOCIALS.find(social => social.NAME === "GitHub")?.HREF || "https://github.com/celestialtaha"} target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="GitHub">
               <div class="social-icon">
@@ -125,14 +82,14 @@ import BackToTop from "@components/BackToTop.astro";
       </div>
     </div>
     
-    <div class="flex flex-col md:flex-row md:items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-800">
-      <div class="flex items-center mb-4 md:mb-0">
-        <span class="text-sm text-gray-600 dark:text-gray-400">&copy; {new Date().getFullYear()} • </span>
-        <span class="ml-1 text-sm font-medium bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 text-transparent bg-clip-text">{SITE.TITLE}</span>
-        <span class="ml-1 logo-emoji relative inline-block">🔬</span>
+    <div class="flex flex-col md:flex-row md:items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-800">
+      <div class="flex items-center mb-3 md:mb-0">
+        <span class="text-xs text-gray-600 dark:text-gray-400">&copy; {new Date().getFullYear()} • </span>
+        <span class="ml-1 text-xs font-medium bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 text-transparent bg-clip-text">{SITE.TITLE}</span>
+        <span class="ml-1 text-sm">🔬</span>
       </div>
       
-      <div class="flex flex-wrap items-center gap-2">
+      <div class="flex items-center gap-1.5">
         <button
           id="light-theme-button"
           aria-label="Light theme"
@@ -283,8 +240,8 @@ import BackToTop from "@components/BackToTop.astro";
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.05);
     color: #4b5563;

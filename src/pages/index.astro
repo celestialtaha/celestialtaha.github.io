@@ -2,6 +2,7 @@
 import Layout from "@layouts/Layout.astro";
 import { SITE, HOME, SOCIALS } from "@consts";
 import { getCollection } from "astro:content";
+import FAQSchema from "@components/FAQSchema.astro";
 
 const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
@@ -24,11 +25,11 @@ const featuredResearch = (await getCollection('research'))
 
 // Skills for typewriter effect
 const skills = [
-  "Data Scientist",
-  "Generative AI Engineer",
-  "Backend Developer",
-  "Researcher",
-  "ML Engineer"
+  "AI Agent Architect",
+  "LLM Systems Engineer",
+  "Multi-Agent Orchestrator",
+  "AI Research Scientist",
+  "Generative AI Engineer"
 ];
 ---
 
@@ -285,12 +286,12 @@ const skills = [
             <div class="md:col-span-2 space-y-6">
               <div class="prose prose-lg dark:prose-invert max-w-none">
                 <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  I'm a passionate technologist with expertise in AI and machine learning, focused on building intelligent systems that solve real-world problems. My background spans data science, generative AI, and backend development. Currently, I'm working on agent-based generative AI applications that push the boundaries of what's possible with today's technology. I believe in creating AI that augments human capabilities rather than replacing them.
+                  I specialize in designing and orchestrating intelligent AI agent systems that tackle complex, multi-step problems. My expertise lies in building sophisticated multi-agent architectures, LLM-powered reasoning systems, and autonomous workflows that can adapt and collaborate. Drawing inspiration from leading researchers, I focus on creating agent systems that demonstrate emergent intelligence through coordinated interactions and advanced reasoning capabilities.
                 </p>
               </div>
               
               <!-- Current Focus -->
-              <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 floating-card-medium">
+              <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -299,15 +300,19 @@ const skills = [
                 </h3>
                 <ul class="space-y-2">
                   <li class="flex items-start">
-                    <span class="text-blue-500 mr-2">🔭</span>
-                    <span class="text-gray-700 dark:text-gray-300">Developing agent-based generative AI products that solve complex problems</span>
+                    <span class="text-blue-500 mr-2">🏗️</span>
+                    <span class="text-gray-700 dark:text-gray-300">Building multi-agent systems with smart orchestration</span>
                   </li>
                   <li class="flex items-start">
-                    <span class="text-purple-500 mr-2">🧠</span>
-                    <span class="text-gray-700 dark:text-gray-300">Researching advanced techniques in multi-agent systems and LLM reasoning</span>
+                    <span class="text-purple-500 mr-2">🔄</span>
+                    <span class="text-gray-700 dark:text-gray-300">Creating autonomous workflows with LLM reasoning</span>
                   </li>
                   <li class="flex items-start">
-                    <span class="text-indigo-500 mr-2">🤝</span>
+                    <span class="text-indigo-500 mr-2">🧪</span>
+                    <span class="text-gray-700 dark:text-gray-300">Researching collaborative agent behaviors</span>
+                  </li>
+                  <li class="flex items-start">
+                    <span class="text-green-500 mr-2">🤝</span>
                     <span class="text-gray-700 dark:text-gray-300">Open to collaborations on innovative Generative AI projects</span>
                   </li>
                 </ul>
@@ -317,7 +322,7 @@ const skills = [
             <!-- Connect Column -->
             <div class="space-y-6">
               <!-- Skills Tags -->
-              <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 floating-card">
+              <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -325,6 +330,8 @@ const skills = [
                   Core Skills
                 </h3>
                 <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm">Multi-Agent Systems</span>
+                  <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full text-sm">LLM Orchestration</span>
                   <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm">Generative AI</span>
                   <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full text-sm">LLM Systems</span>
                   <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-full text-sm">Python</span>
@@ -334,7 +341,7 @@ const skills = [
               </div>
               
               <!-- Connect -->
-              <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 floating-card-slow">
+              <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -451,64 +458,52 @@ const skills = [
       </section>
       
       <!-- Connect Section -->
-      <section id="connect-section" class="animate-on-scroll opacity-0 transition-all duration-700 ease-out transform translate-y-8 overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-indigo-500/10 to-purple-600/10 dark:from-indigo-500/20 dark:to-purple-600/20 backdrop-blur-md border border-indigo-200/50 dark:border-indigo-800/50 shadow-lg">
+      <section id="connect-section" class="animate-on-scroll opacity-0 transition-all duration-700 ease-out transform translate-y-8 overflow-hidden rounded-2xl p-6 bg-gradient-to-br from-indigo-500/8 to-purple-600/8 dark:from-indigo-500/15 dark:to-purple-600/15 backdrop-blur-sm border border-indigo-200/30 dark:border-indigo-800/30 shadow-md">
         <div class="relative">
-          <!-- Animated background elements -->
-          <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 dark:bg-blue-500/20 rounded-full filter blur-3xl -z-10 transform translate-x-1/2 -translate-y-1/2 pulse-animation"></div>
-          <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 dark:bg-purple-500/20 rounded-full filter blur-3xl -z-10 transform -translate-x-1/2 translate-y-1/2 pulse-animation-slow"></div>
-          <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full filter blur-3xl -z-10 transform -translate-x-1/2 -translate-y-1/2 pulse-animation-medium"></div>
+          <!-- Simplified background element -->
+          <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 dark:from-blue-500/10 dark:to-purple-500/10 rounded-2xl -z-10"></div>
           
-          <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold mb-2 inline-block">
+          <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold mb-2">
               <span class="bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 text-transparent bg-clip-text">Let's Connect</span>
             </h2>
-            <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+            <p class="text-gray-600 dark:text-gray-300 text-sm max-w-lg mx-auto">Open to discussing new projects, creative ideas, or collaboration opportunities.</p>
           </div>
           
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
             {SOCIALS.map((SOCIAL) => (
-              <div class="connect-card aspect-square max-w-[140px] mx-auto w-full">
+              <div class="connect-card w-25">
                 <a
                   href={SOCIAL.HREF}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
-                  class="flex flex-col items-center gap-2 px-3 py-3 bg-white/80 dark:bg-gray-800/80 rounded-xl border border-gray-200/80 dark:border-gray-700/80 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all hover:shadow-xl group w-full h-full justify-center relative overflow-hidden"
+                  class="flex flex-col items-center gap-2 p-3 w-full h-full bg-white/70 dark:bg-gray-800/70 rounded-xl border border-gray-200/60 dark:border-gray-700/60 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all hover:shadow-lg group relative overflow-hidden"
                 >
-                  <div class="connect-icon-wrapper">
-                    <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/40 dark:to-purple-900/40 rounded-full transition-all duration-300 group-hover:scale-110">
-                      <div class="w-6 h-6 flex items-center justify-center text-gray-600 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-all duration-300">
-                        <img 
-                          src={SOCIAL.ICON} 
-                          alt={`${SOCIAL.NAME} logo`}
-                          class="w-5 h-5 group-hover:scale-110 transition-all duration-300"
-                        />
-                      </div>
-                    </div>
+                  <div class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-lg transition-all duration-300 group-hover:scale-105">
+                    <img 
+                      src={SOCIAL.ICON} 
+                      alt={`${SOCIAL.NAME} logo`}
+                      class="w-4 h-4 transition-all duration-300"
+                    />
                   </div>
-                  <span class="font-medium text-gray-800 dark:text-white text-base group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-all duration-300">{SOCIAL.NAME}</span>
-                  <span class="text-xs text-gray-500 dark:text-gray-400">{SOCIAL.DESCRIPTION || SOCIAL.NAME}</span>
+                  <span class="font-medium text-gray-800 dark:text-white text-sm group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-all duration-300">{SOCIAL.NAME}</span>
                 </a>
               </div>
             ))}
             
-            <div class="connect-card aspect-square max-w-[140px] mx-auto w-full">
+            <div class="connect-card w-20">
               <a
                 href={`mailto:${SITE.EMAIL}`}
                 aria-label={`Email ${SITE.TITLE}`}
-                class="flex flex-col items-center gap-2 px-3 py-3 bg-white/80 dark:bg-gray-800/80 rounded-xl border border-gray-200/80 dark:border-gray-700/80 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all hover:shadow-xl group w-full h-full justify-center relative overflow-hidden"
+                class="flex flex-col items-center gap-2 p-3 w-full h-full bg-white/70 dark:bg-gray-800/70 rounded-xl border border-gray-200/60 dark:border-gray-700/60 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all hover:shadow-lg group relative overflow-hidden"
               >
-                <div class="connect-icon-wrapper">
-                  <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/40 dark:to-purple-900/40 rounded-full transition-all duration-300 group-hover:scale-110">
-                    <div class="w-6 h-6 flex items-center justify-center text-gray-600 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-all duration-300">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                  </div>
+                <div class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-lg transition-all duration-300 group-hover:scale-105">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
                 </div>
-                <span class="font-medium text-gray-800 dark:text-white text-base group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-all duration-300">Email Me</span>
-                <span class="text-xs text-gray-500 dark:text-gray-400">{SITE.EMAIL}</span>
+                <span class="font-medium text-gray-800 dark:text-white text-sm group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-all duration-300">Email</span>
               </a>
             </div>
           </div>
@@ -822,3 +817,6 @@ const skills = [
     will-change: transform, opacity;
   }
 </style>
+
+<!-- FAQ Schema for better SEO and featured snippets -->
+<FAQSchema />

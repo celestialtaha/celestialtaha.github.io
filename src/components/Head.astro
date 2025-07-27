@@ -20,7 +20,7 @@ const {
   description, 
   image = "/blog-placeholder.svg",
   article = false,
-  keywords = "data science, machine learning, generative AI, research, portfolio" 
+  keywords = "data science, machine learning, AI engineer, generative AI, python developer, AI agent architect, multi-agent systems, LLM orchestration, data scientist, ML engineer, backend developer, AI research, autonomous workflows, intelligent systems, deep learning, artificial intelligence" 
 } = Astro.props;
 ---
 
@@ -46,12 +46,31 @@ const {
 <link rel="canonical" href={canonicalURL} />
 <meta name="robots" content="index, follow" />
 <meta name="keywords" content={keywords} />
-<meta name="author" content="Taha" />
+<meta name="author" content="Taha Samavati" />
 <meta name="language" content="English" />
+<meta name="geo.region" content="US" />
+<meta name="geo.placename" content="United States" />
+<meta name="revisit-after" content="7 days" />
+<meta name="rating" content="General" />
+<meta name="distribution" content="Global" />
+<meta name="coverage" content="Worldwide" />
+<meta name="target" content="all" />
+<meta name="classification" content="Business" />
+<meta name="category" content="Technology, Data Science, Artificial Intelligence" />
+<meta name="subject" content="Data Science, Machine Learning, AI Engineering" />
+<meta name="abstract" content="Professional portfolio of Taha Samavati, Data Scientist and AI Engineer specializing in machine learning and intelligent systems" />
+
+<!-- Performance Optimizations -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://www.google-analytics.com" />
+<link rel="dns-prefetch" href="//github.com" />
+<link rel="dns-prefetch" href="//linkedin.com" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="mobile-web-app-capable" content="yes" />
 
 <!-- PWA Support -->
 <link rel="manifest" href="/manifest.json" />
-<meta name="theme-color" content="#3b82f6" />
+<meta name="theme-color" content="#ffffff" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="Taha's Portfolio" />
@@ -68,8 +87,12 @@ const {
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
-<meta property="og:site_name" content="Taha's Portfolio" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${title} - AI Agent Architect`} />
+<meta property="og:site_name" content="Taha Samavati - AI Agent Architect" />
 <meta property="og:locale" content="en_US" />
+<meta property="article:author" content="Taha Samavati" />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -88,16 +111,107 @@ const {
   {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Taha",
+    "name": "Taha Samavati",
     "url": "https://celestialtaha.github.io",
-    "jobTitle": ["Data Scientist", "Generative AI Engineer", "Researcher"],
+    "jobTitle": ["Data Scientist", "AI Engineer", "Machine Learning Engineer", "AI Agent Architect", "Generative AI Engineer"],
+    "description": "Data Scientist and AI Engineer specializing in machine learning, generative AI, and intelligent agent systems. Expert in building data-driven solutions and autonomous AI workflows",
     "sameAs": [
       "https://github.com/celestialtaha",
-      "https://linkedin.com/in/celestialtaha"
+      "https://www.linkedin.com/in/taha-samavati/",
+      "https://x.com/taha_iusm"
     ],
-    "knowsAbout": ["Machine Learning", "Generative AI", "Data Science", "Backend Development"]
+    "knowsAbout": [
+      "Data Science", 
+      "Machine Learning", 
+      "Python Programming", 
+      "Generative AI", 
+      "Deep Learning", 
+      "Backend Development", 
+      "AI Agent Development", 
+      "Multi-Agent Systems", 
+      "LLM Engineering", 
+      "Data Analysis"
+    ],
+    "hasOccupation": {
+      "@type": "Occupation",
+      "name": "Data Scientist & AI Engineer",
+      "description": "Specializing in machine learning, data science, generative AI, and intelligent agent systems"
+    }
   }
 </script>
+
+<!-- Organization Schema -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Taha Samavati - Data Science & AI Consulting",
+    "description": "Professional data science and AI engineering services specializing in machine learning, generative AI, and intelligent systems development",
+    "url": "https://celestialtaha.github.io",
+    "founder": {
+      "@type": "Person",
+      "name": "Taha Samavati"
+    },
+    "areaServed": "Worldwide",
+    "serviceType": [
+      "Data Science Consulting",
+      "Machine Learning Development", 
+      "AI System Architecture",
+      "Generative AI Solutions",
+      "Python Development",
+      "AI Agent Development"
+    ]
+  }
+</script>
+
+<!-- Local Business Schema -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://celestialtaha.github.io",
+    "name": "Taha Samavati - Data Science & AI Services",
+    "description": "Professional data science and AI engineering services",
+    "url": "https://celestialtaha.github.io",
+    "telephone": "+1-XXX-XXX-XXXX",
+    "email": "tahasamavati12@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "40.7128",
+      "longitude": "-74.0060"
+    },
+    "openingHours": "Mo-Fr 09:00-17:00",
+    "priceRange": "$$$",
+    "serviceArea": {
+      "@type": "Place",
+      "name": "Worldwide"
+    }
+  }
+</script>
+
+<!-- Dynamic Breadcrumb Schema -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://celestialtaha.github.io"
+    },
+    ...(Astro.url.pathname !== '/' ? [{
+      "@type": "ListItem",
+      "position": 2,
+      "name": title.split(' | ')[0] || title,
+      "item": Astro.url.href
+    }] : [])
+  ]
+})}></script>
 
 <!-- JSON-LD for Article if applicable -->
 {article && (
