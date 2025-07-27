@@ -20,7 +20,13 @@ function buildToc(headings: Heading[]) {
     if (heading.depth === 2) {
       toc.push(heading);
     } else {
-      parentHeadings.get(heading.depth - 1).subheadings.push(heading);
+      const parent = parentHeadings.get(heading.depth - 1);
+      if (parent) {
+        parent.subheadings.push(heading);
+      } else {
+        // If no parent found, add to the top level
+        toc.push(heading);
+      }
     }
   });
   return toc;
