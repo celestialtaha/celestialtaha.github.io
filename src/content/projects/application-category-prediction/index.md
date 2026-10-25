@@ -7,7 +7,6 @@ repoURL: "https://github.com/celestialtaha/ApplicationCategoryPrediction"
 draft: false
 ---
 
-![App Category Prediction](/images/projects/app-category.jpg)
 
 This project implements a natural language processing system that predicts the category of mobile applications based solely on their description text. Using advanced NLP techniques and deep learning models, the system can automatically classify apps into their appropriate categories in app stores.
 

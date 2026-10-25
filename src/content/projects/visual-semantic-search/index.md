@@ -1,13 +1,12 @@
 ---
 title: "Visual Semantic Search"
-description: "Visual semantic search system | Search across products | Text Query --> Visual Retrieval"
+description: "Natural-language product discovery using shared text and image embeddings."
 date: "Jun 20 2024"
 demoURL: ""
 repoURL: "https://github.com/celestialtaha/visual-semantic-search"
 draft: false
 ---
 
-![Visual Semantic Search](/images/projects/visual-search.jpg)
 
 This project implements a visual semantic search system that allows users to search for products using natural language queries. The system retrieves visually relevant images based on text descriptions, bridging the gap between language and visual content.
 

@@ -4,6 +4,7 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import pagefind from "astro-pagefind";
+import remarkImages from "./src/lib/remark-images.mjs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -37,8 +38,11 @@ export default defineConfig({
     pagefind()
   ],
   markdown: {
+    remarkPlugins: [remarkImages],
     shikiConfig: {
       theme: "css-variables",
+      // Preload Markdown so concurrent MDX transforms resolve the md alias.
+      langs: ["markdown"],
     },
   },
 });

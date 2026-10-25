@@ -1,11 +1,11 @@
 {
-  "name": "Taha's Portfolio",
+  "name": "Taha Samavati — Portfolio",
   "short_name": "Taha",
   "description": "Data Scientist, Generative AI Engineer, and Researcher",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#3b82f6",
+  "background_color": "#f3f1e9",
+  "theme_color": "#f3f1e9",
   "icons": [
     {
       "src": "/favicon.svg",

@@ -7,7 +7,6 @@ repoURL: "https://github.com/MahdiFarvardin/MEDVSE"
 draft: false
 ---
 
-![MEDVSE](/images/projects/medvse.jpg)
 
 MEDVSE is a collaborative research project that develops efficient deep learning methods for estimating vital signs (heart rate and blood oxygen saturation) from smartphone videos of fingertips. This work was published as ["Efficient Deep Learning-based Estimation of the Vital Signs on Smartphones"](https://arxiv.org/abs/2204.08989).
 

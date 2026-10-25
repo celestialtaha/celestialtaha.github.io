@@ -1,60 +1,20 @@
 ---
-import TableOfContentsHeading from "./TableOfContentsHeading.astro";
-
-// https://kld.dev/building-table-of-contents/
-const { headings } = Astro.props;
-const toc = buildToc(headings);
-
-export interface Heading {
-  depth: number;
-  slug: string;
-  text: string;
-}
-
-function buildToc(headings: Heading[]) {
-  const toc: Heading[] = [];
-  const parentHeadings = new Map();
-  headings.forEach((h) => {
-    const heading = { ...h, subheadings: [] };
-    parentHeadings.set(heading.depth, heading);
-    if (heading.depth === 2) {
-      toc.push(heading);
-    } else {
-      const parent = parentHeadings.get(heading.depth - 1);
-      if (parent) {
-        parent.subheadings.push(heading);
-      } else {
-        // If no parent found, add to the top level
-        toc.push(heading);
-      }
-    }
-  });
-  return toc;
+import TableOfContentsHeading from './TableOfContentsHeading.astro';
+import type { MarkdownHeading } from 'astro';
+interface Props { headings: MarkdownHeading[]; lang?: string; }
+export interface Heading extends MarkdownHeading { subheadings: Heading[]; }
+const {headings,lang='en'} = Astro.props;
+const toc: Heading[]=[];
+const stack: Heading[]=[];
+for(const item of headings){
+  const heading: Heading={...item,subheadings:[]};
+  while(stack.length && stack[stack.length-1].depth >= heading.depth) stack.pop();
+  if(stack.length) stack[stack.length-1].subheadings.push(heading);
+  else toc.push(heading);
+  stack.push(heading);
 }
 ---
-
-<details
-  open
-  class="animate rounded-lg border border-black/15 dark:border-white/20"
->
-  <summary>Table of Contents</summary>
-  <nav class="">
-    <ul class="py-3">
-      {toc.map((heading) => <TableOfContentsHeading heading={heading} />)}
-    </ul>
-  </nav>
+<details class="article-toc" data-pagefind-ignore>
+  <summary lang="en"><span>On this page</span><span class="toc-count">{headings.length} sections <span aria-hidden="true">+</span></span></summary>
+  <nav aria-label="Article contents" lang={lang} dir={lang === 'fa' ? 'rtl' : 'ltr'}><ol>{toc.map(heading => <TableOfContentsHeading heading={heading} />)}</ol></nav>
 </details>
-
-<style>
-  summary {
-    @apply cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors;
-  }
-
-  summary:hover {
-    @apply bg-black/5 dark:bg-white/5;
-  }
-
-  details[open] summary {
-    @apply bg-black/5 dark:bg-white/5;
-  }
-</style>

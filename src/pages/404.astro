@@ -1,45 +1,6 @@
 ---
-import Layout from "@layouts/Layout.astro";
-import Container from "@components/Container.astro";
-import Link from "@components/Link.astro";
-import BackToPrevious from "@components/BackToPrevious.astro";
+import Layout from '@layouts/Layout.astro';
 ---
-
-<Layout 
-  title="404 - Page Not Found | Taha Samavati - Data Scientist & AI Engineer" 
-  description="The page you're looking for doesn't exist. Explore Taha Samavati's data science projects, AI research, and machine learning portfolio instead."
->
-  <Container>
-    <div class="mt-16 grid place-items-center gap-6 py-12 text-center">
-      <div class="animate space-y-4">
-        <h1 class="text-6xl font-bold text-gray-900 dark:text-white">404</h1>
-        <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-          Page not found
-        </h2>
-        <p class="max-w-md mx-auto text-gray-600 dark:text-gray-400">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-      </div>
-      <div class="animate flex flex-col sm:flex-row gap-4 mt-4">
-        <BackToPrevious href="/">
-          Go to home page
-        </BackToPrevious>
-        <Link href="/blog" className="px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-          Browse articles
-        </Link>
-      </div>
-    </div>
-  </Container>
+<Layout title="Page not found" description="This page could not be found. Explore Taha Samavati’s projects, research, and writing." noindex>
+  <div class="not-found"><span class="eyebrow">404 / A SMALL DETOUR</span><h1>This page took<br /><em>another path.</em></h1><p>The address may have changed. There’s still plenty to explore.</p><div class="not-found-links"><a class="primary-link" href="/">Back to the portfolio ↗</a><a class="text-link" href="/projects">Browse projects ↗</a><button type="button" data-open-search class="text-link">Search the site ⌕</button></div></div>
 </Layout>
-
-<script>
-  // Report 404 errors to Google Analytics if it exists
-  if (typeof window !== 'undefined' && window.gtag) {
-    // @ts-ignore
-    window.gtag('event', '404_error', {
-      'event_category': 'error',
-      'event_label': document.referrer || 'direct',
-      'non_interaction': true
-    });
-  }
-</script>

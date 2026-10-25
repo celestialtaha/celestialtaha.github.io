@@ -7,7 +7,6 @@ repoURL: "https://github.com/celestialtaha/psql-query-builder"
 draft: false
 ---
 
-![AI PostgreSQL Query Builder](/images/projects/psql-query-builder.jpg)
 
 This AI-powered PostgreSQL Query Builder allows users to generate and run SQL queries by simply providing natural language instructions. It bridges the gap between non-technical users and database operations by leveraging AI to translate plain English into optimized PostgreSQL queries.
 

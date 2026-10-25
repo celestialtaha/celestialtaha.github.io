@@ -7,7 +7,6 @@ repoURL: "https://github.com/celestialtaha/facial_expression_recognition_cnn"
 draft: false
 ---
 
-![Facial Expression Recognition](/images/projects/facial-expression.jpg)
 
 This project implements a computer vision system that first detects faces using cascade detectors and then classifies facial expressions using a convolutional neural network (CNN). The system can identify different emotional states from facial images in real-time.
 

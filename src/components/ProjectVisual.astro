@@ -1,0 +1,187 @@
+---
+interface Props {
+  kind: string;
+  compact?: boolean;
+}
+const { kind, compact = false } = Astro.props;
+---
+
+<div
+  class:list={["project-visual", `visual-${kind}`, { compact }]}
+  aria-hidden="true" data-pagefind-ignore
+>
+  <div class="visual-corner">
+    <span class="tiny-cross">+</span><span
+      >{
+        kind === "search"
+          ? "01 / SEMANTIC SPACE"
+          : kind === "signal"
+            ? "02 / SIGNAL PROCESSING"
+            : kind === "music"
+              ? "03 / WEARABLE INTERFACE"
+              : "SOFTWARE / EXPLORATION"
+      }</span>
+  </div>
+  {
+    kind === "search" && (
+      <div class="search-study">
+        <>
+          <div class="search-input">
+            <span>⌕</span> a warm light for a quiet evening <span>↵</span>
+          </div>
+          <div class="search-connections">
+            <>
+              <span />
+              <span />
+              <span />
+            </>
+          </div>
+          <div class="retrieval-grid">
+            {["a", "b", "c"].map((name, index) => (
+              <div class={`result result-${name}`}>
+                <div class="lamp">
+                  <i />
+                  <b />
+                  <span />
+                </div>
+                <small>
+                  0.{[94, 89, 86][index]} <span>↗</span>
+                </small>
+              </div>
+            ))}
+          </div>
+          <div class="embedding-line">
+            <>
+              <span>TEXT EMBEDDING</span>
+              <i />
+              <span>SHARED SPACE</span>
+              <i />
+              <span>IMAGE MATCHES</span>
+            </>
+          </div>
+        </>
+      </div>
+    )
+  }
+  {
+    kind === "signal" && (
+      <div class="signal-study">
+        <>
+          <div class="signal-orbits" />
+          <div class="phone">
+            <>
+              <div class="phone-camera" />
+              <div class="phone-content">
+                <>
+                  <span class="phone-app">
+                    MEDVSE <span>◉</span>
+                  </span>
+                  <span class="phone-label">FROM CAMERA TO SIGNAL</span>
+                  <div class="fingerprint">
+                    {Array.from({ length: 6 }, (_, i) => (
+                      <i style={`--i:${i}`} />
+                    ))}
+                  </div>
+                  <div class="phone-wave">
+                    <svg viewBox="0 0 220 70">
+                      <path d="M0 38H35L45 32L54 43L63 38H80L90 12L100 63L112 5L125 46L138 38H155L165 31L176 43L185 38H220" />
+                    </svg>
+                  </div>
+                  <div class="phone-values">
+                    <>
+                      <span>
+                        Heart rate
+                        <b>
+                          — <small>bpm</small>
+                        </b>
+                      </span>
+                      <span>
+                        Blood oxygen
+                        <b>
+                          — <small>%</small>
+                        </b>
+                      </span>
+                    </>
+                  </div>
+                  <span class="phone-footnote">
+                    FINGERTIP VIDEO → VITAL SIGNS
+                  </span>
+                </>
+              </div>
+            </>
+          </div>
+          <div class="signal-badge">
+            <span class="status-dot" /> RGB → MODEL → SIGNAL
+          </div>
+        </>
+      </div>
+    )
+  }
+  {
+    kind === "music" && (
+      <div class="watch-study">
+        <>
+          <div class="watch-shadow" />
+          <div class="watch-strap" />
+          <div class="watch-crown" />
+          <div class="watch">
+            <div class="watch-face">
+              <>
+                <span class="watch-brand">weavelet</span>
+                <div class="watch-disc">
+                  <div />
+                </div>
+                <span class="track-title">A world of your own</span>
+                <span class="track-type">OFFLINE. ON YOUR WRIST.</span>
+                <div class="watch-controls">
+                  <>
+                    <span>‹</span>
+                    <span class="pause">Ⅱ</span>
+                    <span>›</span>
+                  </>
+                </div>
+                <div class="watch-progress" />
+              </>
+            </div>
+          </div>
+          <span class="watch-annotation">
+            LESS SCREEN.
+            <br />
+            MORE SOUND.
+          </span>
+        </>
+      </div>
+    )
+  }
+  {
+    kind === "code" && (
+      <div class="code-study">
+        <>
+          <span>{"{ "}</span>
+          <div class="code-lines">
+            <>
+              <i />
+              <i />
+              <i />
+              <i />
+            </>
+          </div>
+          <span>{" }"}</span>
+        </>
+      </div>
+    )
+  }
+  <div class="visual-caption">
+    <span
+      >{
+        kind === "search"
+          ? "LANGUAGE ↔ VISION"
+          : kind === "signal"
+            ? "VIDEO ↔ VITAL SIGNS"
+            : kind === "music"
+              ? "CODE ↔ EXPERIENCE"
+              : "IDEA ↔ IMPLEMENTATION"
+      }</span
+    ><span>CONCEPT STUDY ↗</span>
+  </div>
+</div>

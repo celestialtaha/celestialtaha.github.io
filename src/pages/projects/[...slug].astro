@@ -1,67 +1,72 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
-import Container from "@components/Container.astro";
-import FormattedDate from "@components/FormattedDate.astro";
-import { readingTime } from "@lib/utils";
-import BackToPrevious from "@components/BackToPrevious.astro";
-import Link from "@components/Link.astro";
+import ProjectVisual from "@components/ProjectVisual.astro";
 import TableOfContents from "@components/TableOfContents.astro";
-
+import { featuredProjects, projectVisual } from "../../lib/portfolio";
 export async function getStaticPaths() {
-  const projects = (await getCollection("projects"))
-    .filter((post) => !post.data.draft)
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-  return projects.map((project) => ({
-    params: { slug: project.slug },
-    props: project,
-  }));
+  return (await getCollection("projects"))
+    .filter((p) => !p.data.draft)
+    .map((project) => ({ params: { slug: project.slug }, props: project }));
 }
 type Props = CollectionEntry<"projects">;
-
 const project = Astro.props;
 const { Content, headings } = await project.render();
+const index = featuredProjects.findIndex((p) => p.slug === project.slug);
+const featured = featuredProjects[index];
+const projects = (await getCollection("projects")).filter(p => !p.data.draft).sort((a,b) => +b.data.date - +a.data.date);
+const ordered = [...featuredProjects.map(p => projects.find(entry => entry.slug === p.slug)!), ...projects.filter(p => !featuredProjects.some(f => f.slug === p.slug))];
+const next = ordered[(ordered.findIndex(p => p.slug === project.slug) + 1) % ordered.length];
 ---
 
 <Layout title={project.data.title} description={project.data.description}>
-  <Container>
-    <div class="animate">
-      <BackToPrevious href="/projects">Back to projects</BackToPrevious>
-    </div>
-    <div class="animate my-10 space-y-1">
-      <div class="flex items-center gap-1.5">
-        <div class="font-base text-sm">
-          <FormattedDate date={project.data.date} />
-        </div>
-        &bull;
-        <div class="font-base text-sm">
-          {readingTime(project.body)}
-        </div>
+  <div class="reading-shell">
+    <a class="text-link" href="/projects">← All projects</a><div
+      class="detail-header"
+    >
+      <span class="eyebrow"
+        >{featured?.category || "SOFTWARE & MACHINE LEARNING"} / {
+          project.data.date.getFullYear()
+        }</span
+      ><h1 data-pagefind-weight="10">{project.data.title}</h1><p>{project.data.description}</p><div
+        class="entry-links"
+      >
+        {
+          project.data.repoURL && (
+            <a href={project.data.repoURL}>View source ↗</a>
+          )
+        }{
+          project.data.demoURL &&
+            project.data.demoURL !== project.data.repoURL && (
+              <a href={project.data.demoURL}>Explore demo ↗</a>
+            )
+        }{
+          project.slug === "medvse" && (
+            <a href="/research/#medvse">Related research ↗</a>
+          )
+        }
       </div>
-      <h1 class="text-3xl font-semibold text-black dark:text-white">
-        {project.data.title}
-      </h1>
-      {
-        (project.data.demoURL || project.data.repoURL) && (
-          <nav class="flex gap-1">
-            {project.data.demoURL && (
-              <Link href={project.data.demoURL} external>
-                demo
-              </Link>
-            )}
-            {project.data.demoURL && project.data.repoURL && <span>/</span>}
-            {project.data.repoURL && (
-              <Link href={project.data.repoURL} external>
-                repo
-              </Link>
-            )}
-          </nav>
-        )
-      }
     </div>
-    <TableOfContents headings={headings} />
-    <article class="animate">
+    {featured && <div class="detail-visual"><ProjectVisual kind={projectVisual(project.slug)} /></div>}
+    {
+      featured && (
+        <div class="detail-contribution">
+          <>
+            <span class="eyebrow">THE WORK</span>
+            <p>{featured.contribution}</p>
+            <div class="pill-list">
+              {featured.stack.map((s) => (
+                <span>{s}</span>
+              ))}
+            </div>
+          </>
+        </div>
+      )
+    }{headings.length > 0 && <TableOfContents headings={headings} />}<article>
       <Content />
-    </article>
-  </Container>
+    </article><div class="next-project">
+      <span class="eyebrow">NEXT PROJECT</span><a
+        href={`/projects/${next.slug}/`}>{next.data.title}<span>↗</span></a>
+    </div>
+  </div>
 </Layout>

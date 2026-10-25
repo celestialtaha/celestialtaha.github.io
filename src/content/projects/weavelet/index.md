@@ -7,7 +7,6 @@ repoURL: "https://github.com/celestialtaha/Weavelet"
 draft: false
 ---
 
-![Weavelet Music Player](/images/projects/weavelet.jpg)
 
 Weavelet is a modern offline music player application designed specifically for Wear OS smartwatches. It provides a seamless music listening experience on wearable devices with intuitive controls and efficient performance.
 

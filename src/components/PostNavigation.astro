@@ -1,65 +1,9 @@
 ---
-const { prevPost, nextPost } = Astro.props;
+import type { CollectionEntry } from 'astro:content';
+interface Props { prevPost?: CollectionEntry<'blog'>; nextPost?: CollectionEntry<'blog'>; }
+const {prevPost,nextPost}=Astro.props;
 ---
-
-<div class="grid grid-cols-2 gap-1.5 sm:gap-3">
-  {
-    prevPost?.slug ? (
-      <a
-        href={`/blog/${prevPost?.slug}`}
-        class="group relative flex flex-nowrap rounded-lg border border-black/15 px-4 py-3 pl-10 no-underline transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          class="absolute left-2 top-1/2 size-5 -translate-y-1/2 fill-none stroke-current stroke-2"
-        >
-          <line
-            x1="5"
-            y1="12"
-            x2="19"
-            y2="12"
-            class="translate-x-3 scale-x-0 transition-transform duration-300 ease-in-out group-hover:translate-x-0 group-hover:scale-x-100 group-focus-visible:translate-x-0 group-focus-visible:scale-x-100"
-          />
-          <polyline
-            points="12 5 5 12 12 19"
-            class="translate-x-1 transition-transform duration-300 ease-in-out group-hover:translate-x-0 group-focus-visible:translate-x-0"
-          />
-        </svg>
-        <div class="flex items-center text-sm">{prevPost?.data.title}</div>
-      </a>
-    ) : (
-      <div class="invisible" />
-    )
-  }
-
-  {
-    nextPost?.slug ? (
-      <a
-        href={`/blog/${nextPost?.slug}`}
-        class="group relative flex flex-grow flex-row-reverse flex-nowrap rounded-lg border border-black/15 px-4 py-4 pr-10 no-underline transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          class="absolute right-2 top-1/2 size-5 -translate-y-1/2 fill-none stroke-current stroke-2"
-        >
-          <line
-            x1="5"
-            y1="12"
-            x2="19"
-            y2="12"
-            class="translate-x-3 scale-x-0 transition-transform duration-300 ease-in-out group-hover:translate-x-0 group-hover:scale-x-100 group-focus-visible:translate-x-0 group-focus-visible:scale-x-100"
-          />
-          <polyline
-            points="12 5 19 12 12 19"
-            class="-translate-x-1 transition-transform duration-300 ease-in-out group-hover:translate-x-0 group-focus-visible:translate-x-0"
-          />
-        </svg>
-        <div class="flex items-center text-sm">{nextPost?.data.title}</div>
-      </a>
-    ) : (
-      <div class="invisible" />
-    )
-  }
-</div>
+<nav lang="en" class="post-navigation" aria-label="More articles" data-pagefind-ignore>
+  {prevPost && <a href={`/blog/${prevPost.slug}/`}><span class="eyebrow">← NEWER NOTE</span><span dir={prevPost.data.rtl?'rtl':'ltr'} lang={prevPost.data.rtl?'fa':'en'}>{prevPost.data.title}</span></a>}
+  {nextPost && <a href={`/blog/${nextPost.slug}/`}><span class="eyebrow">OLDER NOTE →</span><span dir={nextPost.data.rtl?'rtl':'ltr'} lang={nextPost.data.rtl?'fa':'en'}>{nextPost.data.title}</span></a>}
+</nav>

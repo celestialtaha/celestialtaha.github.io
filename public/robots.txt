@@ -1,9 +1,4 @@
 User-agent: *
 Allow: /
-
-# Sitemap location
-Sitemap: https://celestialtaha.github.io/sitemap.xml
-Sitemap: https://celestialtaha.github.io/sitemap-index.xml
-
-# Optimize crawling
 Disallow: /pagefind/
+Sitemap: https://celestialtaha.github.io/sitemap-index.xml

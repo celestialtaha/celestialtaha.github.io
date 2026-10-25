@@ -7,17 +7,16 @@ repoURL: "https://github.com/celestialtaha/celestialtaha.github.io"
 draft: false
 ---
 
-![Personal Portfolio](/images/projects/portfolio.jpg)
 
 This is my personal portfolio and blog website, designed to showcase my projects, research, and writing in a clean, modern interface. Built with performance and accessibility in mind, the site leverages modern web technologies to create a fast, responsive user experience.
 
 ## Key Features
 
 - **Responsive Design**: Fully responsive layout that works beautifully on all devices
-- **Dark/Light Mode**: Automatic theme switching based on user preferences
+- **Scroll-led Portfolio**: Connected project scenes with responsive layouts and reduced-motion support
 - **Blog Platform**: Integrated blog with markdown support and content collections
 - **Projects Showcase**: Dedicated section for highlighting my technical projects
-- **Research Page**: Special section for academic publications with citation tracking
+- **Research Archive**: Publications connected to related projects and professional experience
 - **Performance Optimized**: Fast loading times with static site generation
 - **SEO Friendly**: Structured metadata and optimized for search engines
 

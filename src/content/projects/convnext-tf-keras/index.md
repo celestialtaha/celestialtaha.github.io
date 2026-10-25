@@ -7,7 +7,6 @@ repoURL: "https://github.com/celestialtaha/ConvNeXt-tf-keras"
 draft: false
 ---
 
-![ConvNeXt TensorFlow](/images/projects/convnext.jpg)
 
 A TensorFlow/Keras implementation of the ConvNeXt architecture, a modern convolutional neural network design that bridges the gap between CNNs and Transformers. This implementation makes the cutting-edge ConvNeXt architecture accessible to TensorFlow users.
 

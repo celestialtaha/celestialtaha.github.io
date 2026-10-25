@@ -7,7 +7,6 @@ repoURL: "https://github.com/celestialtaha/Unbalanced-dataset-Classification"
 draft: false
 ---
 
-![Unbalanced Dataset Classification](/images/projects/imbalanced-data.jpg)
 
 This project addresses one of the most common and challenging problems in machine learning: classification with highly imbalanced datasets. When classes are unevenly distributed, standard machine learning algorithms tend to favor the majority class, resulting in poor performance for minority classes.
 

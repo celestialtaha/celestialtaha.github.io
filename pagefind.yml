@@ -1,0 +1,3 @@
+# Search English and Persian together instead of splitting the portfolio by page language.
+# https://pagefind.app/docs/config-options/#force-language
+force_language: en

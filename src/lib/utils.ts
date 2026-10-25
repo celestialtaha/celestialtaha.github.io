@@ -15,8 +15,8 @@ export function formatDate(date: Date) {
 
 export function readingTime(html: string) {
   const textOnly = html.replace(/<[^>]+>/g, "");
-  const wordCount = textOnly.split(/\s+/).length;
-  const readingTimeMinutes = (wordCount / 200 + 1).toFixed();
+  const wordCount = textOnly.trim().split(/\s+/).filter(Boolean).length;
+  const readingTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
   return `${readingTimeMinutes} min read`;
 }
 
@@ -63,8 +63,8 @@ export function dateRange(startDate: Date | string, endDate?: Date | string): st
 
   // Return the formatted date range
   return endYear === "Present"
-    ? `${startMonth}${startYear} - ${endYear}`
-    : `${startMonth}${startYear} - ${endMonth}${endYear}`;
+    ? `${startMonth} ${startYear} – ${endYear}`
+    : `${startMonth} ${startYear} – ${endMonth} ${endYear}`;
 }
 
 
@@ -85,5 +85,5 @@ export function dateRange(startDate: Date | string, endDate?: Date | string): st
 //     }
 //   }
 
-//   return `${startMonth}${startYear} - ${endMonth}${endYear}`;
+//   return `${startMonth} ${startYear} – ${endMonth} ${endYear}`;
 // }

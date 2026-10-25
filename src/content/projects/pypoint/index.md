@@ -7,7 +7,6 @@ repoURL: "https://github.com/celestialtaha/PyPoint"
 draft: false
 ---
 
-![PyPoint](/images/projects/pypoint.jpg)
 
 PyPoint is a lightweight Python library designed for efficiently labeling specific points in images using mouse input. It provides a simple yet powerful interface for image annotation tasks, particularly useful for computer vision projects, data collection, and machine learning applications that require precise point labeling.
 
