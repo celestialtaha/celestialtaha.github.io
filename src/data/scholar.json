@@ -1,0 +1,9 @@
+{
+  "provider": "Google Scholar",
+  "profile": "https://scholar.google.com/citations?user=umQn3lcAAAAJ&hl=en",
+  "asOf": "2026-11-02",
+  "citations": 200,
+  "hIndex": 3,
+  "i10Index": 3,
+  "works": { "3drec": 149, "textasenv": 33, "medvse": 15, "lpdsa": 2, "rose3d": 1 }
+}

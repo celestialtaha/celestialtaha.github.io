@@ -13,12 +13,15 @@ function initSite() {
     const button = document.createElement("button");
     button.className = "copy-code";
     button.textContent = "Copy";
-    button.setAttribute("aria-label", "Copy code");
+    const citation = !!pre.closest(".paper-cite");
+    button.setAttribute("aria-label", citation ? "Copy citation" : "Copy code");
     button.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(code.textContent || "");
         button.textContent = "Copied";
-        status.textContent = "Code copied to clipboard.";
+        status.textContent = citation
+          ? "Citation copied to clipboard."
+          : "Code copied to clipboard.";
         setTimeout(() => (button.textContent = "Copy"), 1600);
       } catch {
         button.textContent = "Try again";

@@ -21,7 +21,7 @@ export const featuredProjects = [
     shortName: "Vital signs",
     category: "APPLIED DEEP LEARNING",
     number: "02",
-    year: "2022",
+    year: "2022–2026",
     discipline: "Research × real life",
     description: "A smartphone camera. A vital signal.",
     detail:

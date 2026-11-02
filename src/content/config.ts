@@ -27,15 +27,35 @@ const research = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string(),
-    journal: z.string(),
-    publicationDate: z.union([z.coerce.date(), z.string()]),
+    venue: z.string(),
+    volume: z.string().optional(),
+    issue: z.string().optional(),
+    pages: z.string().optional(),
+    articleNumber: z.string().optional(),
+    arxiv: z.string().optional(),
+    publicationDate: z.coerce.date(),
+    kind: z.enum(["journal", "conference", "preprint"]),
+    status: z.enum(["published", "preprint"]),
+    summary: z.string(),
+    doi: z.string().optional(),
+    featured: z.number().optional(),
+    revised: z.string().optional(),
+    verifiedAt: z.string(),
+    versions: z
+      .array(
+        z.object({
+          title: z.string(),
+          year: z.number(),
+          url: z.string().url(),
+        }),
+      )
+      .default([]),
     authors: z.array(z.string()),
-    link: z.string(),
-    paperId: z.string().optional(),
-    pdf: z.string().optional(),
+    link: z.string().url(),
+    pdf: z.string().url().optional(),
+    openAccess: z.string().url().optional(),
     code: z.string().optional(),
     demo: z.string().optional(),
-    Content: z.string().optional(),
   }),
 });
 
