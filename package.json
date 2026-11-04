@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "audit": "python3 scripts/audit_portfolio.py"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
@@ -17,18 +18,16 @@
     "@astrojs/tailwind": "^5.1.0",
     "@fontsource/geist-mono": "^5.0.3",
     "@fontsource/geist-sans": "^5.0.3",
+    "@pagefind/default-ui": "1.1.0",
     "astro": "^4.11.3",
     "astro-pagefind": "^1.5.0",
     "clsx": "^2.1.1",
-    "gsap": "^3.15.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss": "^3.4.3",
-    "three": "^0.187.0",
     "typescript": "^5.4.5"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
-    "@types/three": "^0.187.0",
     "pagefind": "^1.1.0",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",

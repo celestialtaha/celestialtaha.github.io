@@ -12,9 +12,19 @@ interface Props {
   lang?: string;
   article?: boolean;
   published?: Date;
+  modified?: Date;
   noindex?: boolean;
 }
-const { title, description, home = false, lang = "en", article = false, published, noindex = false } = Astro.props;
+const {
+  title,
+  description,
+  home = false,
+  lang = "en",
+  article = false,
+  published,
+  modified,
+  noindex = false,
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -25,25 +35,37 @@ const { title, description, home = false, lang = "en", article = false, publishe
       description={description}
       article={article}
       published={published}
+      modified={modified}
       noindex={noindex}
     />
-    {import.meta.env.PROD && (
-      <>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SY0D1STNSD"></script>
-        <script is:inline>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments)}
-          gtag('js', new Date());
-          gtag('config', 'G-SY0D1STNSD');
-        </script>
-      </>
-    )}
-  </head
-  >
+    {
+      import.meta.env.PROD && (
+        <>
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-SY0D1STNSD"
+          />
+          <script is:inline>
+            window.dataLayer = window.dataLayer || []; function gtag()
+            {dataLayer.push(arguments)}
+            gtag('js', new Date()); gtag('config', 'G-SY0D1STNSD');
+          </script>
+        </>
+      )
+    }
+  </head>
   <body id="top" class:list={["portfolio-site", { "home-page": home }]}>
     <a class="skip-link" href="#main">Skip to content</a>
     <Header />
-    <main id="main" tabindex="-1" data-pagefind-body={noindex ? undefined : ""} data-pagefind-ignore={noindex ? "" : undefined} class:list={{ "inner-main": !home }}><slot /></main>
+    <main
+      id="main"
+      tabindex="-1"
+      data-pagefind-body={noindex ? undefined : ""}
+      data-pagefind-ignore={noindex ? "" : undefined}
+      class:list={{ "inner-main": !home }}
+    >
+      <slot />
+    </main>
     <Footer />
     <PageFind />
   </body>

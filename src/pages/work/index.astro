@@ -35,9 +35,7 @@ const work = await Promise.all(
           </div>
           <div class="experience-content">
             <h3>{entry.data.role}</h3>
-            <div>
-              <entry.Content />
-            </div>
+            {entry.body.trim() && <div><entry.Content /></div>}
             {entry.data.skills && (
               <div class="pill-list">
                 {entry.data.skills.map((skill) => (

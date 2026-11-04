@@ -175,7 +175,7 @@
   overflow-wrap: anywhere;
   font: 11px/1.8 var(--mono);
   background: #e8e9df;
-  padding: 18px;
+  padding: 52px 18px 18px;
   margin: 0 0 10px;
 }
 .research-entry .revision-note {
@@ -253,4 +253,15 @@
 }
 .research-heading h1 em {
   color: var(--accent);
+}
+
+.research-heading .text-link + .text-link {
+  margin-left: 24px;
+}
+
+@media (pointer: coarse), (max-width: 700px) {
+  .entry-links a { min-height: 44px; }
+  .paper-cite > summary { min-height: 44px; align-items: center; }
+  .paper-cite .copy-code { min-height: 44px; }
+  .paper-cite pre { padding-top: 64px; }
 }

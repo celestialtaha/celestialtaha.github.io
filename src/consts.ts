@@ -2,7 +2,8 @@ import type { Metadata, Site, Socials } from "@types";
 
 export const SITE: Site = {
   TITLE: "Taha Samavati",
-  DESCRIPTION: "Data Scientist & AI Engineer specializing in machine learning, generative AI, and intelligent systems. Expert in data science, Python development, and building sophisticated AI solutions including multi-agent architectures.",
+  DESCRIPTION:
+    "AI engineer and researcher working across agents, orchestration, backend engineering, and machine perception.",
   EMAIL: "tahasamavati12@gmail.com",
   NUM_POSTS_ON_HOMEPAGE: 3,
   NUM_WORKS_ON_HOMEPAGE: 3,
@@ -10,28 +11,33 @@ export const SITE: Site = {
 };
 
 export const HOME: Metadata = {
-  TITLE: "Taha Samavati | Data Scientist & AI Engineer",
-  DESCRIPTION: "Portfolio of Taha Samavati - Data Scientist & AI Engineer specializing in machine learning, generative AI, and intelligent systems. Explore data science projects, AI solutions, and cutting-edge research.",
+  TITLE: "Taha Samavati — AI Engineer & Researcher",
+  DESCRIPTION:
+    "AI agents, orchestration, backend systems, and applied research. Explore Taha Samavati’s work, publications, and engineering notes.",
 };
 
 export const BLOG: Metadata = {
-  TITLE: "Data Science & AI Blog | Taha Samavati",
-  DESCRIPTION: "In-depth articles on data science, machine learning, generative AI, and intelligent systems. Insights from building data-driven solutions and AI applications.",
+  TITLE: "Writing",
+  DESCRIPTION:
+    "Notes on AI, machine learning, and the ideas behind building useful systems. Writing by Taha Samavati in English and Persian.",
 };
 
 export const WORK: Metadata = {
-  TITLE: "Professional Experience | Data Scientist & AI Engineer",
-  DESCRIPTION: "Professional experience in data science, machine learning, AI engineering, and intelligent systems development. Track record of building data-driven solutions and AI applications.",
+  TITLE: "Experience",
+  DESCRIPTION:
+    "Taha Samavati’s experience across AI engineering, machine learning research, and software development.",
 };
 
 export const RESEARCH: Metadata = {
-  TITLE: "Research Publications | Data Science & AI",
-  DESCRIPTION: "Research publications on machine learning, data science, AI systems, and intelligent technologies. Contributing to the advancement of data-driven solutions and AI research.",
+  TITLE: "Research & Publications",
+  DESCRIPTION:
+    "Publications and preprints by Taha Samavati on machine perception, efficient deep learning, and language. Read papers, explore code, and export citations.",
 };
 
 export const PROJECTS: Metadata = {
-  TITLE: "Data Science & AI Projects Portfolio",
-  DESCRIPTION: "Showcase of data science projects, machine learning applications, AI systems, and intelligent solutions. Open-source repositories and live demonstrations of data-driven applications.",
+  TITLE: "Projects",
+  DESCRIPTION:
+    "Selected work by Taha Samavati: multimodal search, efficient vital-sign estimation, and software for wearable devices. Explore the engineering behind each project.",
 };
 
 export const SOCIALS: Socials = [
@@ -39,18 +45,18 @@ export const SOCIALS: Socials = [
     NAME: "X (Twitter)",
     HREF: "https://x.com/taha_iusm",
     ICON: "/images/twitter.svg",
-    DESCRIPTION: "Follow me for updates"
+    DESCRIPTION: "Follow me for updates",
   },
   {
     NAME: "GitHub",
     HREF: "https://github.com/celestialtaha",
     ICON: "/images/github.svg",
-    DESCRIPTION: "Check out my code"
+    DESCRIPTION: "Check out my code",
   },
   {
     NAME: "LinkedIn",
     HREF: "https://www.linkedin.com/in/taha-samavati/",
     ICON: "/images/linkedin.svg",
-    DESCRIPTION: "Connect professionally"
+    DESCRIPTION: "Connect professionally",
   },
 ];

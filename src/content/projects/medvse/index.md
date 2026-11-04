@@ -17,7 +17,7 @@ The research asks a practical question: how much model capacity is needed to rec
 
 ## Designing for mobile constraints
 
-The 2026 paper explores parameter-efficient models for heart rate, blood oxygen saturation and respiratory rate estimation. Its models range from approximately 3,300 to 53,000 parameters, with TensorFlow Lite deployment considered as part of the mobile workflow. See the paper for the evaluation settings and results for each task.
+The 2026 paper explores parameter-efficient models for heart rate, blood oxygen saturation and respiratory rate estimation. It compares compact fully convolutional and DCT-based architectures and demonstrates on-device deployment using TensorFlow Lite. See the paper for the evaluation settings and results for each task.
 
 ## The MTHS dataset
 

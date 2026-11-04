@@ -8,9 +8,35 @@ import { publicationVenue, bibtex } from "../../lib/research";
 const entries = (await getCollection("research")).sort(
   (a, b) => +b.data.publicationDate - +a.data.publicationDate,
 );
+const verificationDates = entries.map((entry) => entry.data.verifiedAt).sort();
+const formatDate = (value: string, month: "long" | "short" = "long") =>
+  new Date(value).toLocaleDateString("en-GB", {
+    day: "numeric", month, year: "numeric", timeZone: "UTC",
+  });
+const firstCheck = verificationDates[0];
+const lastCheck = verificationDates[verificationDates.length - 1];
+const verificationPeriod = firstCheck === lastCheck
+  ? `on ${formatDate(lastCheck)}`
+  : `between ${formatDate(firstCheck)} and ${formatDate(lastCheck)}`;
+
 ---
 
 <Layout title={RESEARCH.TITLE} description={RESEARCH.DESCRIPTION}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org", "@type": "ItemList",
+    name: "Research publications by Taha Samavati",
+    itemListElement: entries.map((entry, index) => ({
+      "@type": "ListItem", position: index + 1,
+      item: {
+        "@type": "ScholarlyArticle", name: entry.data.title,
+        url: entry.data.link, datePublished: entry.data.publicationDate.toISOString().slice(0, 10),
+        author: entry.data.authors.map(name => ({ "@type": "Person", name })),
+        description: entry.data.summary,
+        ...(entry.data.doi ? { identifier: `https://doi.org/${entry.data.doi}` } : {}),
+        ...(entry.data.status === "preprint" ? { creativeWorkStatus: "Preprint" } : {}),
+      },
+    })),
+  }).replaceAll("<", "\\u003c")} />
   <div class="research-heading">
     <div>
       <span class="eyebrow">PUBLICATIONS & PREPRINTS</span><h1>
@@ -22,9 +48,9 @@ const entries = (await getCollection("research")).sort(
         better understanding to a working system.
       </p><a
         class="text-link"
-        href="https://scholar.google.com/citations?user=umQn3lcAAAAJ&hl=en"
+        href={scholar.profile}
         >Google Scholar ↗</a
-      >
+      ><a class="text-link" href="/research.bib" download="taha-samavati-publications.bib">Download BibTeX ↓</a>
     </div>
   </div>
   <div class="research-overview">
@@ -123,7 +149,7 @@ const entries = (await getCollection("research")).sort(
             )}
             {entry.data.revised && (
               <p class="revision-note">
-                First posted 2019 · Latest revision October 2023
+                First posted {entry.data.publicationDate.getUTCFullYear()} · Latest revision {new Date(entry.data.revised).toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" })}
               </p>
             )}
             <details class="paper-cite">
@@ -142,8 +168,7 @@ const entries = (await getCollection("research")).sort(
     }
   </div>
   <p class="research-source-note">
-    Publication records checked against publisher and arXiv sources on 2
-    November 2026. Preprints and later journal versions are grouped as one work.
+    Publication records checked against publisher and arXiv sources {verificationPeriod}. Preprints and later journal versions are grouped as one work.
     Citation metrics are a dated Scholar snapshot.
   </p>
 </Layout>

@@ -8,10 +8,12 @@ function initSite() {
     pre.tabIndex = 0;
     const status = document.createElement("span");
     status.className = "sr-only";
+    status.lang = "en";
     status.setAttribute("role", "status");
     pre.append(status);
     const button = document.createElement("button");
     button.className = "copy-code";
+    button.lang = "en";
     button.textContent = "Copy";
     const citation = !!pre.closest(".paper-cite");
     button.setAttribute("aria-label", citation ? "Copy citation" : "Copy code");

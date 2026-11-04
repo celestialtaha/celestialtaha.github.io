@@ -11,8 +11,8 @@ export const featuredProjects = [
     detail:
       "A product discovery system that maps natural language and images into the same embedding space. Built with CLIP, PyTorch, and vector search.",
     contribution:
-      "Text-to-image retrieval · Product search · Streamlit interface",
-    stack: ["CLIP", "PyTorch", "Vector search"],
+      "Text-to-image retrieval · Background encoding · Search API",
+    stack: ["CLIP", "FastAPI", "Celery", "Redis", "Qdrant"],
     visual: "search",
   },
   {
@@ -42,7 +42,7 @@ export const featuredProjects = [
     detail:
       "An offline music player for Wear OS. Designed around the constraints of a watch: a small screen, limited battery, and the need for simple controls.",
     contribution: "Wear OS application · Offline playback · Native interface",
-    stack: ["Kotlin", "Jetpack Compose", "Media3"],
+    stack: ["Kotlin", "Compose for Wear OS", "Media3", "Horologist"],
     visual: "music",
   },
 ];

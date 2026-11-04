@@ -1561,3 +1561,9 @@ html.search-open body {
   --accent: #b74426;
 }
 .comments-section>h2{font-size:26px;letter-spacing:-.8px;margin:0 0 25px}
+
+/* Short landscape viewports need the full reading area after scrolling. */
+@media (max-height: 500px) and (min-width: 701px) {
+  .portfolio-site .site-header { position: relative; }
+  html { scroll-padding-top: 24px; }
+}

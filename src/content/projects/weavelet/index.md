@@ -7,27 +7,16 @@ repoURL: "https://github.com/celestialtaha/Weavelet"
 draft: false
 ---
 
+Weavelet is an offline-first music player for Wear OS. It brings local music browsing and playback to the watch, with controls designed for the wrist.
 
-Weavelet is a modern offline music player application designed specifically for Wear OS smartwatches. It provides a seamless music listening experience on wearable devices with intuitive controls and efficient performance.
+## A watch-first interaction
 
-## Key Features
+The app supports library scanning, shuffle and repeat, crown-based volume control, and quick access through Tiles and Complications. Compose for Wear OS provides the interface; Media3 handles playback.
 
-- **Offline Playback**: Listen to your music without requiring an internet connection
-- **Optimized for Wearables**: Designed specifically for the small form factor of smartwatches
-- **Intuitive Controls**: Simple gesture-based interface for easy navigation
-- **Battery Efficient**: Optimized to minimize battery consumption
-- **Playlist Management**: Create and manage playlists directly on your watch
-- **Media Controls**: Play, pause, skip, and volume controls with haptic feedback
+## Engineering around the form factor
 
-## Technical Implementation
+A watch offers little screen space and several ways to interact. Weavelet connects touch, crown input, and system entry points around the same player. Kotlin, Coroutines, and Horologist support the implementation.
 
-The app is built with:
-- **Kotlin**: Modern language for Android development
-- **Jetpack Compose for Wear OS**: UI toolkit for building native UIs
-- **Coroutines**: For asynchronous programming
-- **Media3 (ExoPlayer)**: For audio playback capabilities
-- **Material Design for Wear OS**: For consistent UI/UX
+## Explore the application
 
-## Development Goals
-
-This project aims to provide a lightweight yet powerful music player alternative for Wear OS devices, focusing on performance and battery efficiency while delivering a great user experience on small screens.
+The [repository](https://github.com/celestialtaha/Weavelet) contains the source and build instructions. Its README describes installation through APK releases. The illustration above is a concept study rather than an application screenshot.

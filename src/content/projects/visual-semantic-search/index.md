@@ -7,44 +7,20 @@ repoURL: "https://github.com/celestialtaha/visual-semantic-search"
 draft: false
 ---
 
+A product search experiment that connects a written description to relevant images. CLIP places language and images in a shared embedding space; a vector search retrieves nearby products.
 
-This project implements a visual semantic search system that allows users to search for products using natural language queries. The system retrieves visually relevant images based on text descriptions, bridging the gap between language and visual content.
+## Two paths, one search system
 
-## How It Works
+The system separates catalog preparation from interactive queries. Celery manages image-encoding jobs with Redis as its broker and result backend. Qdrant stores the resulting vectors.
 
-The system leverages OpenAI's CLIP (Contrastive Language-Image Pre-training) model to create a unified embedding space for both images and text. This enables powerful cross-modal search capabilities:
+For search, a Streamlit interface connects to a FastAPI backend. The query becomes an embedding that can be compared with the catalog’s image embeddings. Docker Compose brings the application services together for local use.
 
-1. **Image Embedding**: Product images are processed through CLIP's vision encoder to create visual embeddings
-2. **Query Embedding**: User text queries are processed through CLIP's text encoder
-3. **Similarity Matching**: The system finds images whose embeddings are closest to the query embedding
-4. **Ranked Results**: Results are presented in order of semantic similarity to the query
+## The engineering decision
 
-## Key Features
+Image encoding is background work; answering a search is interactive work. Keeping those paths separate makes their responsibilities explicit. The model is one part of the project—the API, job queue, storage, and interface make it usable.
 
-- **Text-to-Image Search**: Find relevant product images using natural language descriptions
-- **Semantic Understanding**: The system understands concepts beyond simple keywords
-- **Interactive Interface**: User-friendly Streamlit application for search and exploration
-- **Scalable Architecture**: Designed to handle large product catalogs efficiently
-- **Pre-computed Embeddings**: Fast search through vectorized product database
+## What this demonstrates
 
-## Technologies
+The project connects multimodal retrieval with a concrete backend architecture. It is an open-source implementation; the repository does not publish a retrieval benchmark or production-scale performance results.
 
-- Python
-- OpenAI CLIP
-- Streamlit
-- PyTorch
-- Vector Search
-- Deep Learning
-- Computer Vision
-- Natural Language Processing
-
-## Applications
-
-This technology has numerous practical applications:
-- E-commerce product search
-- Visual inventory management
-- Content discovery systems
-- Design inspiration tools
-- Fashion and style recommendation
-
-The project demonstrates how multimodal AI models can create intuitive and powerful search experiences that understand both visual and textual information.
+The [source and setup instructions](https://github.com/celestialtaha/visual-semantic-search) document the application. The [Compose configuration](https://github.com/celestialtaha/visual-semantic-search/blob/main/docker-compose.yaml) shows how the services are connected.

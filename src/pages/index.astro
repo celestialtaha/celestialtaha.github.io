@@ -1,5 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import { Image } from "astro:assets";
+import portrait from "../../public/images/profile.jpeg";
 import ProjectVisual from "@components/ProjectVisual.astro";
 import { featuredProjects } from "../lib/portfolio";
 import { HOME, SITE } from "@consts";
@@ -22,153 +24,66 @@ const expertise = [
   {
     id: "agents",
     label: "Agents",
-    kicker: "01 / AGENT SYSTEMS",
-    title: "Reason. Act.",
-    emphasis: "Check.",
     description:
-      "Agents need more than a prompt. They need useful tools, relevant context, and a way to evaluate what happens next.",
+      "Tool-using agents with relevant context, memory, and evaluation built into the workflow.",
     detail: "Tool use · Memory & context · Evaluation",
     href: "/work",
-    action: "Professional experience",
   },
   {
     id: "orchestration",
     label: "Orchestration",
-    kicker: "02 / ORCHESTRATION",
-    title: "Make the parts",
-    emphasis: "work together.",
     description:
-      "Route the task. Coordinate the work. Bring the result back together. The interesting part is how the whole system behaves.",
+      "Task routing, coordinated workflows, and context that helps the whole system work together.",
     detail: "Workflows · Coordination · Task routing",
     href: "/blog/10-context-engineering/",
-    action: "Notes on context engineering",
   },
   {
     id: "backend",
     label: "Backend",
-    kicker: "03 / BACKEND ENGINEERING",
-    title: "Behind every",
-    emphasis: "working idea.",
     description:
-      "APIs, background workers, data and retrieval. The foundations that turn an AI experiment into usable software.",
+      "APIs, background workers, data, and retrieval that turn an AI experiment into usable software.",
     detail: "Python · APIs · Queues · Data systems",
     href: "/projects",
-    action: "Explore the engineering archive",
   },
   {
     id: "research",
     label: "Research",
-    kicker: "04 / APPLIED RESEARCH",
-    title: "Look closer.",
-    emphasis: "Ask better.",
     description:
-      "My research explores machine perception and efficient learning, from reconstructing geometry to recovering vital signs from light.",
+      "Machine perception and efficient learning, from reconstructing geometry to estimating vital signs.",
     detail: "3D perception · Deep learning · Mobile inference",
     href: "/research",
-    action: "Research & publications",
   },
 ];
 ---
 
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION} home>
-  <section class="signal-story" aria-label="Areas of practice" id="story">
-    <div class="story-viewport">
-      <div class="story-topline">
-        <span class="eyebrow">TAHA SAMAVATI / SELECTED PRACTICE</span><a
-          href="#selected-work">Skip to projects ↘</a
-        >
+  <section class="portfolio-intro home-container" id="practice-overview" aria-labelledby="hero-title">
+    <div class="intro-copy">
+      <span class="eyebrow intro-name">TAHA SAMAVATI / AI ENGINEER & RESEARCHER</span>
+      <h1 id="hero-title">Intelligence,<br /><em>put to work.</em></h1>
+      <p>I build AI systems and explore the research behind them. From agents and orchestration to the backend that brings it all together.</p>
+      <div class="intro-actions">
+        <a class="intro-primary" href="#selected-work">Explore selected work <span aria-hidden="true">↘</span></a>
+        <a class="text-link" href="/research">Research & publications ↗</a>
       </div>
-      <div class="story-art" aria-hidden="true">
-        <div class="scene-fallback">
-          <span>PLAN</span><i>→</i><span>ACT</span><i>→</i><span>CHECK</span
-          ><small>AGENTS / ORCHESTRATION / SYSTEMS</small>
-        </div>
-        <canvas id="intelligence-scene"></canvas>
-        <div class="scene-caption">
-          <span data-scene-label>00 / THE INTELLIGENCE WORKBENCH</span><span
-            >AN ILLUSTRATED VIEW OF MY PRACTICE</span
-          >
-        </div>
-      </div>
-      <div class="story-panels">
-        <section
-          class="story-panel story-opening"
-          data-story-panel="0"
-          id="practice-overview"
-          aria-labelledby="hero-title"
-        >
-          <span class="story-kicker"
-            ><span class="status-dot"></span>AI ENGINEER & RESEARCHER</span
-          >
-          <h1 id="hero-title">Intelligence,<br /><em>engineered.</em></h1>
-          <p>
-            I’m Taha. I work across AI agents, orchestration, backend systems
-            and applied research.
-          </p>
-          <a class="story-link" href="#practice-agents"
-            >Explore my practice <span>↓</span></a
-          >
-        </section>
-        {
-          expertise.map((area, index) => (
-            <section
-              class="story-panel"
-              data-story-panel={index + 1}
-              id={`practice-${area.id}`}
-              aria-labelledby={`${area.id}-title`}
-            >
-              <span class="story-kicker">{area.kicker}</span>
-              <h2 id={`${area.id}-title`}>
-                {area.title}
-                <br />
-                <em>{area.emphasis}</em>
-              </h2>
-              <p>{area.description}</p>
-              <div class="story-project">
-                <>
-                  <span>{area.detail}</span>
-                  <a href={area.href}>
-                    {area.action}
-                    <span>↗</span>
-                  </a>
-                </>
-              </div>
-            </section>
-          ))
-        }
-      </div>
-      <div class="story-controls" hidden>
-        <div class="story-index" aria-label="Areas of practice">
-          {
-            [
-              "Overview",
-              ...expertise.map((a) =>
-                a.id === "orchestration" ? "Routing" : a.label,
-              ),
-            ].map((label, i) => (
-              <button
-                type="button"
-                data-story-button={i}
-                aria-pressed={i === 0}
-                aria-controls={
-                  i === 0
-                    ? "practice-overview"
-                    : `practice-${expertise[i - 1].id}`
-                }
-              >
-                <>
-                  <span>0{i}</span>
-                  <span>{label}</span>
-                </>
-              </button>
-            ))
-          }
-        </div>
-        <div class="story-progress" aria-hidden="true"><span></span></div>
-        <button class="motion-toggle" type="button" aria-pressed="false"
-          >Static view <span aria-hidden="true">Ⅱ</span></button
-        >
-      </div>
+    </div>
+    <figure class="intro-portrait">
+      <Image src={portrait} alt="Taha Samavati" widths={[360, 600, 900]} sizes="(max-width: 700px) 70vw, 30vw" format="webp" quality={85} loading="eager" fetchpriority="high" />
+      <figcaption><span class="mono">ENGINEERING × CURIOSITY</span><a href="#about" aria-label="More about Taha">A little about me ↘</a></figcaption>
+    </figure>
+  </section>
+
+  <section class="practice-index home-container" aria-labelledby="practice-title" id="story">
+    <div class="practice-heading"><h2 class="eyebrow" id="practice-title">AREAS OF PRACTICE</h2><span class="mono">FROM EXPLORATION TO IMPLEMENTATION</span></div>
+    <div class="practice-grid">
+      {expertise.map((area, index) => (
+        <a class="practice-area" id={`practice-${area.id}`} href={area.href}>
+          <span class="practice-number mono">0{index + 1}</span>
+          <h3>{area.label}<span aria-hidden="true">↗</span></h3>
+          <p>{area.description}</p>
+          <span class="practice-detail">{area.detail}</span>
+        </a>
+      ))}
     </div>
   </section>
 
@@ -242,15 +157,7 @@ const expertise = [
     class="about-portfolio home-container"
     aria-labelledby="about-title"
   >
-    <div class="about-portrait">
-      <img
-        src="/images/profile.jpeg"
-        alt="Taha Samavati"
-        width="420"
-        height="500"
-        loading="lazy"
-      /><span class="mono">TAHA SAMAVATI</span>
-    </div>
+    <div class="about-note"><span class="eyebrow">A LITTLE ABOUT ME</span><p>Between<br />the question<br /><em>and the build.</em></p><span class="mono">RESEARCH / ENGINEERING / PRODUCT</span></div>
     <div class="about-story">
       <span class="eyebrow">THE PERSON BEHIND THE SYSTEMS</span><h2
         id="about-title"
@@ -322,4 +229,3 @@ const expertise = [
     </div>
   </section>
 </Layout>
-<script src="../scripts/home.ts"></script>

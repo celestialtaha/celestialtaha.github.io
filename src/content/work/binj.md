@@ -7,4 +7,4 @@ dateEnd: "Current"
 skills: ["Generative AI", "Machine Learning", "Data Science", "NLP", "Python", "Product Development"]
 ---
 
-At Binj, my passion lies in the intersection of AI, ML, and product development, creating solutions that not only make sense but make a difference. I've honed my skills to turn complex AI and ML technologies into actionable, user-friendly products. I have been extracting trends and patterns from large-scale text and interactions data and providing an intuitive output that enables our clients to make data-driven decisions.
+I work across data science, machine learning, and AI product development. My work includes finding patterns in large text and interaction datasets and turning the results into interfaces that help clients make decisions.

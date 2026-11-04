@@ -11,6 +11,50 @@ function initSearch() {
   backdrop.dataset.ready = "true";
   const panel = backdrop,
     content = dialog;
+  const mount = content.querySelector<HTMLElement>("#search")!;
+  const loadingMessage = content.querySelector<HTMLElement>(
+    "[data-search-loading]",
+  )!;
+  const fallback = content.querySelector<HTMLElement>("[data-search-error]")!;
+  let disposed = false;
+  let loading: Promise<void> | undefined;
+  let searchUI: { destroy(): void } | undefined;
+  async function loadSearch() {
+    if (loading) return loading;
+    loadingMessage.hidden = false;
+    mount.setAttribute("aria-busy", "true");
+    loading = import("@pagefind/default-ui")
+      .then(({ PagefindUI }) => {
+        if (disposed) return;
+        searchUI = new PagefindUI({
+          element: "#search",
+          bundlePath: mount.dataset.bundlePath,
+          showImages: false,
+          excerptLength: 20,
+          resetStyles: false,
+        });
+        const input = content.querySelector<HTMLInputElement>("input");
+        input?.setAttribute(
+          "aria-label",
+          "Search projects, research, and writing",
+        );
+        input?.setAttribute("dir", "auto");
+        if (!panel.hidden && document.activeElement === content) focusInput();
+      })
+      .catch(() => {
+        if (!disposed) fallback.hidden = false;
+      })
+      .finally(() => {
+        if (!disposed) {
+          loadingMessage.hidden = true;
+          mount.removeAttribute("aria-busy");
+        }
+      });
+    return loading;
+  }
+  const warmSearch = () => {
+    void loadSearch();
+  };
   let previous: HTMLElement | null = null;
   let background: Array<{ element: HTMLElement; inert: boolean }> = [];
   function focusInput() {
@@ -46,6 +90,7 @@ function initSearch() {
     background.forEach(({ element }) => (element.inert = true));
     document.documentElement.classList.add("search-open");
     focusInput();
+    void loadSearch();
   }
   function key(event: KeyboardEvent) {
     const typing =
@@ -102,7 +147,12 @@ function initSearch() {
       close(false);
   }
   const dismiss = () => close();
-  triggers.forEach((trigger) => trigger.addEventListener("click", open));
+  triggers.forEach((trigger) => {
+    trigger.addEventListener("click", open);
+    trigger.addEventListener("pointerenter", warmSearch, { once: true });
+    trigger.addEventListener("focus", warmSearch, { once: true });
+    trigger.hidden = false;
+  });
   const closeButton = content.querySelector("[data-close-search]");
   closeButton?.addEventListener("click", dismiss);
   panel.addEventListener("click", outside);
@@ -112,8 +162,14 @@ function initSearch() {
     "astro:before-swap",
     () => {
       close(false);
+      disposed = true;
+      searchUI?.destroy();
       document.removeEventListener("keydown", key);
-      triggers.forEach((trigger) => trigger.removeEventListener("click", open));
+      triggers.forEach((trigger) => {
+        trigger.removeEventListener("click", open);
+        trigger.removeEventListener("pointerenter", warmSearch);
+        trigger.removeEventListener("focus", warmSearch);
+      });
       closeButton?.removeEventListener("click", dismiss);
       panel.removeEventListener("click", outside);
       content.removeEventListener("click", resultClick);

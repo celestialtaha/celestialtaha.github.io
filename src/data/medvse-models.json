@@ -1,0 +1,15 @@
+{
+  "dataset": "PPG-DaLiA",
+  "task": "Heart-rate estimation",
+  "metric": "MAE (bpm)",
+  "protocol": "Session-wise results; mean ± standard deviation as reported in Table 5.",
+  "source": "https://doi.org/10.1049/htl2.70083",
+  "tables": "Tables 2 and 5",
+  "checkedAt": "2026-11-03",
+  "models": [
+    { "name": "DCT", "parameters": 3266, "mae": 7.25, "sd": 2.84 },
+    { "name": "FCN", "parameters": 8037, "mae": 6.49, "sd": 2.82 },
+    { "name": "Base", "parameters": 29665, "mae": 7.79, "sd": 3.36 },
+    { "name": "Residual FCN", "parameters": 53713, "mae": 6.07, "sd": 2.70 }
+  ]
+}

@@ -1,0 +1,126 @@
+---
+import results from "../data/medvse-models.json";
+---
+
+<section class="research-results" aria-labelledby="result-title">
+  <span class="eyebrow">A CLOSER LOOK / PPG-DALIA</span>
+  <h2 id="result-title">Small models.<br /><em>Different tradeoffs.</em></h2>
+  <p class="result-intro">
+    Four architectures from the paper, compared on heart-rate estimation.
+    Parameter count is one part of the decision; error and its variation matter
+    too.
+  </p>
+  <figure>
+    <table>
+      <caption>{results.dataset} · {results.task}</caption>
+      <thead
+        ><tr
+          ><th scope="col">Model</th><th scope="col">Parameters</th><th
+            scope="col">MAE ± SD <span>(bpm)</span></th
+          ></tr
+        ></thead
+      >
+      <tbody
+        >{
+          results.models.map((model) => (
+            <tr>
+              <>
+                <th scope="row">{model.name}</th>
+                <td>{model.parameters.toLocaleString("en-US")}</td>
+                <td>
+                  {model.mae.toFixed(2)} <span>± {model.sd.toFixed(2)}</span>
+                </td>
+              </>
+            </tr>
+          ))
+        }</tbody
+      >
+    </table>
+    <figcaption>
+      {results.protocol} DCT denotes the variant without inversion. MAE is mean absolute
+      error; SD is standard deviation. Lower MAE is better.
+      <a href={results.source}>Source: {results.tables} ↗</a>
+    </figcaption>
+  </figure>
+</section>
+<style>
+  .research-results {
+    border-top: 1px solid var(--line);
+    padding-top: 35px;
+    margin-top: 50px;
+  }
+  .research-results h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.05em;
+    margin: 20px 0;
+  }
+  .result-intro {
+    font-size: 14px;
+    line-height: 1.85;
+    max-width: 620px;
+    color: var(--muted);
+  }
+  .research-results figure {
+    margin: 30px 0 0;
+  }
+  .research-results table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: left;
+    font-size: 12px;
+  }
+  .research-results caption {
+    text-align: left;
+    font: 10px var(--mono);
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .research-results th,
+  .research-results td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 400;
+  }
+  .research-results thead th {
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .research-results th:first-child {
+    padding-left: 0;
+  }
+  .research-results :is(th, td):not(:first-child) {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .research-results td > span {
+    color: var(--muted);
+  }
+  .research-results figcaption {
+    margin-top: 20px;
+    font-size: 11px;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 700px;
+  }
+  .research-results figcaption a {
+    display: block;
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    margin-top: 10px;
+  }
+  @media (max-width: 600px) {
+    .research-results table {
+      font-size: 11px;
+    }
+    .research-results th,
+    .research-results td {
+      padding: 14px 6px;
+    }
+    .research-results thead th > span {
+      display: block;
+      margin-top: 3px;
+    }
+  }
+</style>

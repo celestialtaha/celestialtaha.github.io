@@ -20,7 +20,14 @@ const index = posts.findIndex((p) => p.slug === post.slug);
 const { Content, headings } = await post.render();
 ---
 
-<Layout title={post.data.title} description={post.data.description} lang={post.data.rtl ? "fa" : "en"} article published={post.data.date}>
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  lang={post.data.rtl ? "fa" : "en"}
+  article
+  published={post.data.date}
+  modified={post.data.updated}
+>
   <div class="reading-shell">
     <a lang="en" class="text-link" href="/blog">← All writing</a><div
       class="detail-header"
@@ -33,10 +40,30 @@ const { Content, headings } = await post.render();
             month: "long",
             day: "numeric",
           })
-        } / {readingTime(post.body)}</span
-      ><h1 data-pagefind-weight="10">{post.data.title}</h1><p>{post.data.description}</p>
+        } / {readingTime(post.body)}{
+          post.data.updated && (
+            <span>
+              {" "}
+              / Revised{" "}
+              {post.data.updated.toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+                timeZone: "UTC",
+              })}
+            </span>
+          )
+        }</span
+      ><h1 data-pagefind-weight="10">{post.data.title}</h1><p>
+        {post.data.description}
+      </p>
     </div>{
-      headings.length > 0 && <TableOfContents headings={headings} lang={post.data.rtl ? "fa" : "en"} />
+      headings.length > 0 && (
+        <TableOfContents
+          headings={headings}
+          lang={post.data.rtl ? "fa" : "en"}
+        />
+      )
     }<article class:list={{ rtl: post.data.rtl }}><Content /></article><div
       style="margin-top:65px"
     >

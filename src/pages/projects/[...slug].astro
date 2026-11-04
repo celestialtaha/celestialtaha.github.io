@@ -2,6 +2,8 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import ProjectVisual from "@components/ProjectVisual.astro";
+import ProjectSystem from "@components/ProjectSystem.astro";
+import ResearchResults from "@components/ResearchResults.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import { featuredProjects, projectVisual } from "../../lib/portfolio";
 export async function getStaticPaths() {
@@ -12,11 +14,28 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<"projects">;
 const project = Astro.props;
 const { Content, headings } = await project.render();
+const pageHeadings =
+  project.slug === "medvse"
+    ? [
+        ...headings,
+        { depth: 2, slug: "result-title", text: "Model comparison" },
+      ]
+    : headings;
 const index = featuredProjects.findIndex((p) => p.slug === project.slug);
 const featured = featuredProjects[index];
-const projects = (await getCollection("projects")).filter(p => !p.data.draft).sort((a,b) => +b.data.date - +a.data.date);
-const ordered = [...featuredProjects.map(p => projects.find(entry => entry.slug === p.slug)!), ...projects.filter(p => !featuredProjects.some(f => f.slug === p.slug))];
-const next = ordered[(ordered.findIndex(p => p.slug === project.slug) + 1) % ordered.length];
+const projects = (await getCollection("projects"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => +b.data.date - +a.data.date);
+const ordered = [
+  ...featuredProjects.map(
+    (p) => projects.find((entry) => entry.slug === p.slug)!,
+  ),
+  ...projects.filter((p) => !featuredProjects.some((f) => f.slug === p.slug)),
+];
+const next =
+  ordered[
+    (ordered.findIndex((p) => p.slug === project.slug) + 1) % ordered.length
+  ];
 ---
 
 <Layout title={project.data.title} description={project.data.description}>
@@ -26,11 +45,11 @@ const next = ordered[(ordered.findIndex(p => p.slug === project.slug) + 1) % ord
     >
       <span class="eyebrow"
         >{featured?.category || "SOFTWARE & MACHINE LEARNING"} / {
-          project.data.date.getFullYear()
+          featured?.year || project.data.date.getFullYear()
         }</span
-      ><h1 data-pagefind-weight="10">{project.data.title}</h1><p>{project.data.description}</p><div
-        class="entry-links"
-      >
+      ><h1 data-pagefind-weight="10">{project.data.title}</h1><p>
+        {project.data.description}
+      </p><div class="entry-links">
         {
           project.data.repoURL && (
             <a href={project.data.repoURL}>View source ↗</a>
@@ -47,7 +66,13 @@ const next = ordered[(ordered.findIndex(p => p.slug === project.slug) + 1) % ord
         }
       </div>
     </div>
-    {featured && <div class="detail-visual"><ProjectVisual kind={projectVisual(project.slug)} /></div>}
+    {
+      featured && (
+        <div class="detail-visual">
+          <ProjectVisual kind={projectVisual(project.slug)} />
+        </div>
+      )
+    }
     {
       featured && (
         <div class="detail-contribution">
@@ -62,11 +87,16 @@ const next = ordered[(ordered.findIndex(p => p.slug === project.slug) + 1) % ord
           </>
         </div>
       )
-    }{headings.length > 0 && <TableOfContents headings={headings} />}<article>
+    }<ProjectSystem slug={project.slug} />{
+      pageHeadings.length > 0 && <TableOfContents headings={pageHeadings} />
+    }<article>
       <Content />
-    </article><div class="next-project">
+    </article>{project.slug === "medvse" && <ResearchResults />}<div
+      class="next-project"
+    >
       <span class="eyebrow">NEXT PROJECT</span><a
-        href={`/projects/${next.slug}/`}>{next.data.title}<span>↗</span></a>
+        href={`/projects/${next.slug}/`}>{next.data.title}<span>↗</span></a
+      >
     </div>
   </div>
 </Layout>

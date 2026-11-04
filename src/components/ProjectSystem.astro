@@ -1,0 +1,271 @@
+---
+import { caseStudies } from "../lib/case-studies";
+interface Props {
+  slug: string;
+}
+const study = caseStudies[Astro.props.slug];
+---
+
+{
+  study && (
+    <section class="case-study-context" aria-label="Project at a glance">
+      <div class="case-brief">
+        <span class="eyebrow">AT A GLANCE</span>
+        <div>
+          <>
+            <h2>{study.focus}</h2>
+            <dl>
+              <div>
+                <>
+                  <dt>The challenge</dt>
+                  <dd>{study.constraint}</dd>
+                </>
+              </div>
+              <div>
+                <>
+                  <dt>The work</dt>
+                  <dd>{study.artifact}</dd>
+                </>
+              </div>
+            </dl>
+          </>
+        </div>
+      </div>
+      {study.evidence && (
+        <aside
+          class="research-evidence"
+          aria-label="Published research details"
+        >
+          <div class="evidence-heading">
+            <span class="eyebrow">FROM THE PUBLISHED RESEARCH</span>
+            <a href={study.evidence.source}>2026 journal paper ↗</a>
+          </div>
+          <dl>
+            {study.evidence.metrics.map((metric) => (
+              <div>
+                <dd>{metric.value}</dd>
+                <dt>{metric.label}</dt>
+              </div>
+            ))}
+          </dl>
+          <p>{study.evidence.note}</p>
+        </aside>
+      )}
+      <figure class="system-map">
+        {study.flows.map((flow) => (
+          <div class="system-flow">
+            <span class="mono">{flow.label}</span>
+            <ol>
+              {flow.steps.map((step, index) => (
+                <li>
+                  <span class="system-step-index" aria-hidden="true">
+                    0{index + 1}
+                  </span>
+                  <strong>{step.name}</strong>
+                  <span>{step.detail}</span>
+                  {index < flow.steps.length - 1 && <i aria-hidden="true">→</i>}
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))}
+        <figcaption>{study.note}</figcaption>
+      </figure>
+    </section>
+  )
+}
+<style>
+  .case-study-context {
+    margin-block: 40px;
+  }
+  .case-brief {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 30px;
+    border-top: 1px solid var(--line);
+    padding-top: 30px;
+  }
+  .case-brief > .eyebrow {
+    padding-top: 8px;
+  }
+  .case-brief h2 {
+    font-size: clamp(25px, 3vw, 35px);
+    letter-spacing: -0.045em;
+    line-height: 1.2;
+    margin: 0 0 25px;
+  }
+  .case-brief dl {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  .case-brief dt {
+    font-size: 12px;
+    font-weight: 550;
+    margin-bottom: 9px;
+  }
+  .case-brief dd {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin: 0;
+  }
+  .system-map {
+    background: #e7e9df;
+    border: 1px solid var(--line);
+    padding: 30px;
+    margin: 35px 0;
+  }
+  .system-flow + .system-flow {
+    margin-top: 32px;
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+  }
+  .system-flow > .mono {
+    font-size: 9px;
+    color: #59664e;
+    letter-spacing: 0.6px;
+  }
+  .system-flow ol {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+  }
+  .system-flow li {
+    position: relative;
+    min-width: 0;
+  }
+  .system-step-index {
+    font: 10px var(--mono);
+    color: var(--accent);
+    display: block;
+    margin-bottom: 22px;
+  }
+  .system-flow strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .system-flow li > span:last-of-type {
+    font-size: 10px;
+    color: var(--muted);
+    display: block;
+    margin-top: 6px;
+    line-height: 1.7;
+  }
+  .system-flow i {
+    position: absolute;
+    right: 0;
+    top: -5px;
+    font-size: 20px;
+    color: #7b856e;
+    font-style: normal;
+  }
+  .system-map figcaption {
+    font-size: 10px;
+    line-height: 1.8;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    margin-top: 28px;
+  }
+  .research-evidence {
+    margin-top: 35px;
+    padding-block: 25px;
+    border-block: 1px solid var(--line);
+  }
+  .evidence-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .evidence-heading > a {
+    font-size: 11px;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+  .research-evidence dl {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 25px;
+    margin: 25px 0 20px;
+  }
+  .research-evidence dd {
+    font-size: clamp(25px, 3.4vw, 43px);
+    letter-spacing: -0.055em;
+    line-height: 1.2;
+    margin: 0 0 8px;
+  }
+  .research-evidence dt {
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .research-evidence > p {
+    font-size: 10px;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 650px;
+    margin: 0;
+  }
+  @media (max-width: 600px) {
+    .research-evidence dl {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .research-evidence dl > div {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 1fr;
+      align-items: center;
+      gap: 20px;
+    }
+    .research-evidence dd {
+      font-size: 30px;
+      margin: 0;
+    }
+
+    .case-brief {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+    .case-brief dl {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+    .system-map {
+      padding: 22px;
+    }
+    .system-flow ol {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .system-flow li {
+      padding: 16px 0 18px 30px;
+      border-bottom: 1px solid var(--line);
+    }
+    .system-flow li:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+    .system-step-index {
+      position: absolute;
+      left: 0;
+      top: 19px;
+      margin: 0;
+    }
+    .system-flow i {
+      right: 2px;
+      top: 19px;
+      transform: rotate(90deg);
+    }
+    .system-map figcaption {
+      margin-top: 22px;
+    }
+  }
+</style>

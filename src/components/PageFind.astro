@@ -1,8 +1,8 @@
 ---
-import Search from "astro-pagefind/components/Search";
+import "@pagefind/default-ui/css/ui.css";
 ---
 
-<aside data-pagefind-ignore>
+<aside data-pagefind-ignore lang="en">
   <div id="backdrop" class="search-backdrop" hidden>
     <div
       id="pagefind-container"
@@ -16,13 +16,24 @@ import Search from "astro-pagefind/components/Search";
           type="button"
           data-close-search
           class="search-dismiss"
-          aria-label="Close search">Close ×</button>
+          aria-label="Close search">Close ×</button
+        >
       </div>
-      <Search
+      <p class="search-loading" data-search-loading role="status" hidden>
+        Preparing search...
+      </p>
+      <div
         id="search"
-        className="pagefind-ui"
-        uiOptions={{ showImages: false, excerptLength: 20, resetStyles: false }}
-      />
+        class="pagefind-ui"
+        data-bundle-path={`${import.meta.env.BASE_URL}pagefind/`}
+      >
+      </div>
+      <div class="search-fallback" data-search-error hidden>
+        <p>Search is unavailable right now. You can still explore:</p>
+        <a href="/projects">Projects</a><a href="/research">Research</a><a
+          href="/blog">Writing</a
+        >
+      </div>
       <p class="search-hint">
         Search projects, research, and writing. Press Esc to close.
       </p>
@@ -89,6 +100,22 @@ import Search from "astro-pagefind/components/Search";
     cursor: pointer;
     padding: 6px;
     color: var(--ink);
+  }
+  .site-header .search-button[hidden] {
+    display: none;
+  }
+  .search-loading,
+  .search-fallback {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  .search-fallback a {
+    display: inline-block;
+    margin-right: 22px;
+    min-height: 44px;
+    padding-block: 10px;
+    text-decoration: underline;
   }
   .search-button:hover {
     color: var(--accent);

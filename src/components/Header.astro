@@ -27,6 +27,7 @@ const links = [
     }
     <button
       id="portfolio-search"
+      hidden
       class="search-button"
       type="button"
       aria-label="Search portfolio"
@@ -42,7 +43,8 @@ const links = [
         aria-hidden="true"
         ><circle cx="8.5" cy="8.5" r="5.5"></circle><path d="m13 13 4 4"
         ></path></svg
-      ></button>
+      ></button
+    >
   </nav>
   <a class="header-contact" href={`mailto:${SITE.EMAIL}`}
     >Get in touch <span aria-hidden="true">↗</span></a

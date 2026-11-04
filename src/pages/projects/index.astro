@@ -27,7 +27,7 @@ const others = projects.filter(
   <div class="archive-label">
     <span class="mono">SELECTED PROJECTS</span><a
       class="mono"
-      href="/#selected-work">View as a story ↗</a>
+      href="/#selected-work">Selected work on the homepage ↗</a>
   </div>
   <div class="project-grid">
     {
@@ -44,7 +44,7 @@ const others = projects.filter(
                         featuredProjects.find((f) => f.slug === project.slug)
                           ?.category
                       }{" "}
-                      / {project.data.date.getFullYear()}
+                      / {featuredProjects.find((f) => f.slug === project.slug)?.year || project.data.date.getFullYear()}
                     </span>
                     <h2 data-pagefind-weight="1">{project.data.title}</h2>
                     <p>{project.data.description}</p>

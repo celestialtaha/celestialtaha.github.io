@@ -1,14 +1,34 @@
 ---
-import '../styles/global.css';
-import '@fontsource/geist-sans';
-import '@fontsource/geist-mono';
-import { ViewTransitions } from 'astro:transitions';
-interface Props { title:string; description:string; image?:string; article?:boolean; published?:Date; noindex?:boolean; }
-const {title,description,image='/social-card.png',article=false,published,noindex=false}=Astro.props;
-const pathname=Astro.url.pathname;
-const canonicalPath=pathname==='/'||/\.[^/]+$/.test(pathname)?pathname:pathname.replace(/\/?$/,'/');
-const canonicalURL=new URL(canonicalPath,Astro.site);
+import "../styles/global.css";
+import "@fontsource/geist-sans";
+import "@fontsource/geist-mono";
+import { ViewTransitions } from "astro:transitions";
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  article?: boolean;
+  published?: Date;
+  modified?: Date;
+  noindex?: boolean;
+}
+const {
+  title,
+  description,
+  image = "/social-card.png",
+  article = false,
+  published,
+  modified,
+  noindex = false,
+} = Astro.props;
+const pathname = Astro.url.pathname;
+const canonicalPath =
+  pathname === "/" || /\.[^/]+$/.test(pathname)
+    ? pathname
+    : pathname.replace(/\/?$/, "/");
+const canonicalURL = new URL(canonicalPath, Astro.site);
 ---
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -18,26 +38,77 @@ const canonicalURL=new URL(canonicalPath,Astro.site);
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalURL} />
-<meta name="robots" content={noindex?'noindex, follow':'index, follow'} />
+<meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
 <meta name="author" content="Taha Samavati" />
 <meta name="theme-color" content="#f3f1e9" />
-<meta property="og:type" content={article?'article':'website'} />
+<meta property="og:type" content={article ? "article" : "website"} />
 <meta property="og:site_name" content="Taha Samavati" />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image,Astro.site)} />
+<meta property="og:image" content={new URL(image, Astro.site)} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Taha Samavati — AI Engineer & Researcher. Research. Systems. Products." />
-{article&&published&&<meta property="article:published_time" content={published.toISOString()} />}
+<meta
+  property="og:image:alt"
+  content="Taha Samavati — AI Engineer & Researcher. Research. Systems. Products."
+/>
+{
+  article && published && (
+    <meta property="article:published_time" content={published.toISOString()} />
+  )
+}
+{
+  article && modified && (
+    <meta property="article:modified_time" content={modified.toISOString()} />
+  )
+}
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={new URL(image,Astro.site)} />
-<meta name="twitter:image:alt" content="Taha Samavati — AI Engineer & Researcher" />
-<link rel="alternate" type="application/rss+xml" title="Taha Samavati — Projects & Writing" href={new URL('/rss.xml',Astro.site)} />
-<script type="application/ld+json" set:html={JSON.stringify({'@context':'https://schema.org','@type':'Person',name:'Taha Samavati',url:Astro.site,jobTitle:'AI Engineer & Researcher',sameAs:['https://github.com/celestialtaha','https://www.linkedin.com/in/taha-samavati/','https://x.com/taha_iusm']})} />
-{article&&<script type="application/ld+json" set:html={JSON.stringify({'@context':'https://schema.org','@type':'BlogPosting',headline:title,description,url:canonicalURL,image:new URL(image,Astro.site),...(published?{datePublished:published.toISOString()}:{}),author:{'@type':'Person',name:'Taha Samavati',url:Astro.site}})} />}
+<meta name="twitter:image" content={new URL(image, Astro.site)} />
+<meta
+  name="twitter:image:alt"
+  content="Taha Samavati — AI Engineer & Researcher"
+/>
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title="Taha Samavati — Projects & Writing"
+  href={new URL("/rss.xml", Astro.site)}
+/>
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Taha Samavati",
+    url: Astro.site,
+    jobTitle: "AI Engineer & Researcher",
+    sameAs: [
+      "https://github.com/celestialtaha",
+      "https://www.linkedin.com/in/taha-samavati/",
+      "https://x.com/taha_iusm",
+    ],
+  })}
+/>
+{
+  article && (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: title,
+        description,
+        url: canonicalURL,
+        image: new URL(image, Astro.site),
+        ...(published ? { datePublished: published.toISOString() } : {}),
+        ...(modified ? { dateModified: modified.toISOString() } : {}),
+        author: { "@type": "Person", name: "Taha Samavati", url: Astro.site },
+      })}
+    />
+  )
+}
 <ViewTransitions />
 <script src="../scripts/site.ts"></script>
